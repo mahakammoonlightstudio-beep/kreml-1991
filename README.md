@@ -248,4 +248,7 @@ alternate-history layer declaratively.
 *A Mahakam Moonlight Studio production — beep edition.*
 *Directed & written by mahakammoonlightstudio-beep and Mr. Fozan.*
 
+*Code licensed MIT. Historical recordings and the musical soundtrack featured
+in the rendered videos belong to their respective owners.*
+
 </div>
