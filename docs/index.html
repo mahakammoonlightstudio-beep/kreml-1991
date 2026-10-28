@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>☭ КРЕМЛЬ 1991 — General Secretary · BETA v4</title>
+<meta name="description" content="A text-based alternate-history terminal game: run the USSR from 1964 to 1991 — or into the Red Millennium of 2001. Play it with python main.py.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='85'>☭</text></svg>">
+<style>
+  :root{
+    --red:#c8102e; --red-dark:#7a0b1e; --bg:#0d0d10; --panel:#15161a;
+    --ink:#e8e4da; --dim:#9a958b; --gold:#d4af37;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);font-family:"Courier New",ui-monospace,monospace;line-height:1.6}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{color:#fff}
+  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+
+  /* ── red top banner ── */
+  .banner{background:linear-gradient(180deg,#b10e28,#7a0b1e);border-bottom:4px solid #4d0612;
+    text-align:center;padding:52px 16px 44px;position:relative;overflow:hidden}
+  .banner:before{content:"☭";position:absolute;font-size:340px;color:rgba(0,0,0,.14);
+    left:-70px;top:-110px;transform:rotate(-12deg)}
+  .banner:after{content:"☭";position:absolute;font-size:340px;color:rgba(0,0,0,.14);
+    right:-70px;top:-110px;transform:rotate(12deg)}
+  .banner .star{color:var(--gold);letter-spacing:14px;font-size:15px}
+  .banner h1{font-size:clamp(44px,9vw,84px);letter-spacing:6px;color:#fff;
+    text-shadow:0 3px 0 rgba(0,0,0,.45);font-weight:900;margin:6px 0 2px}
+  .banner h2{font-size:clamp(15px,2.4vw,21px);color:#ffd9dd;letter-spacing:3px;font-weight:400}
+  .banner .sub{color:#f3c9ce;font-size:14px;max-width:640px;margin:16px auto 0}
+  .chip{display:inline-block;background:#000;color:var(--gold);border:1px solid var(--gold);
+    padding:3px 14px;font-size:13px;letter-spacing:2px;margin-top:18px}
+
+  /* ── console hero ── */
+  .console{background:#050506;border:1px solid #2a2b31;border-radius:10px;overflow:hidden;
+    margin:-26px auto 0;max-width:880px;box-shadow:0 24px 70px rgba(0,0,0,.6);position:relative;z-index:2}
+  .console .bar{background:#1c1d22;padding:9px 14px;display:flex;gap:8px;align-items:center}
+  .dot{width:11px;height:11px;border-radius:50%}
+  .bar span{margin-left:8px;color:#77787f;font-size:12px}
+  .console .screen{padding:0}
+  .console img{display:block;width:100%}
+
+  section{padding:56px 0}
+  .kick{color:var(--red);letter-spacing:4px;font-size:13px;font-weight:700}
+  h3{font-size:clamp(24px,4vw,34px);letter-spacing:1px;margin:6px 0 22px;color:#fff}
+
+  /* ── command block ── */
+  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+  .step{background:var(--panel);border:1px solid #26272d;border-radius:10px;padding:22px}
+  .step .n{color:var(--red);font-weight:900;font-size:26px}
+  .step h4{color:#fff;margin:8px 0 8px;font-size:17px}
+  .step p{color:var(--dim);font-size:14px}
+  .cmd{background:#000;border:1px solid #2a2b31;border-radius:8px;padding:13px 16px;margin-top:10px;
+    color:#7ee787;font-size:14px;white-space:pre;overflow-x:auto}
+  .cmd .you{color:#ffd9dd}
+
+  /* ── features ── */
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .card{background:var(--panel);border:1px solid #26272d;border-left:3px solid var(--red);
+    border-radius:10px;padding:22px}
+  .card h4{color:#fff;font-size:17px;margin-bottom:8px}
+  .card p{color:var(--dim);font-size:14px}
+
+  /* ── gallery ── */
+  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+  .shots figure{background:#050506;border:1px solid #2a2b31;border-radius:10px;overflow:hidden}
+  .shots img{display:block;width:100%}
+  .shots figcaption{padding:10px 14px;color:var(--dim);font-size:13px;border-top:1px solid #2a2b31}
+  .shots b{color:var(--gold);font-weight:400}
+
+  /* ── cta ── */
+  .cta{background:linear-gradient(180deg,#b10e28,#7a0b1e);text-align:center;padding:58px 20px;border-top:4px solid #4d0612}
+  .cta h3{color:#fff}
+  .btn{display:inline-block;background:#000;color:#fff !important;border:2px solid #fff;
+    padding:14px 30px;border-radius:6px;font-size:16px;letter-spacing:2px;margin:10px 8px 0}
+  .btn:hover{background:var(--gold);border-color:var(--gold);color:#000 !important}
+  .btn.ghost{background:transparent;border-color:rgba(255,255,255,.6);color:#fff !important}
+  .small{color:#f3c9ce;font-size:13px;margin-top:14px}
+
+  footer{padding:34px 0 44px;text-align:center;color:var(--dim);font-size:13px;
+    border-top:1px solid #232428}
+  footer .u{text-align:center}
+</style>
+</head>
+<body>
+
+<div class="banner">
+  <div class="star">★ ★ ★ ★ ★ ★ ★</div>
+  <h1>КРЕМЛЬ&nbsp;1991</h1>
+  <h2>GENERAL SECRETARY — A TEXT-BASED GAME OF THE SOVIET UNION</h2>
+  <p class="sub">An alternate-history simulator for your terminal. Take the CPSU from
+  <b>1964</b> through the booms, the coups and the oil gluts — hold the five gauges
+  above zero to <b>1991</b>, or steer hard enough to reach the <b>Red Millennium
+  of 2001</b>. Pure Python. No installs. Just <code>main.py</code>.</p>
+  <div class="chip">╔ BETA v4 — RELEASED ╗</div>
+</div>
+
+<section style="padding-top:0">
+  <div class="console">
+    <div class="bar">
+      <i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i>
+      <i class="dot" style="background:#28c840"></i><span>kreml_1991 — python console — 27 years of history</span>
+    </div>
+    <div class="screen"><img src="media/teaser.gif" alt="Gameplay recording: a mouse clicks through the Politburo menu while the RED ● timer runs."></div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kick">ТРИ ШАГА К ВЛАСТИ</div>
+    <h3>How to take power in 3 commands</h3>
+    <div class="steps">
+      <div class="step"><div class="n">1.</div><h4>Get Python</h4>
+        <p>Any Python 3.8+. Windows, Linux, macOS. Nothing else to install — the game is pure standard library.</p></div>
+      <div class="step"><div class="n">2.</div><h4>Download</h4>
+        <p>Clone the repo, or grab the BETA v4 release and unzip it.</p>
+        <div class="cmd"><span class="you">&gt;</span> git clone https://github.com/mahakammoonlightstudio-beep/kreml-1991.git</div></div>
+      <div class="step"><div class="n">3.</div><h4>Rule</h4>
+        <p>Run it. Choose your ideology of difficulty. Survive.</p>
+        <div class="cmd"><span class="you">&gt;</span> python main.py</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#101115;border-top:1px solid #232428;border-bottom:1px solid #232428">
+  <div class="wrap">
+    <div class="kick">АРХИВ ПОЛИТБЮРО</div>
+    <h3>What the press is not supposed to see</h3>
+    <div class="shots">
+      <figure><img src="media/shot_panel.jpg" alt="Stat panel: five gauges, valas reserve, three Politburo factions"><figcaption><b>The yardstick.</b> Five gauges, the valas vault, and the three moods of the Politburo.</figcaption></figure>
+      <figure><img src="media/shot_directives.jpg" alt="The yearly directive menu"><figcaption><b>The directive.</b> Thirteen public levers across economy, defense, society, foreign and science.</figcaption></figure>
+      <figure><img src="media/shot_boom.jpg" alt="1974 — oil boom"><figcaption><b>«Oil: BOOM».</b> The valas pays for dinner, the pipeline pays for the navy.</figcaption></figure>
+      <figure><img src="media/shot_finalyears.jpg" alt="1990 — the plot brews in the court"><figcaption><b>The late era.</b> 1990: the PLOT flickers in the court line. Do the arithmetic early.</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="kick">ПЯТЬ ЦИФЕРБЛАТОВ</div>
+    <h3>The systems in BETA v4</h3>
+    <div class="grid">
+      <div class="card"><h4>⚖ Five gauges</h4><p>Economy, Military, Order, People's Faith, World Prestige. All erode every year. Any one that touches zero removes the portraits and ends the game.</p></div>
+      <div class="card"><h4>💵 The valas &amp; the oil market</h4><p>A yearly oil index (1973 boom → 1986 glut → late-90s trough) drives a hard-currency reserve you spend on imports, loans and grain.</p></div>
+      <div class="card"><h4>♛ The court &amp; the velvet coup</h4><p>Three factions — Old Guard, Reformers, Army — keep private moods. Let one despair and they book your conference room for a palace coup.</p></div>
+      <div class="card"><h4>⭐ The Red Millennium</h4><p>End 1991 strong and the Politburo offers ten more years (1992–2001). Survive to 2001 and history rewrites itself around you.</p></div>
+      <div class="card"><h4>🗂 The Dossier</h4><p>Every decision you ever made, every fork still open, every delayed consequence in the pipeline — and history's own timetable for comparison.</p></div>
+      <div class="card"><h4>💾 Save exactly where you are</h4><p>The whole state — including the RNG — goes to <code>kreml_save.json</code> at any year boundary. Save, sleep, resume as General Secretary.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="cta">
+  <div class="wrap">
+    <h3>☭ The Politburo awaits your signature, Comrade ☭</h3>
+    <a class="btn" href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">⬇ DOWNLOAD BETA v4</a>
+    <a class="btn ghost" href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">★ SOURCE ON GITHUB</a>
+    <p class="small">python main.py — and the decade is yours.</p>
+  </div>
+</div>
+
+<footer>
+  <p>A Mahakam Moonlight Studio ☭ production (beep edition)</p>
+  <p>Written &amp; directed by <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a> and <b>Mr. Fozan</b></p>
+  <p class="u">★ СТРАНЫ, УХОДЯЩИЕ В ИСТОРИЮ ★</p>
+</footer>
+
+</body>
+</html>

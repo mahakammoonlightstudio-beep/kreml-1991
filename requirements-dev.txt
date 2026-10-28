@@ -1,0 +1,6 @@
+# The game itself is pure standard library — nothing to install.
+# These are optional deps for the video-render tools in tools/:
+Pillow
+fonttools
+# ffmpeg (an external binary, not pip-installable) — needed by the renderers:
+#   https://ffmpeg.org/download.html

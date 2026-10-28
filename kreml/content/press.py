@@ -1,0 +1,128 @@
+"""The Western press camera: pure data.
+
+Each entry is one foreign-newspaper headline REACTING to the state of the
+Union. Selection logic lives in the engine; this file only declares:
+
+  id        unique key (tracked so a headline prints at most once)
+  organ     newspaper name
+  headline  the main title
+  sub       optional subhead / quote
+  requires  same vocabulary as ops.check_requires (stats/flags/min_year/...)
+  w         weight: bigger = picked earlier
+  fallback  True = era filler shown when no conditional headline matches
+            (fallbacks may repeat and are never 'used up')
+"""
+
+def P(id, organ, headline, sub="", requires=None, w=1, fallback=False):
+    return {"id": id, "organ": organ, "headline": headline, "sub": sub,
+            "requires": requires or {}, "w": w, "fallback": fallback}
+
+
+PRESS: tuple[dict, ...] = (
+    # ── conditional: react to what the player has done ──
+    P("war_vietnam", "THE ECONOMIST",
+      "Afghanistan: Moscow's Vietnam",
+      "A superpower bleeding in the mountains, nine years on.",
+      requires={"flags": ["at_war"], "min_year": 1983}, w=9),
+    P("guns_butter", "THE ECONOMIST",
+      "Guns versus Butter: the Final Round",
+      "Gosplan cannot feed both the missile queue and the bread queue.",
+      requires={"min_year": 1980, "stats": {"MILITARY": 75, "ECONOMY": 45}}, w=5),
+    P("quiet_market", "FINANCIAL TIMES",
+      "Kremlin Backs a Quiet Market",
+      "Profit indicators are now law where profit was once slang for sabotage.",
+      requires={"flags": ["kosygin_full"]}, w=8),
+    P("rouble_truth", "NEW YORK TIMES",
+      "The Rouble Finally Tells the Truth",
+      "Prices unbound; bread queues report from both lines.",
+      requires={"flags": ["price_done"]}, w=8),
+    P("private_trade", "WALL STREET JOURNAL",
+      "Millions Now Trade Privately in the Land of Marx",
+      "The co-operative millionaire is a fact, a scandal, and a hero.",
+      requires={"flags": ["coops"], "min_year": 1985}, w=7),
+    P("aa_reaction", "THE GUARDIAN",
+      "Sweden's Stations Detect the Silence",
+      "Whatever burned at Chernobyl was not announced, it was measured.",
+      requires={"flags": ["chernobyl_hidden"], "max_year": 1987}, w=9),
+    P("trials_return", "NEW YORK TIMES",
+      "The Show Trials Return to Moscow",
+      "Confessions are read with the punctuation of fear.",
+      requires={"flags": ["purge"]}, w=6),
+    P("beijing_harmony", "FAR EASTERN ECONOMIC REVIEW",
+      "Moscow–Beijing: Radio War Gives Way to Rail War",
+      "Freight replaces insults along four thousand kilometres.",
+      requires={"flags": ["china_thaw"]}, w=5),
+    P("brink_again", "WORLD PRESS REVIEW",
+      "One Minute to Midnight — Again",
+      "Both arsenals posture; both populations shrug and queue.",
+      requires={"flags": ["brink"]}, w=10),
+    P("files_1939", "DER SPIEGEL",
+      "Moscow Opens the Files of 1939",
+      "The secret protocols are printed, footnoted and officially regretted.",
+      requires={"flags": ["mr_admitted"]}, w=6),
+    P("soviet_spring", "DER SPIEGEL",
+      "A Soviet Spring?",
+      "Censorship relaxes; the samizdat typists go unemployed.",
+      requires={"any_flags": ["perestroika", "glasnost_early"], "stats": {"FAITH": 60}},
+      w=6),
+    P("union_by_consent", "LE MONDE",
+      "A Union by Consent: A Rare Marvel",
+      "Nine republics sign what history failed to impose.",
+      requires={"flags": ["treaty_signed"]}, w=10),
+    P("iron_returns", "THE TIMES",
+      "The Iron Hand Returns to Moscow",
+      "Order is up; so are the whispers in hotel lobbies.",
+      requires={"min_year": 1979, "stats": {"ORDER": 80}}, w=4),
+    P("queues_guns", "TIME",
+      "Queues and Machine Guns",
+      "Shelves empty as the soldiers smile politely.",
+      requires={"min_year": 1985, "stats": {"FAITH": 30, "ORDER": 70}}, w=7),
+    P("defection_flap", "INTERNATIONAL HERALD TRIBUNE",
+      "They Keep Jumping the Wall — Inward Talk",
+      "Western services report recruitment lines, not defection lines.",
+      requires={"min_year": 1978, "stats": {"PRESTIGE": 80}}, w=4),
+
+    # ── v4: the world market, the court, and the extended era ──
+    P("oil_glut", "REUTERS",
+      "The Oil Glut Eats Moscow's Lunch",
+      "Crude at a decade low; the valas ministry develops a twitch.",
+      requires={"min_year": 1985, "hc_max": 25}, w=9),
+    P("golden_cushion", "FINANCIAL TIMES",
+      "Gold Flows Toward Moscow's Reserve Shelves",
+      "Analysts revise the Union's lifespan upward, again.",
+      requires={"hc": 70}, w=6),
+    P("barracks_love", "THE WASHINGTON POST",
+      "The Barracks Sing Your Name",
+      "General staff evenings end with an unscheduled toast to the Secretary.",
+      requires={"court_min": {"military": 70}}, w=5),
+    P("apparatus_love", "THE ECONOMIST",
+      "The Apparatus Approves",
+      "A rare mood in Moscow's corridors: quiet, well-fed satisfaction.",
+      requires={"court_min": {"old_guard": 70}}, w=4),
+    P("corridor_poison", "WORLD PRESS REVIEW",
+      "Poison in the Third-Floor Corridor",
+      "Western embassy gossip lists the Kremlin mood as 'plotting-adjacent'.",
+      requires={"max_year": 1989, "court_max": {"old_guard": 15}}, w=8),
+    P("obit_outlived", "NEWSWEEK",
+      "The Union Outlives Its Obituary",
+      "Pundits shred their 1991 obituary columns and start over.",
+      requires={"min_year": 1992}, w=10),
+
+    # ── era fallbacks (always eligible, repeatable) ──
+    P("fb_early", "THE ECONOMIST",
+      "The Gerontocracy Problem",
+      "Heartbeats function as a policy instrument in Moscow.",
+      requires={"max_year": 1975}, fallback=True),
+    P("fb_middle", "TIME",
+      "Andropov's Long Shadow",
+      "Brezhnev-era paperwork meets the world's biggest oil bill.",
+      requires={"min_year": 1976, "max_year": 1984}, fallback=True),
+    P("fb_late", "NEWSWEEK",
+      "Can This Empire Be Saved?",
+      "The reformers say yes, the shelves say otherwise.",
+      requires={"min_year": 1985, "max_year": 1991}, fallback=True),
+    P("fb_new", "TIME",
+      "The Red Millennium?",
+      "A Union that refused to die now argues what to live for.",
+      requires={"min_year": 1992}, fallback=True),
+)

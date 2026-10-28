@@ -1,0 +1,15 @@
+# Byte-code
+__pycache__/
+*.py[cod]
+
+# Player saves & local records
+kreml_save.json
+
+# Local media studio assets (heavy videos stay local; the release page ships them)
+*.mp4
+"edit video/"
+edit video/
+
+# Render / autowrite artifacts
+*.tmp
+docs/media/teaser.mp4
