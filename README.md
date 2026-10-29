@@ -21,8 +21,9 @@ and a plenum that erases you from the portraits.
 [![platform](https://img.shields.io/badge/platform-Windows%20·%20Linux%20·%20macOS-lightgrey?style=flat-square)](#quick-start)
 [![web](https://img.shields.io/badge/web-live%20page-c8102e?style=flat-square&logo=githubpages&logoColor=white)](https://mahakammoonlightstudio-beep.github.io/kreml-1991/)
 
-[**▶ Play / landing page**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/) ·
+[**▶ Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·
 [**⬇ Download BETA v5**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
+[**🌐 Landing page**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/) ·
 [**🐛 Report a bug**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/issues)
 
 ![КРЕМЛЬ 1991 gameplay — the Politburo panel, yearly directives and the 1991 divergence report](docs/media/teaser.gif)
@@ -75,6 +76,10 @@ report that tells you exactly where your century left ours — all in a codebase
 ---
 
 ## Quick start
+
+**No terminal? [Play the browser build](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/)** —
+the same game, the same Python, compiled to WebAssembly and running in the tab. About 12 MB on the
+first visit, then offline; your run is kept in the browser and resumes after a refresh.
 
 **Requirements: Python 3.8 or newer. That is the entire list.**
 
@@ -289,6 +294,11 @@ tests/
   run_smoke.py          headless full-game runs across modes and timelines
 tools/
   render_gameplay.py    smooth 60 fps "real gameplay" video renderer (Pillow + ffmpeg)
+  build_web.py          packs the game into docs/play/game_bundle.js (run after any change)
+docs/play/              the browser build: the same game under Pyodide
+  index.html, app.js    terminal page — renders ANSI, turns menus into buttons
+  kreml_web.py          replay driver: runs the game one answer at a time
+  game_bundle.js        GENERATED copy of the game (tools/build_web.py --check)
 ```
 
 Requirements on options and directives — `flags` / `any_flags` / `not_flags` / `stats` /
@@ -301,6 +311,8 @@ branching alternate-history layer declaratively.
 python tests/test_mechanics.py    # 41 mechanic-level self checks
 python tests/test_io_flow.py      # save / load / dossier flow via scripted input
 python tests/run_smoke.py         # headless full-game smoke runs
+python tests/test_web_driver.py   # the browser build's replay contract (8 checks)
+python tests/test_web_build.py    # the browser bundle is in sync with the game
 ```
 
 The video renderer is a developer tool, not a dependency:

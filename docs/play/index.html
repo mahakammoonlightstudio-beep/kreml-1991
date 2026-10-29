@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Play КРЕМЛЬ 1991 in your browser — Soviet alternate-history game</title>
+<meta name="description" content="Play КРЕМЛЬ 1991 free in your browser, no install: run the Soviet Union as General Secretary from 1964 to 1991 — and into the Red Millennium of 2001. The real Python game, compiled to WebAssembly.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Play КРЕМЛЬ 1991 — Soviet Union alternate-history game in your browser">
+<meta property="og:description" content="The real game, in your browser. Five gauges, three suspicious factions, an oil market and 27 years of history. No install, no account.">
+<meta property="og:url" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
+<meta property="og:image" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/media/shot_panel.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#c8102e">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='85'>☭</text></svg>">
+<style>
+  :root{
+    --red:#c8102e; --red-dark:#7a0b1e; --bg:#0d0d10; --panel:#15161a;
+    --ink:#e8e4da; --dim:#9a958b; --gold:#d4af37; --line:#26272d;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{background:var(--bg);color:var(--ink);line-height:1.55;
+    font-family:"Cascadia Mono","Consolas","DejaVu Sans Mono",ui-monospace,monospace}
+  a{color:var(--gold);text-decoration:none}
+  a:hover{color:#fff}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+
+  header{border-bottom:1px solid var(--line);background:#101115}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;
+    gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
+  .brand{font-weight:900;letter-spacing:2px;color:#fff;font-size:15px}
+  .brand b{color:var(--red)}
+  .nav{display:flex;gap:16px;font-size:13px;color:var(--dim)}
+
+  main{padding:22px 0 40px}
+
+  /* ── appointment (setup) ── */
+  .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--red);
+    border-radius:10px;padding:22px;margin-bottom:18px}
+  .kick{color:var(--red);letter-spacing:3px;font-size:12px;font-weight:700}
+  h1{font-size:clamp(22px,3.4vw,30px);color:#fff;letter-spacing:1px;margin:6px 0 10px}
+  .lede{color:var(--dim);font-size:14px;max-width:70ch}
+  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px}
+  .group h3{font-size:12px;letter-spacing:2px;color:var(--dim);font-weight:700;margin-bottom:8px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{background:#0b0b0e;border:1px solid var(--line);border-radius:6px;color:var(--ink);
+    padding:8px 12px;font:inherit;font-size:12.5px;letter-spacing:.4px;cursor:pointer;
+    transition:border-color .15s,color .15s,background .15s}
+  .chip:hover{border-color:#4a4b53}
+  .chip[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:#171713}
+  .chip small{display:block;color:var(--dim);font-size:11px;letter-spacing:0;margin-top:2px}
+  .chip[aria-pressed="true"] small{color:#b9ad86}
+  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
+  .btn{background:var(--red);border:1px solid #e0283f;color:#fff;font:inherit;font-size:13.5px;
+    letter-spacing:1.2px;padding:11px 20px;border-radius:6px;cursor:pointer}
+  .btn:hover{background:#d8152f}
+  .btn:disabled{opacity:.5;cursor:wait}
+  .btn.ghost{background:transparent;border-color:#3a3b43;color:var(--ink)}
+  .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
+  .note{color:var(--dim);font-size:12px;margin-top:14px;max-width:78ch}
+  .note b{color:var(--ink);font-weight:400}
+
+  /* ── terminal ── */
+  .term{margin-top:6px}
+  .term .bar{display:flex;align-items:center;gap:10px;background:#1c1d22;
+    border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;padding:8px 12px}
+  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  .term .bar .title{font-size:12px;color:#8b8c94;letter-spacing:1px}
+  .term .bar .status{margin-left:auto;font-size:12px;color:var(--gold)}
+  #screen{background:#050506;border:1px solid var(--line);border-top:0;
+    padding:14px 16px;height:min(58vh,560px);overflow:auto;white-space:pre-wrap;
+    overflow-wrap:break-word;font-size:13.5px;line-height:1.45;color:#d8d4ca}
+  #screen .r{color:#ff6b6b} #screen .g{color:#7ee787} #screen .y{color:#ffd866}
+  #screen .b{color:#79c0ff} #screen .m{color:#e2a8ff} #screen .c{color:#76e3ea}
+  #screen .w{color:#ffffff} #screen .dim{color:#8b8c94} #screen .bold{font-weight:700}
+  #screen .err{color:#ff6b6b}
+
+  .choices{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
+  .choices:empty{display:none}
+  .choices button{background:#0b0b0e;border:1px solid #33343c;color:var(--ink);
+    border-radius:6px;padding:7px 11px;font:inherit;font-size:12.5px;cursor:pointer;
+    max-width:100%;text-align:left}
+  .choices button:hover{border-color:var(--gold);color:var(--gold)}
+  .choices button .n{color:var(--red);font-weight:700;margin-right:6px}
+  .choices button .d{color:var(--dim)}
+
+  form#answer{display:flex;gap:8px;align-items:center;margin-top:10px;
+    background:#0b0b0e;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+  form#answer .caret{color:var(--gold)}
+  #line{flex:1;background:transparent;border:0;outline:none;color:#fff;font:inherit;font-size:13.5px}
+  #line::placeholder{color:#5d5e66}
+  form#answer button{background:#1d1e24;border:1px solid #33343c;color:var(--ink);
+    font:inherit;font-size:12.5px;padding:6px 12px;border-radius:5px;cursor:pointer}
+  form#answer button:hover{border-color:var(--gold);color:var(--gold)}
+
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
+  .toolbar .spacer{flex:1}
+  .muted{color:var(--dim);font-size:12px}
+
+  footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--dim);font-size:12px}
+  footer a{color:var(--gold)}
+  [hidden]{display:none !important}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="brand"><b>☭</b> КРЕМЛЬ 1991 <span class="muted">— web edition</span></div>
+    <nav class="nav">
+      <a href="../index.html">Landing page</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">Download</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ── the appointment ─────────────────────────────────────── -->
+  <section id="setup">
+    <div class="card">
+      <div class="kick">ПОСТАНОВЛЕНИЕ ПОЛИТБЮРО</div>
+      <h1>The Politburo awaits your signature, Comrade</h1>
+      <p class="lede">This is the real game — the same Python that runs in your terminal — compiled to
+      WebAssembly and running in this tab. Choose how harsh history should be and which decade you
+      inherit, then type your answers below the console. Nothing is installed, nothing is uploaded.</p>
+
+      <div class="row">
+        <div class="group">
+          <h3>DIFFICULTY</h3>
+          <div class="chips" id="modes" role="group" aria-label="Difficulty"></div>
+        </div>
+        <div class="group">
+          <h3>TIMELINE</h3>
+          <div class="chips" id="timelines" role="group" aria-label="Timeline"></div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn" id="start">Take the appointment ▸</button>
+        <button class="btn ghost" id="resume" hidden>Continue last run</button>
+        <span class="muted" id="bootnote">Loading Python…</span>
+      </div>
+      <p class="note"><b>First load pulls about 12 MB</b> of Python (Pyodide) from a CDN, once per browser.
+      After that the game runs entirely offline in the tab. Deep runs work best on a desktop; the
+      terminal scrolls on a phone too.</p>
+    </div>
+  </section>
+
+  <!-- ── the terminal ────────────────────────────────────────── -->
+  <section id="game" class="term" hidden>
+    <div class="bar">
+      <i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i>
+      <i class="dot" style="background:#28c840"></i>
+      <span class="title" id="termtitle">kreml_1991 — python in the browser</span>
+      <span class="status" id="status"></span>
+    </div>
+    <pre id="screen" aria-live="polite" aria-label="Game console"></pre>
+    <div class="choices" id="choices"></div>
+    <form id="answer" autocomplete="off">
+      <span class="caret">❯</span>
+      <input id="line" type="text" placeholder="Type your answer, then Enter" aria-label="Your answer">
+      <button type="submit">Enter</button>
+    </form>
+    <div class="toolbar">
+      <button class="btn ghost" id="restart">New appointment</button>
+      <span class="spacer"></span>
+      <span class="muted" id="hint">Enter submits · the buttons below the console pick a number for you</span>
+    </div>
+  </section>
+
+  <noscript><p class="note">The browser build needs JavaScript. Clone the repo and run
+    <b>python main.py</b> instead.</p></noscript>
+</main>
+
+<footer class="wrap">
+  <p>A Mahakam Moonlight Studio ☭ production — by
+    <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a>
+    and <b>Mr. Fozan</b>. MIT licence.</p>
+</footer>
+
+<script src="game_bundle.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
