@@ -7,12 +7,19 @@ the alternate-history layer.
 from ..model import Directive, Option
 from ..ops import check_requires  # noqa: F401  (re-exported for keyboard convenience)
 from ..state import Kremlin
+from .modes import MODES
 
 
 def make_directive(id: str, label: str, desc: str, group: str, ops: dict, *,
-                   requires: dict | None = None, once: bool = False) -> Directive:
+                   requires: dict | None = None, once: bool = False,
+                   alt: bool = False) -> Directive:
     return Directive(id=id, label=label, desc=desc, group=group,
-                     ops=ops, requires=requires or {}, once=once)
+                     ops=ops, requires=requires or {}, once=once, alt=alt)
+
+
+def on_rails(g: Kremlin) -> bool:
+    """HISTORICAL RAILS locks every alternate-history lever."""
+    return bool(MODES.get(g.mode, MODES["medium"]).get("rail"))
 
 
 DIRECTIVES: tuple[Directive, ...] = (
@@ -27,8 +34,8 @@ DIRECTIVES: tuple[Directive, ...] = (
                     "court": {"reformers": 3}}),
     make_directive("agriculture_reform", "Agriculture reform",
                    "Private plot concessions, tractors promised.", "Economy",
-                   {"stats": {"ECONOMY": 2, "FAITH": 3, "ORDER": -1},
-                    "court": {"reformers": 2}}),
+                   {"stats": {"ECONOMY": 2, "FAITH": 4, "ORDER": -1}, "hc": 2,
+                    "court": {"reformers": 3}}),
     make_directive("oil_gas_exports", "Oil & gas exports",
                    "Purchases abroad with pipeline money.", "Economy",
                    {"stats": {"ECONOMY": 4, "PRESTIGE": 1}, "hc": 6}),
@@ -42,7 +49,7 @@ DIRECTIVES: tuple[Directive, ...] = (
                    "The special export account refills; the Swiss suspect nothing loudly.",
                    "Economy",
                    {"stats": {"ECONOMY": 3, "PRESTIGE": -1}, "hc": 20,
-                    "flag_add": "gold_sold"},
+                    "flag_add": "gold_sold", "queue": [(2, "gold_rumour")]},
                    requires={"hc_max": 30}, once=True),
     make_directive("western_loans", "Borrow from the West",
                    "Ten-year paper at eight points. Time is bought; time bills.",
@@ -54,7 +61,7 @@ DIRECTIVES: tuple[Directive, ...] = (
                    {"stats": {"ECONOMY": 12, "ORDER": -6, "FAITH": 3},
                     "flag_add": "kosygin_full",
                     "court": {"reformers": 10, "old_guard": -8}},
-                   requires={"flags": ["kosygin_pilot"]}, once=True),
+                   requires={"flags": ["kosygin_pilot"]}, once=True, alt=True),
     make_directive("legalize_cooperatives", "Legalize private cooperatives",
                    "Pioneering co-ops may lawfully sell vegetables, films, and haircuts.",
                    "Economy",
@@ -62,19 +69,20 @@ DIRECTIVES: tuple[Directive, ...] = (
                     "flag_add": "coops",
                     "court": {"reformers": 6, "old_guard": -6}},
                    requires={"any_flags": ["kosygin_full", "perestroika"],
-                             "min_year": 1984}, once=True),
+                             "min_year": 1984}, once=True, alt=True),
     make_directive("price_reform", "Price reform: the rouble retrains",
                    "Prices float to where bread actually is.", "Economy",
                    {"stats": {"ECONOMY": 10, "FAITH": -5, "ORDER": -7},
                     "flag_add": "price_done",
                     "court": {"reformers": 8, "old_guard": -10}},
-                   requires={"flags": ["coops"], "min_year": 1988}, once=True),
+                   requires={"flags": ["coops"], "min_year": 1988}, once=True,
+                   alt=True),
     make_directive("special_economic_zone", "Special economic zones (Nakhodka model)",
                    "Four swathes of coast learn Mandarin-style incentives.", "Economy",
                    {"stats": {"ECONOMY": 7, "ORDER": -4, "PRESTIGE": 2},
                     "flag_add": "sez"},
                    requires={"any_flags": ["price_done", "coops"],
-                             "min_year": 1988}, once=True),
+                             "min_year": 1988}, once=True, alt=True),
 
     # ── Defense & state ----------------------------------------------------
     make_directive("military_buildup", "Military buildup",
@@ -83,8 +91,8 @@ DIRECTIVES: tuple[Directive, ...] = (
                     "court": {"military": 6}}),
     make_directive("espionage", "Espionage & intelligence ops",
                    "The KGB loves quiet paperwork.", "Defense",
-                   {"stats": {"PRESTIGE": 3, "MILITARY": 2},
-                    "court": {"old_guard": 2}}),
+                   {"stats": {"PRESTIGE": 3, "MILITARY": 2}, "hc": 3,
+                    "court": {"old_guard": 2, "military": 2}}),
     make_directive("atomic_ultimatum", "Atomic ultimatum to NATO",
                    "Silo doors open a crack. The world holds its breath.", "Defense",
                    {"stats": {"MILITARY": 1, "PRESTIGE": -10, "ORDER": 4},
@@ -107,34 +115,34 @@ DIRECTIVES: tuple[Directive, ...] = (
                     "court": {"reformers": 2}}),
     make_directive("kgb_crackdown", "KGB crackdown",
                    "Silence is the mother of order... allegedly.", "Society",
-                   {"stats": {"ORDER": 6, "FAITH": -3, "PRESTIGE": -2},
-                    "court": {"old_guard": 5}}),
+                   {"stats": {"ORDER": 7, "FAITH": -3, "PRESTIGE": -2},
+                    "court": {"old_guard": 6, "military": -2, "reformers": -3}}),
     make_directive("soft_glasnost", "Relax censorship (soft glasnost)",
                    "Let writers breathe a little.", "Society",
                    {"stats": {"FAITH": 4, "ORDER": -3, "PRESTIGE": 1},
                     "court": {"reformers": 6, "old_guard": -5}}),
     make_directive("party_discipline", "Party discipline & propaganda",
                    "Posters, meetings, correct slogans.", "Society",
-                   {"stats": {"ORDER": 3, "FAITH": 2, "ECONOMY": -1},
-                    "court": {"old_guard": 4}}),
+                   {"stats": {"ORDER": 4, "FAITH": 2, "ECONOMY": -1},
+                    "court": {"old_guard": 4, "reformers": -2}}),
     make_directive("cadres_refresh", "Regenerate the nomenklatura",
                    "Grey heads rotate out; technocrats and Party youth step in.", "Society",
                    {"stats": {"FAITH": 3, "ORDER": 2, "ECONOMY": 1},
                     "flag_add": "cadres_refresh",
                     "court": {"reformers": 6, "old_guard": -8}},
                    requires={"any_flags": ["perestroika", "reformer"],
-                             "min_year": 1985}, once=True),
+                             "min_year": 1985}, once=True, alt=True),
 
     # ── Foreign policy ------------------------------------------------------
     make_directive("detente", "Détente diplomacy",
                    "Summits, treaties, handshakes.", "Foreign",
-                   {"stats": {"PRESTIGE": 5, "MILITARY": -1},
-                    "court": {"old_guard": -3, "military": -3}}),
+                   {"stats": {"PRESTIGE": 5, "MILITARY": -1}, "hc": 2,
+                    "court": {"old_guard": -3, "reformers": 3, "military": -3}}),
     make_directive("new_union_treaty", "Sign the Renewed Union Treaty",
                    "Nine republics re-enter the Union by signature, not by tank.",
                    "Foreign",
                    {"stats": {"FAITH": 4, "PRESTIGE": 3, "ORDER": -5},
-                    "flag_add": "treaty_signed",
+                    "flag_add": "treaty_signed", "queue": [(1, "treaty_sabotage")],
                     "court": {"reformers": 8, "old_guard": -8, "military": -6}},
                    requires={"min_year": 1989, "stats": {"FAITH": 55}}, once=True),
     make_directive("china_open", "Economic opening toward Beijing",
@@ -149,13 +157,13 @@ DIRECTIVES: tuple[Directive, ...] = (
                    {"stats": {"MILITARY": -4, "ECONOMY": 5, "PRESTIGE": 2},
                     "flag_add": "retrench",
                     "court": {"military": -8}},
-                   requires={"min_year": 1985}, once=True),
+                   requires={"min_year": 1985}, once=True, alt=True),
     make_directive("eurasian_market", "A Eurasian Common Market",
                    "Budapest to Baku: one tariff shelf, nine warehouses, no tanks.",
                    "Foreign",
                    {"stats": {"ECONOMY": 8, "PRESTIGE": 4, "ORDER": -2},
                     "hc": 10, "flag_add": "union_market"},
-                   requires={"min_year": 1992}, once=True),
+                   requires={"min_year": 1992}, once=True, alt=True),
 
     # ── Science & space -----------------------------------------------------
     make_directive("space_science", "Space science & exploration",
@@ -166,7 +174,7 @@ DIRECTIVES: tuple[Directive, ...] = (
                    "Science",
                    {"stats": {"ECONOMY": 6, "PRESTIGE": 3, "ORDER": -1},
                     "flag_add": "red_net"},
-                   requires={"min_year": 1984}, once=True),
+                   requires={"min_year": 1984}, once=True, alt=True),
 )
 
 GROUP_ORDER = ("Economy", "Defense", "Society", "Foreign", "Science")
@@ -194,7 +202,10 @@ LIFELINES: tuple[Option, ...] = (
 def available_directives(g: Kremlin) -> list[tuple[str, list[Directive]]]:
     """Returns menu groups (in GROUP_ORDER) holding only available directives."""
     groups: dict[str, list[Directive]] = {}
+    rails = on_rails(g)
     for d in DIRECTIVES:
+        if rails and d.alt:            # historical mode keeps history's levers
+            continue
         if d.once and d.id in g.used_directives:
             continue
         ok, _ = check_requires(g, d.requires)

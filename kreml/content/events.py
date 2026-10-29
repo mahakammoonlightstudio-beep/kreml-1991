@@ -18,9 +18,10 @@ def _opt(label: str, ops: dict, outcomes: str = "", requires: dict | None = None
 
 
 def _ev(id: str, title: str, text: str, options, *, era: str = "",
-        once: bool = False, requires: dict | None = None) -> Event:
+        once: bool = False, requires: dict | None = None,
+        alt: bool = False) -> Event:
     return Event(id=id, title=title, text=text, options=tuple(options),
-                 era=era, once=once, requires=requires or {})
+                 era=era, once=once, requires=requires or {}, alt=alt)
 
 
 # ══════════════════════════════════════════════════════════════════
@@ -58,7 +59,8 @@ EVENTS["kosygin_memo"] = _ev(
     "The Premier slides you a memo: profit indicators, worker councils, honesty about steel.",
     [
         _opt("Support pilot reforms",
-             {"stats": {"ECONOMY": 4, "ORDER": -2}, "flag_add": "kosygin_pilot"},
+             {"stats": {"ECONOMY": 4, "ORDER": -2}, "flag_add": "kosygin_pilot",
+              "queue": [(2, "reform_wobble")]},
              "Two factories dare to profit. A pilot regime is born."),
         _opt("Send him to the archives", {"stats": {"ECONOMY": -1, "ORDER": 2}},
              "The memo is filed. So is its author's ambition."),
@@ -628,7 +630,7 @@ EVENTS["singapore_dream"] = _ev(
              "The envelope gains a stamp and a dust coat."),
         _opt("Trial one zone only, quietly", {"stats": {"ECONOMY": 2, "ORDER": -1}},
              "Nakhodka learns accounting by fire."),
-    ], era="LATE", once=True,
+    ], era="LATE", once=True, alt=True,
     requires={"any_flags": ["price_done", "coops", "kosygin_full"]})
 
 EVENTS["coal_miners_1989"] = _ev(
@@ -723,7 +725,7 @@ RANDOM_POOLS: dict[str, tuple[str, ...]] = {
         "jazz_shortwave", "kuzbass_strike", "virgin_lands", "cuban_sugar",
         "prague_airwaves", "golden_orlov", "vienna_defection",
         "phantom_growth", "china_overture", "de_gaulle", "cairo_arms",
-        "cosmonaut_letter", "baikal_pulp",
+        "cosmonaut_letter", "baikal_pulp", "gagarin_crash",
     ),
     "MIDDLE": (
         "solidarnosc", "grain_scandal", "andropov_dossiers", "war_scares",
@@ -731,6 +733,8 @@ RANDOM_POOLS: dict[str, tuple[str, ...]] = {
         "athletes_defect", "brezhnev_orders", "uzbek_cotton", "foreign_debt",
         "yugo_study", "afghan_trap", "pipeline_sabotage", "helsinki_accords",
         "vatican_signal", "grain_bill",
+        "vietnam_peace", "sakharov_nobel", "polish_pope", "grain_embargo",
+        "petrov_1983",
     ),
     "LATE": (
         "glasnost_press", "karabakh", "baltic_chain", "mic_reform",
@@ -739,10 +743,12 @@ RANDOM_POOLS: dict[str, tuple[str, ...]] = {
         "referendum_fever", "coops_press", "mr_archives",
         "vodka_campaign", "nomenklatura_rift", "singapore_dream",
         "name_duel", "cassette_wave",
+        "malta_summit", "alma_ata_1991",
     ),
     "NEW": (
         "oligarch_weekend", "brain_gain", "siberia_2", "network_age",
         "church_revival", "arctic_route", "wild_east_jobs",
+        "ruble_crash_1994", "default_1998", "kursk_2000", "mir_2001",
     ),
 }
 
@@ -806,7 +812,7 @@ EVENTS["afghanistan_1979"] = _ev(
     [
         _opt("Intervene with the 40th Army",
              {"stats": {"MILITARY": 4, "PRESTIGE": -4, "ECONOMY": -2},
-              "flag_add": "at_war"},
+              "flag_add": "at_war", "queue": [(3, "afghan_stalemate")]},
              "Soviet columns cross the Amu Darya. The mountains are patient."),
         _opt("Support the regime with materiel only", {"stats": {"MILITARY": 1, "PRESTIGE": -1, "ECONOMY": -1}},
              "Mi-24s and advisers cross the border; columns do not."),
@@ -871,10 +877,12 @@ EVENTS["chernobyl"] = _ev(
         _opt("Admit the disaster immediately", {"stats": {"FAITH": 2, "PRESTIGE": 3, "ECONOMY": -3}},
              "Radiologists fly in from eleven countries. Truth is expensive and less fatal."),
         _opt("Keep it quiet, evacuate quietly",
-             {"stats": {"FAITH": -4, "PRESTIGE": -4}, "flag_add": "chernobyl_hidden"},
+             {"stats": {"FAITH": -4, "PRESTIGE": -4}, "flag_add": "chernobyl_hidden",
+              "queue": [(1, "chernobyl_secrecy")]},
              "Kiosks sell kilos of newsprint, none mentioning dosimeters."),
         _opt("Dismiss as 'not a catastrophe'",
-             {"stats": {"FAITH": -2, "PRESTIGE": -3}, "flag_add": "chernobyl_hidden"},
+             {"stats": {"FAITH": -2, "PRESTIGE": -3}, "flag_add": "chernobyl_hidden",
+              "queue": [(1, "chernobyl_secrecy")]},
              "Swedish monitoring stations foam politely."),
     ])
 
@@ -1294,3 +1302,16 @@ EVENTS["wild_east_jobs"] = _ev(
              {"stats": {"FAITH": 1, "ECONOMY": 1}},
              "Pliers acquire permits, margins acquire stamps."),
     ], era="NEW")
+
+# ══════════════════════════════════════════════════════════════════
+# v5: chain reactions, new standalone events, divergence forks
+# ══════════════════════════════════════════════════════════════════
+from .chains import CHAIN_EVENTS, EXTRA_EVENTS          # noqa: E402
+from .forks import FORK_EVENTS, FORKS                   # noqa: E402
+
+EVENTS.update(EXTRA_EVENTS)
+EVENTS.update(CHAIN_EVENTS)
+EVENTS.update(FORK_EVENTS)
+
+# Forks are appended by the engine on their year; expose them for the dossier.
+FORKS = FORKS

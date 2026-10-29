@@ -163,20 +163,27 @@ def _patch_engine() -> None:
         return out
     engine.collect_events = collect_wrap
 
-    _orig_end_surv = __import__("kreml.content.endings", fromlist=["x"]).ending_union_survives
-    _orig_end_coll = __import__("kreml.content.endings", fromlist=["x"]).ending_collapse
+    _mod = __import__("kreml.content.endings", fromlist=["x"])
+    _orig_end_surv = _mod.ending_union_survives
+    _orig_end_coll = _mod.ending_collapse
+    _orig_end_red = _mod.ending_red_millennium
 
     def surv_wrap(g):
         OUTCOME["survived"] = True
         return _orig_end_surv(g)
 
+    def red_wrap(g):
+        OUTCOME["survived"] = True      # 2001 counts: the bot did not collapse
+        return _orig_end_red(g)
+
     def coll_wrap(g):
         OUTCOME["collapsed"] = True
         return _orig_end_coll(g)
 
-    END = __import__("kreml.content.endings", fromlist=["x"])
+    END = _mod
     END.ending_union_survives = surv_wrap
     END.ending_collapse = coll_wrap
+    END.ending_red_millennium = red_wrap
     # engine.run resolves END via its own import binding — rebind it there too
     engine.END = END
 
@@ -193,11 +200,15 @@ def bot_input(prompt: str = "") -> str:
     if "name for the history books" in p:
         return BOT_NAME
     if "How harsh" in p:
-        return "2"                       # BALANCED
+        return "2"                       # BALANCED (v5: 5 modes, 2 = medium)
+    if "Which timeline" in p:
+        return "1"                       # rails of history
     if "Your mandate" in p:
         return "3"                       # dark-horse reformer
     if "Resume" in p:
         return "0"
+    if "Continue into the new era" in p:
+        return "1"                      # take the Red Millennium when offered
     if "proceed" in p or "[Enter] " in p:
         return ""                        # year boundary → go
     g = CUR_G.get("g")
@@ -228,13 +239,18 @@ def run_bot(seed: int, dry: bool = False) -> str:
     EVENT_QUEUE.clear()
 
     ui._use_colour = True          # keep ANSI codes in the captured log
+    old_anim = ui.ANIM
+    ui.ANIM = False                # no \r frames or sleeps in a captured log
     _patch_engine()
     builtins.input = bot_input
 
     log = io.StringIO()
     from contextlib import redirect_stdout
-    with redirect_stdout(log):
-        engine.run(seed)
+    try:
+        with redirect_stdout(log):
+            engine.run(seed)
+    finally:
+        ui.ANIM = old_anim
 
     text = log.getvalue()
     if dry:
@@ -269,11 +285,16 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    hall = os.path.join(pathlib.Path(__file__).resolve().parent.parent,
+                        "hall_of_fame.txt")
+    # a recording session must not eat the player's record book
+    backup = pathlib.Path(hall).read_bytes() if os.path.exists(hall) else None
     try:
         raise SystemExit(main())
     finally:
-        for f in (persistence.SAVE_FILE, os.path.join(pathlib.Path(__file__).resolve().parent.parent, "hall_of_fame.txt")):
-            try:
-                os.remove(f)
-            except OSError:
-                pass
+        try:
+            os.remove(persistence.SAVE_FILE)
+        except OSError:
+            pass
+        if backup is not None:
+            pathlib.Path(hall).write_bytes(backup)

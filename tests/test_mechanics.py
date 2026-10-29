@@ -166,6 +166,9 @@ def t_save_load_roundtrip():
     g.hard_currency = 66
     g.court = {"old_guard": 11, "reformers": 70, "military": 45}
     g.deposed = False
+    g.timeline = "flashpoint"
+    g.directive_uses = {"heavy_industry": 3}
+    g.focus_uses = {"factory_visit": 2}
     ops.apply_ops(g, {"stats": {"ECONOMY": (3, 3), "ORDER": 5}})
     snap = g.rng.getstate()                 # snapshot AFTER the random roll
     try:
@@ -182,6 +185,9 @@ def t_save_load_roundtrip():
         assert g2.hard_currency == 66
         assert g2.court == {"old_guard": 11, "reformers": 70, "military": 45}
         assert g2.deposed is False
+        assert g2.timeline == "flashpoint"
+        assert g2.directive_uses == {"heavy_industry": 3}
+        assert g2.focus_uses == {"factory_visit": 2}
         assert g2.rng.getstate() == snap
     finally:
         try:
@@ -285,8 +291,9 @@ def t_dossier_and_ledger():
 def t_valas_and_court_ops():
     from kreml.state import FACTIONS
     g = Kremlin(0)
+    assert g.hard_currency == 50          # v5 opening reserve
     ops.apply_ops(g, {"hc": (5, 5), "court": {"military": 60, "old_guard": -200}})
-    assert g.hard_currency == 45
+    assert g.hard_currency == 55
     assert g.court["military"] == 100          # clamped
     assert all(0 <= g.court[f] <= 100 for f in FACTIONS)
     assert g.court["old_guard"] == 0
@@ -324,13 +331,13 @@ def t_world_year():
     # bonus (76-40)//6=6 +2 pipelines = 8, drain 3 → +5; still below 75, no resonance
     assert g.hard_currency == start + 5, g.hard_currency
     assert g.stats["ECONOMY"] == 55 and g.stats["PRESTIGE"] == 62
-    # a GLUT year with debt: 1986, price 25, drain 3+3+5 = 11
+    # a GLUT year with debt: 1986, price 25, drain 3+3+7 = 13 (v5)
     h = Kremlin(0)
     h.year = 1986
     h.flags.add("debt_trap")
     before = h.hard_currency
     engine.apply_systems(h)
-    assert h.hard_currency == before - 11, h.hard_currency
+    assert h.hard_currency == before - 13, h.hard_currency
     assert h.hard_currency >= 15        # low, but not yet dry → no gauge penalty
     assert h.stats["ECONOMY"] == 55 and h.stats["FAITH"] == 52
     # a DRY reserve pains the gauges
@@ -465,6 +472,289 @@ def t_new_events_and_directives():
     assert "gold_sale" not in ids        # hc_max 30 gate
 
 
+# ─────────────────────────────── v5 ──────────────────────────────
+def t_five_modes():
+    from kreml.content.modes import MODE_ORDER as ORDER, normalize
+    assert len(ORDER) == 5, ORDER
+    assert ORDER == ("easy", "medium", "hard", "extreme", "historical")
+    assert normalize("normal") == "medium"          # v4 alias still works
+    assert normalize("nonsense") == "medium"
+    assert MODES["historical"]["rail"] is True
+    assert MODES["extreme"]["lifelines"] == 1
+    assert Kremlin(0, mode="normal").mode == "medium"
+
+
+def t_timeline_application():
+    from kreml.content.timelines import TIMELINE_ORDER, TIMELINES
+    assert set(TIMELINE_ORDER) == set(TIMELINES) and len(TIMELINE_ORDER) == 4
+    f = Kremlin(0, mode="medium", timeline="flashpoint")
+    assert (f.year, f.end_year) == (1980, 1991) and "at_war" in f.flags
+    assert f.era == "MIDDLE" and f.stats["MILITARY"] == 76
+    m = Kremlin(0, mode="medium", timeline="millennium")
+    assert m.end_year == 2001 and m.year == 1992 and m.era == "NEW"
+    assert "treaty_signed" in m.flags and m.timeline_def.id == "millennium"
+    r = Kremlin(0)
+    assert r.timeline == "rails" and r.year == 1964 and r.court == {
+        "old_guard": 50, "reformers": 50, "military": 50}
+
+
+def t_fatigue_scaling():
+    assert ops.fatigue_multiplier(0) == 1.0
+    assert ops.fatigue_multiplier(1) == 0.85
+    assert ops.fatigue_multiplier(99) == ops.FATIGUE_FLOOR
+    raw = {"stats": {"ECONOMY": 6, "FAITH": -2}, "hc": 6,
+           "court": {"old_guard": 4}}
+    scaled = ops.scale_ops(raw, 0.7)
+    assert scaled["stats"]["ECONOMY"] == 4        # 6 * 0.7 rounded
+    assert scaled["stats"]["FAITH"] == -2         # costs never shrink
+    assert scaled["hc"] == 4
+    assert scaled["court"]["old_guard"] == 3
+    assert raw["stats"]["ECONOMY"] == 6           # original untouched
+    g = Kremlin(0)
+    before = g.stats["ECONOMY"]
+    ops.apply_ops(g, scaled)
+    assert g.stats["ECONOMY"] == before + 4
+    assert g.directive_uses == {}
+
+
+def t_fork_fires_once():
+    from kreml.content.forks import FORKS, PATH_FLAGS
+    g = Kremlin(0, mode="medium")
+    g.year = 1968
+    first = [e.id for e in engine.collect_events(g)]
+    assert "prague_spring" in first and "fork_1968" in first, first
+    second = [e.id for e in engine.collect_events(g)]
+    assert "fork_1968" not in second, second
+    assert FORKS[1968] == "fork_1968"
+    # a chosen path both marks divergence and nudges drift
+    ops.apply_ops(g, {"path": "path_reform"})
+    assert g.path == "path_reform" and "path_reform" in g.flags
+    ops.apply_ops(g, {"path": "path_iron"})          # realignment replaces it
+    assert g.path == "path_iron" and "path_reform" not in g.flags
+    ops.apply_ops(g, {"path": "path_reform"})
+    before = dict(g.stats)
+    engine.apply_drift(g)
+    assert g.stats["FAITH"] == before["FAITH"]        # -1 era drift, +1 path
+    assert g.stats["ORDER"] == before["ORDER"] - 2    # -1 era drift, -1 path
+    assert set(PATH_FLAGS) >= {"path_reform", "path_iron", "path_market"}
+    g2 = Kremlin(0, mode="medium")
+    g2.year = 1985
+    ids = [e.id for e in engine.collect_events(g2)]
+    assert "new_secretary" in ids and "fork_1985" in ids, ids
+    # a later fork still fires: paths can be realigned, one fork per year
+    ops.apply_ops(g2, {"path": "path_iron"})
+    g2.year = 1989
+    ids = [e.id for e in engine.collect_events(g2)]
+    assert "fork_1989" in ids, ids
+    ops.apply_ops(g2, {"path": "path_letgo"})
+    assert g2.path == "path_letgo" and "path_iron" not in g2.flags
+
+
+def t_rails_lock_alternate_content():
+    from kreml.content import events as EV
+    hist = Kremlin(0, mode="historical")
+    hist.flags |= {"kosygin_pilot", "perestroika", "coops"}
+    hist.stats["FAITH"] = 60                  # so the treaty is otherwise open
+    hist.year = 1990
+    ids = {d.id for _, ds in DR.available_directives(hist) for d in ds}
+    for locked in ("kosygin_reforms", "legalize_cooperatives", "price_reform",
+                   "special_economic_zone", "red_net", "cadres_refresh"):
+        assert locked not in ids, locked
+    assert "new_union_treaty" in ids          # historical content stays
+    free = Kremlin(0, mode="medium")
+    free.flags |= {"kosygin_pilot", "perestroika", "coops"}
+    free.year = 1990
+    ids = {d.id for _, ds in DR.available_directives(free) for d in ds}
+    assert "price_reform" in ids and "legalize_cooperatives" in ids
+    # events: alt events are never eligible, forks never fire
+    assert not engine._eligible(hist, EV.EVENTS["singapore_dream"])
+    assert engine._eligible(free, EV.EVENTS["singapore_dream"])
+    hist.year = 1968
+    assert "fork_1968" not in [e.id for e in engine.collect_events(hist)]
+
+
+def t_coup_gate_is_graded():
+    near = Kremlin(0)
+    near.stats["MILITARY"], near.stats["ORDER"] = 50, 55     # 105
+    ops.apply_ops(near, {"special": "coup_defy"})
+    assert near.dead_stat() is None
+    assert {"survived_coup", "coup_scarred"} <= near.flags
+    assert near.stats["ORDER"] == 43 and near.court["old_guard"] == 45
+    broken = Kremlin(0)
+    broken.stats["MILITARY"], broken.stats["ORDER"] = 47, 47  # 94
+    ops.apply_ops(broken, {"special": "coup_defy"})
+    assert broken.dead_stat() is not None and broken.death_reason
+    safe = Kremlin(0)
+    safe.stats["MILITARY"], safe.stats["ORDER"] = 55, 55     # 110
+    ops.apply_ops(safe, {"special": "coup_defy"})
+    assert "survived_coup" in safe.flags and "coup_scarred" not in safe.flags
+    assert safe.stats["FAITH"] == 58 and safe.stats["PRESTIGE"] == 67
+
+
+def t_divergence_penalty():
+    from kreml.content.endings import divergence_penalty, survival_outcome
+    rails = Kremlin(0, mode="historical")
+    rails.stats = {s: 80 for s in STATS}
+    base = survival_outcome(rails)[1]
+    rails.flags |= {"at_war", "purge", "price_done"}        # three detours
+    score = survival_outcome(rails)[1]
+    assert divergence_penalty(rails) == 10                   # 5 * (3 - 1)
+    assert score == base - 10
+    tag, _, header = survival_outcome(rails)
+    assert tag == "DIVERGED" and "OFF THE RAILS" in header
+    quiet = Kremlin(0, mode="historical")
+    quiet.stats = {s: 80 for s in STATS}
+    assert survival_outcome(quiet)[0] == "HISTORICAL"
+    free = Kremlin(0, mode="medium")
+    free.stats = {s: 80 for s in STATS}
+    free.flags |= {"at_war", "purge", "price_done"}
+    assert divergence_penalty(free) == 0
+
+
+def t_extension_needs_thirty_valas():
+    g = Kremlin(0)
+    g.stats["FAITH"] = 60
+    g.hard_currency = 30
+    assert engine.qualifies_for_new_era(g)
+    g.hard_currency = 29
+    assert not engine.qualifies_for_new_era(g)      # v5: the gate was raised
+
+
+def t_timeline_endings_and_hall_tag():
+    from kreml.content.endings import TIMELINE_EPILOGUE, _epilogue
+    g = Kremlin(0, mode="medium", timeline="reform")
+    g.stats = {s: 80 for s in STATS}
+    assert "Kosygin's memo" in " ".join(_epilogue(g))
+    assert ("reform", "survived") in TIMELINE_EPILOGUE
+    g.path = "path_hardline"
+    assert any("hard line" in ln for ln in _epilogue(g))
+
+
+def t_all_queue_targets_exist():
+    """Every delayed consequence in the content must point at a real event."""
+    from kreml.content import events as EV
+    missing, bad_delay = [], []
+    for ev in EV.EVENTS.values():
+        for o in ev.options:
+            for delay, target in (o.ops.get("queue") or []):
+                if target not in EV.EVENTS:
+                    missing.append((ev.id, target))
+                if not isinstance(delay, int) or delay < 0:
+                    bad_delay.append((ev.id, target, delay))
+    for d in DR.DIRECTIVES:
+        for delay, target in (d.ops.get("queue") or []):
+            if target not in EV.EVENTS:
+                missing.append((d.id, target))
+    assert not missing, missing
+    assert not bad_delay, bad_delay
+
+
+def t_chain_reactions_wired():
+    """The five v5 chains start from the right decisions and progress."""
+    from kreml.content import events as EV
+    # triggers
+    memo = next(o for o in EV.EVENTS["kosygin_memo"].options
+                if o.label.startswith("Support"))
+    assert memo.ops["queue"][0][1] == "reform_wobble"
+    for o in EV.EVENTS["chernobyl"].options:
+        if o.ops.get("flag_add") == "chernobyl_hidden":
+            assert o.ops["queue"][0][1] == "chernobyl_secrecy"
+    intervene = next(o for o in EV.EVENTS["afghanistan_1979"].options
+                     if o.label.startswith("Intervene"))
+    assert intervene.ops["queue"][0][1] == "afghan_stalemate"
+    gold = next(d for d in DR.DIRECTIVES if d.id == "gold_sale")
+    assert gold.ops["queue"][0][1] == "gold_rumour"
+    treaty = next(d for d in DR.DIRECTIVES if d.id == "new_union_treaty")
+    assert treaty.ops["queue"][0][1] == "treaty_sabotage"
+    # progression: stage 1 queues stage 2 with the right delay
+    g = Kremlin(0)
+    g.year = 1982
+    ops.apply_ops(g, {"queue": [(3, "afghan_decision")]})
+    g.year = 1984
+    ids = [e.id for e in engine.collect_events(g)]
+    assert "afghan_decision" not in ids                  # not due yet
+    g.year = 1985
+    ids = [e.id for e in engine.collect_events(g)]
+    assert "afghan_decision" in ids, ids
+    # the withdraw option actually ends the war and queues the veterans
+    withdraw = next(o for o in EV.EVENTS["afghan_decision"].options
+                    if o.label.startswith("Withdraw"))
+    g.flags.add("at_war")
+    ops.apply_ops(g, withdraw.ops)
+    assert "at_war" not in g.flags and "afghan_withdraw" in g.flags
+    assert g.pending and g.pending[-1][1] == "afghan_veterans"
+
+
+def t_grumble_costs_and_glut_pressure():
+    from kreml.content import world as WORLD
+    g = Kremlin(0)
+    g.year = 1986
+    g.court["reformers"] = WORLD.GRUMBLE_THRESHOLD - 1  # grumbling, not plotting
+    eco = g.stats["ECONOMY"]
+    engine.apply_systems(g)
+    assert g.stats["ECONOMY"] == eco - 1               # neglect costs a point
+    assert not any(eid == "palace_coup" for _, eid in g.pending)
+
+
+def t_ui_visuals():
+    import io
+    from contextlib import redirect_stdout
+    from kreml import ui
+    for v in (0, 1, 49, 50, 99, 100):
+        assert len(ui.bar(v, 30)) == 30, (v, ui.bar(v, 30))
+        assert len(ui.bar(v, 6)) == 6
+    assert set(ui.bar(0)) == {"░"} and set(ui.bar(100)) == {"█"}
+    assert ui.bar(50, 10).count("█") == 5
+    assert any(ch in ui.bar(13, 20) for ch in ui._SUB)      # fractional cell
+    assert ui.sparkline([]) == ""
+    sp = ui.sparkline([1, 2, 3, 4, 5, 6, 7, 8], 8)
+    assert len(sp) == 8 and sp[0] == "▁" and sp[-1] == "█"
+    assert len(ui.sparkline([50] * 9, 5)) == 5              # flat series, capped
+    assert ui.arrow(3) == "▲" and ui.arrow(-2) == "▼" and ui.arrow(0) == "·"
+    buf = io.StringIO()
+    old, ui.ANIM = ui.ANIM, False
+    try:
+        with redirect_stdout(buf):
+            ui.year_banner(1968)
+            ui.stats_panel(lambda: {s: 60 for s in STATS}, 1968, 2, "EARLY",
+                           mode_tag="BALANCED", reserves_cap=3, hc=40,
+                           court={"old_guard": 60, "reformers": 40, "military": 30},
+                           world="STEADY", timeline="RAILS OF HISTORY",
+                           history=[{"year": 1966, "stats": {s: 50 for s in STATS},
+                                     "hc": 38, "oil": 42},
+                                    {"year": 1967, "stats": {s: 55 for s in STATS},
+                                     "hc": 46, "oil": 50},
+                                    {"year": 1968, "stats": {s: 55 for s in STATS},
+                                     "hc": 41, "oil": 44}])
+            from kreml import dossier as D
+            g = Kremlin(0)
+            g.history = [{"year": 1965, "stats": {s: 50 for s in STATS},
+                          "hc": 40, "oil": 42},
+                         {"year": 1966, "stats": {s: 45 for s in STATS},
+                          "hc": 36, "oil": 41},
+                         {"year": 1967, "stats": {s: 52 for s in STATS},
+                          "hc": 44, "oil": 47}]
+            D.show_roadmap(g)
+    finally:
+        ui.ANIM = old
+    out = buf.getvalue()
+    assert "1968" in out and "▓" not in out.splitlines()[0]
+    assert "▁" in out and "▲" in out          # 55 vs 60 now reads as a rise
+    assert "TREND" in out
+    # the animated path must not crash (sleeps neutralised for the test)
+    old_sleep = ui.time.sleep
+    buf2 = io.StringIO()
+    try:
+        ui.time.sleep = lambda *_: None
+        ui.ANIM = True
+        with redirect_stdout(buf2):
+            ui.year_banner(1970)
+    finally:
+        ui.time.sleep = old_sleep
+        ui.ANIM = False
+    assert "1970" in buf2.getvalue() and "░" in buf2.getvalue()
+
+
 def main() -> int:
     check("queued delayed event fires next year", t_queued_event)
     check("dacha rest halves next event damage", t_rested_softening)
@@ -495,6 +785,20 @@ def main() -> int:
     check("extension qualification gates", t_extension_qualifies)
     check("red millennium outcome bonuses", t_red_millennium_outcome)
     check("new events, valas directives", t_new_events_and_directives)
+    # ── v5 ──
+    check("five modes + v4 alias", t_five_modes)
+    check("timeline presets apply", t_timeline_application)
+    check("plan fatigue scaling", t_fatigue_scaling)
+    check("divergence forks fire once", t_fork_fires_once)
+    check("historical rails lock alt content", t_rails_lock_alternate_content)
+    check("1991 coup gate is graded", t_coup_gate_is_graded)
+    check("rails divergence penalty", t_divergence_penalty)
+    check("millennium needs 30 valas", t_extension_needs_thirty_valas)
+    check("timeline endings & epilogue", t_timeline_endings_and_hall_tag)
+    check("every queue target exists", t_all_queue_targets_exist)
+    check("chain reactions wired", t_chain_reactions_wired)
+    check("grumbling court & glut pressure", t_grumble_costs_and_glut_pressure)
+    check("ui visuals: bars, sparklines, panels", t_ui_visuals)
     failed = [r for r in results if not r[1]]
     for name, ok, err in results:
         print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" — {err}" if err else ""))

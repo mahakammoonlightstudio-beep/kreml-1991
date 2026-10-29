@@ -34,6 +34,21 @@ def oil_price(year: int) -> int:
     return OIL_YEARS.get(year, DEFAULT_OIL)
 
 
+def oil_bonus(year: int) -> int:
+    """Yearly export income before the drain is subtracted.
+
+    v5 adds a thin early trickle: 1964-1972 prices sit just under the old
+    threshold, which used to leave the reserve structurally dry before the
+    1973 boom. The Union always sold *some* oil.
+    """
+    p = oil_price(year)
+    if p >= 45:
+        return (p - 40) // 6
+    if p >= 41:
+        return 1
+    return 0
+
+
 def oil_status(year: int) -> str:
     """A one-word read of the market for the stats panel."""
     p = oil_price(year)
@@ -59,13 +74,21 @@ def oil_status(year: int) -> str:
 #            the general staff re-finds its pride.
 COURT_DRIFT: dict[str, dict[str, int]] = {
     "EARLY":  {"old_guard": +1, "reformers": -1, "military": 0},
-    "MIDDLE": {"old_guard": +1, "reformers": -1, "military": -1},
+    "MIDDLE": {"old_guard": +1, "reformers": -2, "military": -1},
     "LATE":   {"old_guard": -1, "reformers": +1, "military": -1},
     "NEW":    {"old_guard": -1, "reformers": +1, "military": +1},
 }
 
 # A faction whose mood drops to this level starts booking rooms.
-COUP_THRESHOLD = 15
+# v5 raises the line from 15 to 22: the passive trajectory bottoms at ~29/34,
+# so ignoring the court now actually drifts you toward a velvet Thursday.
+COUP_THRESHOLD = 22
 
-# Mood above this counts as enthusiastic (small yearly blessing).
-LOVE_THRESHOLD = 80
+# Mood above this counts as enthusiastic. The engine grants ONE blessing per
+# year in total (not one per faction), so a loved court is a bonus, not a pump.
+LOVE_THRESHOLD = 70
+
+# Below this a faction grumbles: one gauge point per year is lost to inertia,
+# friction and unreturned telephone calls. Neglect now costs something before
+# it costs the conference room.
+GRUMBLE_THRESHOLD = 28

@@ -34,8 +34,9 @@ def stage(name: str, stats_over: dict, script: list[str], must_contain: list[str
     with_inputs(script)
     old_init = engine.Kremlin.__init__
 
-    def patched_init(self, seed=None, mode="normal"):
+    def patched_init(self, seed=None, mode="medium", timeline="rails"):
         self.mode = mode
+        self.timeline = "rails"
         self.year = 1964
         self.end_year = 1991
         self.name = "Comrade Secretary"
@@ -55,6 +56,10 @@ def stage(name: str, stats_over: dict, script: list[str], must_contain: list[str
         self.hard_currency = 40
         self.court = {"old_guard": 50, "reformers": 50, "military": 50}
         self.deposed = False
+        self.directive_uses = {}
+        self.focus_uses = {}
+        self.path = None
+        self.history = []
         self.rng = __import__("random").Random(11)
     engine.Kremlin.__init__ = patched_init
     ok = True
@@ -79,19 +84,29 @@ def stage(name: str, stats_over: dict, script: list[str], must_contain: list[str
 
 def main() -> int:
     ok = True
+    # the engine writes hall-of-fame records; keep the real one intact
+    backup = HALL.read_bytes() if HALL.exists() else None
+    try:                              # a stale save would hijack the scripted input
+        os.remove(persistence.SAVE_FILE)
+    except OSError:
+        pass
     ok &= stage("save+dossier+load via command bar", {s: 88 for s in STATS},
-                ["2", "A. Sekretar", "2", "s", "d", "l"],
+                # difficulty=2 (medium), timeline=1 (rails), name, mandate=2,
+                # then the command bar: s save, d dossier, l load
+                ["2", "1", "A. Sekretar", "2", "s", "d", "l"],
                 ["Save filed for 1964", "DOSSIER", "State restored: 1964",
                  "FOREIGN PRESS"])
     assert persistence.has_save(), "save file should still exist after session 1"
     ok &= stage("resume from title screen", {s: 88 for s in STATS}, ["1"],
                 ["A saved game exists", "Welcome back"])
-    # cleanup the artifacts this test created
+    # cleanup the artifacts this test created — but never the real hall of fame
     for f in (persistence.SAVE_FILE, HALL):
         try:
             os.remove(f)
         except OSError:
             pass
+    if backup is not None:
+        HALL.write_bytes(backup)
     return 0 if ok else 1
 
 

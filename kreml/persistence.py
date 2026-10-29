@@ -3,6 +3,9 @@
 Saves happen only at YEAR BOUNDARIES (via the command bar between years),
 which keeps the format trivial and halfway-applied turns impossible.
 The RNG state is serialised too, so a loaded run continues identically.
+
+v5 adds the chosen timeline and the fatigue counters; v4 files are refused
+politely (the state now carries scenarios and plan fatigue).
 """
 from __future__ import annotations
 
@@ -10,10 +13,11 @@ import json
 import os
 
 from .state import Kremlin, STATS, FACTIONS
+from .content.modes import normalize
 
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                          "kreml_save.json")
-SAVE_VERSION = 4
+SAVE_VERSION = 5
 
 
 def _rng_pack(rng) -> dict:
@@ -45,6 +49,7 @@ def save_game(g: Kremlin, path: str | None = None) -> bool:
     payload = {
         "version": SAVE_VERSION,
         "mode": g.mode,
+        "timeline": g.timeline,
         "year": g.year,
         "end_year": g.end_year,
         "name": g.name,
@@ -62,6 +67,10 @@ def save_game(g: Kremlin, path: str | None = None) -> bool:
         "hard_currency": g.hard_currency,
         "court": dict(g.court),
         "deposed": g.deposed,
+        "directive_uses": dict(g.directive_uses),
+        "focus_uses": dict(g.focus_uses),
+        "path": g.path,
+        "history": g.history,
         "rng": _rng_pack(g.rng),
     }
     try:
@@ -81,9 +90,10 @@ def load_game(path: str | None = None) -> Kremlin | None:
         if data.get("version") != SAVE_VERSION:
             return None
         g = Kremlin.__new__(Kremlin)
-        g.mode = data["mode"]
-        g.year = data["year"]
-        g.end_year = data["end_year"]
+        g.mode = normalize(data["mode"])
+        g.timeline = data.get("timeline", "rails")
+        g.year = int(data["year"])
+        g.end_year = int(data["end_year"])
         g.name = data["name"]
         g.stats = {s: int(data["stats"].get(s, 50)) for s in STATS}
         g.flags = set(data["flags"])
@@ -96,9 +106,15 @@ def load_game(path: str | None = None) -> Kremlin | None:
         g.putschist = bool(data["putschist"])
         g.ledger = [(int(a), str(b)) for a, b in data["ledger"]]
         g.shown_press = set(data["shown_press"])
-        g.hard_currency = int(data.get("hard_currency", 40))
+        g.hard_currency = int(data.get("hard_currency", 50))
         g.court = {f: int(data.get("court", {}).get(f, 50)) for f in FACTIONS}
         g.deposed = bool(data.get("deposed", False))
+        g.directive_uses = {str(k): int(v) for k, v in
+                            (data.get("directive_uses") or {}).items()}
+        g.focus_uses = {str(k): int(v) for k, v in
+                        (data.get("focus_uses") or {}).items()}
+        g.path = data.get("path")
+        g.history = list(data.get("history") or [])
         g.rng = _rng_unpack(data["rng"])
         return g
     except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError):

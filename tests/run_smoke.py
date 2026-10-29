@@ -12,10 +12,11 @@ from kreml.content.modes import MODES                 # noqa: E402
 
 
 def _patch(stats_over, mode="normal"):
-    def patched_init(self, seed=None, mode=mode):
+    def patched_init(self, seed=None, mode=mode, timeline="rails"):
         if mode not in MODES:
-            mode = "normal"
+            mode = "medium"
         self.mode = mode
+        self.timeline = timeline or "rails"
         self.year = 1964
         self.end_year = 1991
         self.name = "Comrade Secretary"
@@ -35,6 +36,10 @@ def _patch(stats_over, mode="normal"):
         self.hard_currency = 40
         self.court = {"old_guard": 50, "reformers": 50, "military": 50}
         self.deposed = False
+        self.directive_uses = {}
+        self.focus_uses = {}
+        self.path = None
+        self.history = []
         self.rng = __import__("random").Random(seed)
     engine.Kremlin.__init__ = patched_init
 
@@ -54,11 +59,18 @@ def scenario(name: str, stats_over: dict, mode: str = "normal") -> bool:
 
 def main() -> int:
     ok = True
-    ok &= scenario("full 1964-1991 run (BALANCED)", {s: 90 for s in STATS})
-    ok &= scenario("collapse-run, IRON GRASP (economy near zero)",
-                   {"ECONOMY": 4}, mode="hard")
-    ok &= scenario("reform playground, SWEEPING REFORMS",
-                   {"ECONOMY": 75, "ORDER": 60}, mode="easy")
+    # the engine appends hall-of-fame records; keep the real file intact
+    hall = pathlib.Path(__file__).resolve().parent.parent / "hall_of_fame.txt"
+    backup = hall.read_bytes() if hall.exists() else None
+    try:
+        ok &= scenario("full 1964-1991 run (BALANCED)", {s: 90 for s in STATS})
+        ok &= scenario("collapse-run, IRON GRASP (economy near zero)",
+                       {"ECONOMY": 4}, mode="hard")
+        ok &= scenario("reform playground, SWEEPING REFORMS",
+                       {"ECONOMY": 75, "ORDER": 60}, mode="easy")
+    finally:
+        if backup is not None:
+            hall.write_bytes(backup)
     return 0 if ok else 1
 
 

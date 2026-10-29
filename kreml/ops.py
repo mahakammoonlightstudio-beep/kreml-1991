@@ -10,6 +10,7 @@ Ops vocabulary (dict keys):
   "hc"        : +10 | (min, max)            (hard currency / valas reserve)
   "court"     : {"old_guard": +5, ...}      (faction moods, clamped 0-100)
   "special"   : "handler_name" | ["a", "b"] (custom logic, via SPECIALS registry)
+  "path"      : "path_reform"             (divergence line; replaces any previous)
 
 Requirements vocabulary (dict keys):
   "stats"     : {"MILITARY": 60}            (stat must be >= value)
@@ -32,6 +33,47 @@ from .state import Kremlin, STATS, clamp, FACTIONS
 from . import ui
 
 SPECIALS: dict[str, Callable[[Kremlin], None]] = {}
+
+# ── v5: plan fatigue ───────────────────────────────────────────────────
+# Repeating the same lever every year stops working: gains shrink with every
+# previous use (in this run), down to a floor. Costs are never softened.
+FATIGUE: tuple[float, ...] = (1.0, 0.85, 0.70, 0.55, 0.45, 0.35)
+FATIGUE_FLOOR = FATIGUE[-1]
+
+
+def fatigue_multiplier(uses: int) -> float:
+    return FATIGUE[min(max(0, int(uses)), len(FATIGUE) - 1)]
+
+
+def _scaled(value, mult: float):
+    if isinstance(value, tuple):
+        lo, hi = value
+        if lo > 0:
+            lo = max(1, int(round(lo * mult)))
+        if hi > 0:
+            hi = max(lo, int(round(hi * mult)))
+        return (lo, hi)
+    if isinstance(value, int) and value > 0:
+        return max(1, int(round(value * mult)))
+    return value
+
+
+def scale_ops(ops: dict | None, mult: float) -> dict | None:
+    """Copy of `ops` whose POSITIVE gains are multiplied by `mult`.
+
+    Penalties, flags, queues and specials are untouched: a stale plan still
+    costs what it costs, it just no longer pays.
+    """
+    if not ops or mult >= 1.0:
+        return ops
+    out = dict(ops)
+    if "stats" in ops:
+        out["stats"] = {k: _scaled(v, mult) for k, v in ops["stats"].items()}
+    if "hc" in ops:
+        out["hc"] = _scaled(ops["hc"], mult)
+    if "court" in ops:
+        out["court"] = {k: _scaled(v, mult) for k, v in ops["court"].items()}
+    return out
 
 
 def _special(name: str):
@@ -114,6 +156,16 @@ def apply_ops(g: Kremlin, ops: dict | None) -> list[str]:
             raise ValueError(f"content bug: unknown faction '{f}'")
         g.court[f] = max(0, min(100, g.court[f] + int(val)))
         changes.append(f"COURT {f} {int(val):+d}")
+    path = ops.get("path")
+    if path:
+        from .content.forks import PATH_FLAGS
+        for old in PATH_FLAGS:
+            if old != path:
+                g.flags.discard(old)
+        g.path = path
+        if path not in g.flags:
+            g.flags.add(path)
+            changes.append(f"⚑ line: {path}")
     for f in _as_list(ops.get("flag_add")):
         if f not in g.flags:
             g.flags.add(f)
@@ -149,19 +201,42 @@ def consume_rest(g: Kremlin, ops_dict: dict | None) -> tuple[dict, bool]:
 # ---------------------------------------------------------------
 # Custom special handlers (rare, high-impact logic)
 # ---------------------------------------------------------------
+def coup_sum(g: Kremlin) -> int:
+    """The August Coup's yardstick, exposed so the UI can show it."""
+    return g.stats["MILITARY"] + g.stats["ORDER"]
+
+
+COUP_SAFE = 110      # at or above: the Committee hesitates
+COUP_SCARRED = 95    # at or above: the Union survives, wounded and watched
+
+
 @_special("coup_defy")
 def _coup_defy(g: Kremlin) -> None:
-    if g.stats["MILITARY"] + g.stats["ORDER"] >= 110:
+    total = coup_sum(g)
+    if total >= COUP_SAFE:
         g.stats["FAITH"] = clamp(g.stats["FAITH"] + 6)
         g.stats["PRESTIGE"] = clamp(g.stats["PRESTIGE"] + 5)
         g.flags.add("survived_coup")
         print()
         print(ui.paint("  ★ The Committee hesitates. Radio waves carry your voice for three days;", ui.C.BG))
         print(ui.paint("    drunken sailors defect; armoured convoys park and drink tea. THE UNION HOLDS.", ui.C.BG))
+    elif total >= COUP_SCARRED:
+        g.stats["ORDER"] = clamp(g.stats["ORDER"] - 12)
+        g.stats["FAITH"] = clamp(g.stats["FAITH"] - 10)
+        g.stats["PRESTIGE"] = clamp(g.stats["PRESTIGE"] - 6)
+        for f in FACTIONS:
+            g.court[f] = max(0, g.court[f] - 5)
+        g.flags.add("coup_scarred")
+        g.flags.add("survived_coup")
+        print()
+        print(ui.paint("  ! The Committee blinks — but only after the tanks have parked.", ui.C.Y))
+        print(ui.paint("    You keep the office, the Committee keeps the keys, and every", ui.C.Y))
+        print(ui.paint("    ministry knows the arithmetic was close. The Union survives, watched.", ui.C.Y))
     else:
         g.stats["FAITH"] = 0
         g.stats["ORDER"] = 0
-        g.death_reason = "The August Coup succeeded. Your voice was one of many, then none."
+        g.death_reason = (f"The August Coup succeeded ({total} against a yardstick of "
+                          f"{COUP_SAFE}). Your voice was one of many, then none.")
 
 
 @_special("coup_join")

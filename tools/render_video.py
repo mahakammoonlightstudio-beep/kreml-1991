@@ -94,8 +94,8 @@ def _title_card(seed: int) -> str:
     return (
         f"{b}{a}\n        ★  ☭  ★\n   К Р Е М Л Ь\n      1 9 9 1\x1b[0m\n\n"
         f"{b}{w}   G A M E P L A Y   R E C O R D I N G\x1b[0m\n\n"
-        f"{d}   {a}☭{d} Kremlin v3 · seed {seed} · BALANCED · autopilot: market path\n"
-        f"   {a}☭{d} Generous Secretary: Nikolai Vetrov, 1964 → 1991\x1b[0m\n\n\n\n\n\n"
+        f"{d}   {a}☭{d} Kremlin v5 · seed {seed} · BALANCED · autopilot: market path\n"
+        f"   {a}☭{d} Generous Secretary: Nikolai Vetrov, 1964 → 1991 (or 2001)\x1b[0m\n\n\n\n\n\n"
     )
 
 

@@ -10,6 +10,9 @@ import datetime
 
 from .. import ui
 from ..state import Kremlin, STATS
+from .modes import MODES
+from .forks import PATH_EPILOGUE
+from .timelines import get as get_timeline
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 HALL_FILE = os.path.join(ROOT, "hall_of_fame.txt")
@@ -73,26 +76,68 @@ DIVERGENCE_FLAGS = {
     "survived_plot":     "A velvet room one Thursday met you, and blinked.",
     "made_deals":        "A Thursday plenum was bought with dachas and dusk appointments.",
     "red_initiative":    "The millennium broadcast proposed retiring the bomb early.",
+    # ── v5 divergence lines ──
+    "path_hardline":     "The hard line became doctrine, then furniture.",
+    "path_reform":       "The reform line became the Union's second official language.",
+    "path_neutral":      "Silence was chosen at the right moment, twice.",
+    "path_accel":        "Acceleration was taught as the decade that almost worked.",
+    "path_glasnost":     "Glasnost arrived years before its time and stayed.",
+    "path_iron":         "Iron discipline held the corridors and emptied the shelves.",
+    "path_letgo":        "The empire's edges were released; the centre held.",
+    "path_hold":         "The held line cost the Pact and bought the decade.",
+    "path_market":       "The empire was traded for a market, receipts kept.",
 }
 
 # ---------------------------------------------------------------
 # Scoring
 # ---------------------------------------------------------------
 def final_score(g: Kremlin) -> int:
-    """Gauge sum plus 2 survival points per year governed."""
-    return sum(g.stats.values()) + 2 * (g.year - 1964)
+    """Gauge sum plus 2 survival points per year governed.
+
+    v5 counts years from the timeline's own start: a 1992-2001 Millennium run
+    gets ten years' credit, not thirty-seven.
+    """
+    return sum(g.stats.values()) + 2 * (g.year - get_timeline(g.timeline).year)
 
 
 def legacy_title(score: int) -> str:
-    if score >= 450:
+    """v5 raises the tiers: fatigue lowers every run's ceiling, so the old
+    thresholds handed the top title to any Millennium."""
+    if score >= 470:
         return "GENERALISSIMUS OF HISTORY ★"
-    if score >= 380:
+    if score >= 400:
         return "Hero of Socialist Labour (twice)"
-    if score >= 300:
+    if score >= 330:
         return "A steady hand — the Union endures"
-    if score >= 220:
+    if score >= 260:
         return "Survivor of queues and committees"
     return "Footnote in an unpublished archive"
+
+
+# ── v5: the historical rails count your detours ───────────────────
+def divergence_count(g: Kremlin) -> int:
+    return sum(1 for flag in DIVERGENCE_FLAGS if flag in g.flags)
+
+
+def divergence_penalty(g: Kremlin) -> int:
+    """Score cost of leaving the rails (HISTORICAL mode only)."""
+    per = MODES.get(g.mode, MODES["medium"]).get("divergence", 0)
+    if not per:
+        return 0
+    return min(40, per * max(0, divergence_count(g) - 1))
+
+
+# Closing lines per timeline, on top of the generic ending text.
+TIMELINE_EPILOGUE: dict[tuple[str, str], str] = {
+    ("rails", "survived"): "The appointed Secretary outlived the appointment.",
+    ("rails", "millennium"): "The timetable was rewritten in the same handwriting.",
+    ("reform", "survived"): "Kosygin's memo became a school of government.",
+    ("reform", "millennium"): "The 1965 pilot was, in the end, the whole century's plan.",
+    ("flashpoint", "survived"): "Twelve years handed over late held the line.",
+    ("flashpoint", "millennium"): "The generation that inherited a war inherited a century.",
+    ("millennium", "millennium"): "Ten years that were never supposed to exist, used well.",
+    ("millennium", "survived"): "A decade of argument, which is how unions live.",
+}
 
 
 # ---------------------------------------------------------------
@@ -113,13 +158,14 @@ def divergence_report(g: Kremlin) -> None:
 # Hall of fame persistence
 # ---------------------------------------------------------------
 def record_hall(name: str, score: int, title: str, tag: str = "SURVIVED",
-                mode: str = "normal") -> None:
+                mode: str = "medium", timeline: str = "rails") -> None:
     try:
-        from .modes import MODES
         stamp = datetime.date.today().isoformat()
-        difficulty = MODES.get(mode, MODES["normal"])["label"]
+        difficulty = MODES.get(mode, MODES["medium"])["label"]
+        era = get_timeline(timeline).label
         with open(HALL_FILE, "a", encoding="utf-8") as f:
-            f.write(f"{stamp} | {name} | {tag} · {difficulty} | score {score:3d} | {title}\n")
+            f.write(f"{stamp} | {name} | {tag} · {difficulty} · {era} | "
+                    f"score {score:3d} | {title}\n")
     except OSError:
         pass
 
@@ -156,12 +202,15 @@ def ending_collapse(g: Kremlin) -> int:
     print(ui.paint("  " + reason, ui.C.W))
     print(ui.paint("═" * 78, ui.C.BB))
     avg = final_score(g) // 2
-    print(ui.paint(f"  Governed years: {g.year - 1964}   Final gauges → {g.stats}", ui.C.W))
+    print(ui.paint(f"  Governed years: {g.year - get_timeline(g.timeline).year}   "
+                   f"Final gauges → {g.stats}", ui.C.W))
     print(ui.paint(f"  Valas reserve: {g.hard_currency} · "
                    f"Politburo {g.court['old_guard']}/{g.court['reformers']}/{g.court['military']}", ui.C.W))
     print(ui.paint(f"  Legacy score: {avg} — Removed from the portraits", ui.C.BB))
+    for _ln in _epilogue(g):
+        print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
-    record_hall(g.name, avg, "Removed from the portraits", tag=tag, mode=g.mode)
+    record_hall(g.name, avg, "Removed from the portraits", tag=tag, mode=g.mode, timeline=g.timeline)
     return avg
 
 
@@ -171,11 +220,14 @@ def ending_retire(g: Kremlin) -> int:
     print(ui.paint("═" * 78, ui.C.BB))
     print(ui.paint("  ★ You resigned and retired to a comfortable dacha.", ui.C.Y))
     print(ui.paint("═" * 78, ui.C.BB))
-    print(ui.paint(f"  Governed years: {g.year - 1964}   Final gauges → {g.stats}", ui.C.W))
+    print(ui.paint(f"  Governed years: {g.year - get_timeline(g.timeline).year}   "
+                   f"Final gauges → {g.stats}", ui.C.W))
     legend = legacy_title(score)
     print(ui.paint(f"  Legacy score: {score} — {legend}", ui.C.BB))
+    for _ln in _epilogue(g):
+        print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
-    record_hall(g.name, score, legend, tag="RETIRED", mode=g.mode)
+    record_hall(g.name, score, legend, tag="RETIRED", mode=g.mode, timeline=g.timeline)
     return score
 
 
@@ -187,6 +239,7 @@ def survival_outcome(g: Kremlin) -> tuple[str, int, str]:
       - treaty bonus    (treaty_signed): +6 score
       - golden cushion  (valas ≥ 70): +4 score
       - red millennium  (survived to 2001): +8 score
+      - rails detour    (HISTORICAL mode): −5 per divergence after the first
     """
     score = final_score(g)
     near_miss = min(g.stats.values()) < 10
@@ -198,6 +251,9 @@ def survival_outcome(g: Kremlin) -> tuple[str, int, str]:
         score += 4
     if g.end_year >= 2001:
         score += 8
+    detour = divergence_penalty(g)
+    score = max(0, score - detour)
+    rails = MODES.get(g.mode, {}).get("rail", False)
     if g.end_year >= 2001:
         header = "██ THE RED MILLENNIUM — THE UNION NEVER LEFT ██" if not near_miss \
             else "██ THE RED MILLENNIUM — HELD BY A PRAYER ██"
@@ -205,10 +261,32 @@ def survival_outcome(g: Kremlin) -> tuple[str, int, str]:
     elif near_miss:
         header = "██ THE UNION SURVIVES — BY A PRAYER ██"
         tag = "NEAR-MISS"
+    elif rails and divergence_count(g) > 2:
+        header = "██ THE UNION SURVIVES — OFF THE RAILS ██"
+        tag = "DIVERGED"
     else:
         header = "██ THE UNION SURVIVES ██"
-        tag = "SURVIVED"
+        tag = "HISTORICAL" if rails else "SURVIVED"
     return tag, score, header
+
+
+def ending_kind(g: Kremlin) -> str:
+    if g.deposed or g.dead_stat() is not None:
+        return "collapse"
+    if g.end_year >= 2001:
+        return "millennium"
+    return "survived"
+
+
+def _epilogue(g: Kremlin) -> list[str]:
+    """Timeline + path closing lines for any ending."""
+    out = []
+    line = TIMELINE_EPILOGUE.get((g.timeline, ending_kind(g)))
+    if line:
+        out.append(line)
+    if g.path and g.path in PATH_EPILOGUE:
+        out.append(PATH_EPILOGUE[g.path])
+    return out
 
 
 def ending_union_survives(g: Kremlin) -> int:
@@ -240,12 +318,15 @@ def ending_union_survives(g: Kremlin) -> int:
     legend = legacy_title(score)
     if near_miss:
         legend = "Survived by a prayer — " + legend.lower()
-    print(ui.paint(f"  Governed years: {g.year - 1964}   Final gauges → {g.stats}", ui.C.W))
+    print(ui.paint(f"  Governed years: {g.year - get_timeline(g.timeline).year}   "
+                   f"Final gauges → {g.stats}", ui.C.W))
     print(ui.paint(f"  Valas reserve: {g.hard_currency} · "
                    f"Politburo {g.court['old_guard']}/{g.court['reformers']}/{g.court['military']}", ui.C.W))
     print(ui.paint(f"  Legacy score: {score} — {legend}", ui.C.BB))
+    for _ln in _epilogue(g):
+        print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
-    record_hall(g.name, score, legend, tag=tag, mode=g.mode)
+    record_hall(g.name, score, legend, tag=tag, mode=g.mode, timeline=g.timeline)
     return score
 
 
@@ -281,10 +362,13 @@ def ending_red_millennium(g: Kremlin) -> int:
         legend = "Held by a prayer to 2001 — " + legend.lower()
     else:
         legend = "Author of the Red Millennium — " + legend.lower()
-    print(ui.paint(f"  Governed years: {g.year - 1964}   Final gauges → {g.stats}", ui.C.W))
+    print(ui.paint(f"  Governed years: {g.year - get_timeline(g.timeline).year}   "
+                   f"Final gauges → {g.stats}", ui.C.W))
     print(ui.paint(f"  Valas reserve: {g.hard_currency} · "
                    f"Politburo {g.court['old_guard']}/{g.court['reformers']}/{g.court['military']}", ui.C.W))
     print(ui.paint(f"  Legacy score: {score} — {legend}", ui.C.BB))
+    for _ln in _epilogue(g):
+        print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
-    record_hall(g.name, score, legend, tag=tag, mode=g.mode)
+    record_hall(g.name, score, legend, tag=tag, mode=g.mode, timeline=g.timeline)
     return score

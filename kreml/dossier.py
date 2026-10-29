@@ -16,12 +16,16 @@ from .ops import check_requires
 from .state import Kremlin, ERAS
 from .content import directives as DR
 from .content import events as EV
+from .content import forks as FK
+from .content.modes import MODES
 
 
 def _directive_status(g: Kremlin, d) -> tuple[str, str]:
     """One of: done / open / locked(+reason)."""
     if d.once and d.id in g.used_directives:
         return "done", ""
+    if getattr(d, "alt", False) and MODES[g.mode]["rail"]:
+        return "locked", "locked: the historical rails"
     ok, reason = check_requires(g, d.requires)
     if ok:
         return "open", ""
@@ -31,6 +35,8 @@ def _directive_status(g: Kremlin, d) -> tuple[str, str]:
 def _event_status(g: Kremlin, ev) -> tuple[str, str]:
     if ev.once and ev.id in g.used_events:
         return "done", ""
+    if getattr(ev, "alt", False) and MODES[g.mode]["rail"]:
+        return "locked", "locked: the historical rails"
     ok, reason = check_requires(g, ev.requires)
     if ok:
         return "open", ""
@@ -55,6 +61,25 @@ def show_roadmap(g: Kremlin) -> None:
     print(W(" ╔" + "═" * 76 + "╗", ui.C.BB))
     print(W(" ║ DOSSIER — the decision ledger & the road map                           ║", ui.C.BB))
     print(W(" ╚" + "═" * 76 + "╝", ui.C.BB))
+    print(W(f"  TIMELINE: {g.timeline_def.label} ({g.year}–{g.end_year})   "
+            f"MODE: {MODES[g.mode]['label']}", ui.C.Y))
+    if g.path:
+        print(W(f"  PATH: {FK.PATH_LABELS.get(g.path, g.path)}", ui.C.W))
+    elif not MODES[g.mode]["rail"]:
+        print(W("  PATH: not yet chosen — a fork is waiting in history", ui.C.DIM))
+    if g.history:
+        print()
+        print(W("  ── TREND (end-of-year series) ──", ui.C.Y))
+        years = [h["year"] for h in g.history]
+        print(W(f"   {years[0]}–{years[-1]} · {len(years)} years", ui.C.DIM))
+        for s in ("ECONOMY", "MILITARY", "ORDER", "FAITH", "PRESTIGE"):
+            series = [h["stats"][s] for h in g.history]
+            print(f"   {s:<9} {ui.sparkline(series, 30)}  {series[-1]:>3}")
+        print(f"   {'VALAS':<9} {ui.sparkline([h['hc'] for h in g.history], 30)}"
+              f"  {g.hard_currency:>3}")
+        print(f"   {'OIL':<9} {ui.sparkline([h['oil'] for h in g.history], 30)}"
+              f"  {g.history[-1]['oil']:>3}")
+    print()
 
     # ── 0. v4: the world market & the court weather ───────────────
     from .content import world as _W
@@ -103,6 +128,7 @@ def show_roadmap(g: Kremlin) -> None:
         in_rotation.update(ids)
     for ids in EV.SCRIPTED.values():
         in_rotation.update(ids)
+    in_rotation.update(EV.FORKS.values())          # v5 divergence forks
     print(W("  ── FORKS (branching events still in play) ──", ui.C.Y))
     shown = 0
     for ev in EV.EVENTS.values():
