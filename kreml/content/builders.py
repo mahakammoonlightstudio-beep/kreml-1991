@@ -16,9 +16,11 @@ def opt(label: str, ops: dict, outcomes: str = "",
 
 def ev(id: str, title: str, text: str, options, *, era: str = "",
        once: bool = False, requires: dict | None = None,
-       alt: bool = False) -> Event:
+       alt: bool = False, clock: int = 0,
+       hesitate: dict | None = None) -> Event:
     return Event(id=id, title=title, text=text, options=tuple(options),
-                 era=era, once=once, requires=requires or {}, alt=alt)
+                 era=era, once=once, requires=requires or {}, alt=alt,
+                 clock=clock, hesitate=hesitate or {})
 
 
 def directive(id: str, label: str, desc: str, group: str, ops: dict, *,

@@ -10,6 +10,7 @@ Run:
     python main.py --mode medium          # easy | medium | hard | extreme | historical
     python main.py --timeline flashpoint  # rails | reform | flashpoint | millennium
     python main.py --no-anim              # plain text (no bars/animations)
+    python main.py --timed                # v6: decisions run on a wall clock
 
 (The v1 single-file version is kept for reference in v1_kreml.py.)
 """
@@ -34,6 +35,12 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
         ui.ANIM = False
     if "--anim" in argv:
         ui.ANIM = True
+    # v6: the wall clock. Opt-in on purpose: pipes, tests, recorders and the
+    # browser build must stay deterministic, so nothing times out by accident.
+    if "--timed" in argv:
+        ui.TIMED = True
+    if "--no-timed" in argv:
+        ui.TIMED = False
     for flag in ("-seed", "--seed"):
         if flag in argv:
             idx = argv.index(flag)
@@ -54,7 +61,27 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
     return seed, mode, timeline
 
 
+HELP = """КРЕМЛЬ 1991 v6 — General Secretary
+
+Usage: python main.py [flags]
+
+  --mode <easy|medium|hard|extreme|flash|historical>
+  --timeline <rails|reform|flashpoint|millennium>
+  --seed <int>     reproducible run
+  --timed          decisions run on a wall clock (flash crises breathe)
+  --no-timed       force the clock off (default)
+  --anim/--no-anim terminal visuals on/off
+  --drama          slow typewriter printing
+
+At the year boundary: s save · l load · d dossier · i political capital ·
+                     o standing order · q resign
+"""
+
+
 def main() -> None:
+    if "--help" in sys.argv[1:] or "-h" in sys.argv[1:]:
+        print(HELP)
+        return
     seed, mode, timeline = parse_args(sys.argv[1:])
     try:
         engine.run(seed, mode=mode, timeline=timeline)

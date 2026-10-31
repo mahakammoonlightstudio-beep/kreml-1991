@@ -17,6 +17,7 @@ from .state import Kremlin, ERAS
 from .content import directives as DR
 from .content import events as EV
 from .content import forks as FK
+from .content import orders as ORDERS
 from .content.modes import MODES
 
 
@@ -96,6 +97,24 @@ def show_roadmap(g: Kremlin) -> None:
           f"   {W(' | '.join(mood_bits), ui.C.W)}")
     if any(eid == "palace_coup" for _, eid in g.pending):
         print(W("   ⚠ A velvet meeting is on this year's docket. Personally.", ui.C.BM))
+    print()
+
+    # ── 0b. v6: capital, doctrine and the agenda ─────────────────
+    order = ORDERS.get(getattr(g, "order", None))
+    print(W("  ── CAPITAL, DOCTRINE & THE AGENDA ──", ui.C.Y))
+    print(f"   {W('Political capital:', ui.C.W)} "
+          f"{W(str(getattr(g, 'influence', 0)), ui.C.BB)}"
+          f"   {W('Hesitations:', ui.C.W)} "
+          f"{W(str(getattr(g, 'hesitations', 0)), ui.C.BB)}")
+    print(f"   {W('Standing order:', ui.C.W)} "
+          + (W(order["label"], ui.C.W) if order
+             else W("none chosen — press o at the year boundary", ui.C.DIM)))
+    agenda = getattr(g, "agenda", None)
+    print(f"   {W('Agenda:', ui.C.W)} "
+          + (W(agenda["text"], ui.C.W) if agenda
+             else W("no demand tabled", ui.C.DIM)))
+    for line in (getattr(g, "agenda_log", None) or [])[-4:]:
+        print(f"   {W('· ' + line, ui.C.DIM)}")
     print()
 
     # ── 1. Decision ledger ────────────────────────────────────────

@@ -20,6 +20,9 @@ from .content import actions as AC
 from .content import history as HIST
 from .content import press as PR
 from .content import endings as END
+from .content import agenda as AGENDA
+from .content import capital as CAP
+from .content import orders as ORDERS
 from .content.timelines import TIMELINES, TIMELINE_ORDER
 from .content.forks import FORKS, PATH_DRIFT
 
@@ -111,6 +114,8 @@ def introduction(g: Kremlin, mode: str | None = None,
     ui.slow(ui.paint(f"  ☭ Welcome, {name}. The Union is yours. Try not to lose it.", ui.C.BG))
     print()
     ui.slow(ui.paint("  EVERY YEAR: a personal focus, a public directive, and the year's", ui.C.W))
+    ui.slow(ui.paint("  v6 adds the clock: 'i' spends political capital, 'o' sets the doctrine", ui.C.W))
+    ui.slow(ui.paint("  that answers for you when a flash crisis freezes the room.", ui.C.W))
     ui.slow(ui.paint("  crisis event(s). The command bar between years: s = save game,", ui.C.W))
     ui.slow(ui.paint("  l = load, d = dossier (timeline & road map), q = retire.", ui.C.W))
     ui.slow(ui.paint("  Watch TWO extra skies: the valas reserve (the world market pays/hauls)", ui.C.W))
@@ -194,6 +199,19 @@ def briefing(g: Kremlin) -> None:
         print(ui.paint("  │ 🏠 " + note[1], ui.C.DIM))
         print(ui.paint("  └──────────────────────────────────────────────────────", ui.C.DIM))
     _press_line(g)
+    _agenda_notice(g)
+
+
+def _agenda_notice(g: Kremlin) -> None:
+    """v6: the demand the Politburo has tabled for this year."""
+    agenda = getattr(g, "agenda", None)
+    if not agenda:
+        return
+    print()
+    print(ui.paint("  ┌─ POLITBURO AGENDA ──────────────────────────────────", ui.C.DIM))
+    print(ui.paint(f"  │ {agenda['text']}", ui.C.W))
+    print(ui.paint(f"  │ now {agenda['stat']} {g.stats[agenda['stat']]} → target {agenda['target']}", ui.C.DIM))
+    print(ui.paint("  └──────────────────────────────────────────────────────", ui.C.DIM))
 
 
 def _press_line(g: Kremlin) -> None:
@@ -248,6 +266,13 @@ def maybe_lifeline(g: Kremlin) -> bool:
     return True
 
 
+def _influence_notes(notes) -> None:
+    """v6: influence changes are not gauge changes, so echo them separately."""
+    for note in notes or []:
+        if note.startswith("INFLUENCE"):
+            print(ui.paint(f"  ▸ {note}", ui.C.Y))
+
+
 def run_action(g: Kremlin) -> bool:
     """Personal focus (small lever). Returns False on retire."""
     focus = AC.available_actions(g)
@@ -262,7 +287,7 @@ def run_action(g: Kremlin) -> bool:
     uses = g.focus_uses.get(act.id, 0)
     mult = ops.fatigue_multiplier(uses)
     before, flags0 = dict(g.stats), set(g.flags)
-    ops.apply_ops(g, ops.scale_ops(act.ops, mult))
+    _influence_notes(ops.apply_ops(g, ops.scale_ops(act.ops, mult)))
     g.focus_uses[act.id] = uses + 1
     if act.once:
         g.used_focus.add(act.id)
@@ -295,7 +320,7 @@ def run_directive(g: Kremlin) -> bool:
     uses = g.directive_uses.get(d.id, 0)
     mult = ops.fatigue_multiplier(uses)
     before, flags0 = dict(g.stats), set(g.flags)
-    ops.apply_ops(g, ops.scale_ops(d.ops, mult))
+    _influence_notes(ops.apply_ops(g, ops.scale_ops(d.ops, mult)))
     g.directive_uses[d.id] = uses + 1
     if d.once:
         g.used_directives.add(d.id)
@@ -349,18 +374,146 @@ def run_event(g: Kremlin, ev) -> str:
             desc = f"{desc}  ·  {hint(g)}" if desc else hint(g)
         rows.append((o.label, desc))
     ui.list_options(rows)
-    pick = ui.ask_choice("  ❯ Your decision: ", len(avail), g.rng)
+    pick = ui.ask_choice("  ❯ Your decision: ", len(avail), g.rng,
+                         seconds=_seconds_for(g, ev))
+    if pick == -1:
+        return _hesitate(g, ev)
     if pick == 0:
         return "quit"
     before, flags0 = dict(g.stats), set(g.flags)
     chosen = avail[pick - 1]
     chosen_ops, rested = ops.consume_rest(g, chosen.ops)
     notes = ops.apply_ops(g, chosen_ops)
+    _influence_notes(notes)
     g.ledger.append((g.year, f"event: {ev.title} → {chosen.label}"))
     if rested:
         print(ui.paint("   (your dacha rest softened the impact)", ui.C.DIM))
     ui.show_changes(before, g.stats, flags0, g.flags)
     return "ok"
+
+
+# ---------------------------------------------------------------
+# v6: the clock, the standing order and the agenda
+# ---------------------------------------------------------------
+def _seconds_for(g: Kremlin, ev) -> float | None:
+    """How long this decision stays open; None means no clock at all."""
+    if not ui.TIMED:
+        return None
+    clock = getattr(ev, "clock", 0) or MODES[g.mode].get("clock", 0)
+    if not clock:
+        return None
+    if "crisis_team" in g.flags:          # influence bought you two seconds
+        clock += 2
+    return float(clock)
+
+
+DEFAULT_HESITATION = {"stats": {"ORDER": -1, "PRESTIGE": -1}}
+
+
+def _hesitate(g: Kremlin, ev) -> str:
+    """Nobody decided in time: the doctrine — or the crisis — decides."""
+    g.hesitations = getattr(g, "hesitations", 0) + 1
+    instinct = ORDERS.instinct(g, ev) or DEFAULT_HESITATION
+    print()
+    print(ui.paint("  ⏱ The clock runs out. The room looks at you, then at the door.",
+                   ui.C.BM))
+    order = ORDERS.get(getattr(g, "order", None))
+    if order is not None:
+        print(ui.paint(f"  ▸ The standing order answers for you: {order['label']}.",
+                       ui.C.DIM))
+    before, flags0 = dict(g.stats), set(g.flags)
+    _influence_notes(ops.apply_ops(g, instinct))
+    g.ledger.append((g.year, f"event: {ev.title} → hesitated"))
+    ui.show_changes(before, g.stats, flags0, g.flags)
+    return "ok"
+
+
+def _settle_agenda(g: Kremlin) -> None:
+    """Grade the year's demand, pay or charge for it, and clear the table."""
+    result = AGENDA.settle_agenda(g)
+    if result.get("met") is None:
+        return
+    if getattr(g, "agenda_log", None) is None:
+        g.agenda_log = []
+    label = AGENDA.describe(getattr(g, "agenda", None))
+    if result["met"]:
+        g.influence = min(100, getattr(g, "influence", 0) + result["reward"])
+        g.agenda_log.append(f"{g.year}: met — {label}")
+        print(ui.paint(f"  ✔ Agenda met: {label}. Political capital "
+                       f"+{result['reward']}.", ui.C.G))
+    else:
+        faction = result["faction"]
+        g.agenda_log.append(f"{g.year}: missed — {label}")
+        if g.court[faction] <= 25:
+            # v6 mercy rule: a faction with nothing left to withdraw withdraws
+            # the demand instead of feeding the death spiral.
+            print(ui.paint(f"  ✖ Agenda missed: {label}. The demand is withdrawn — "
+                           f"that faction has no patience left to spend.", ui.C.Y))
+        else:
+            g.court[faction] = max(0, g.court[faction] + result["fail_court"])
+            g.stats["FAITH"] = clamp(g.stats["FAITH"] + result["fail_faith"])
+            print(ui.paint(f"  ✖ Agenda missed: {label}. "
+                           f"{faction.replace('_', ' ').title()} lose "
+                           f"{abs(result['fail_court'])} patience.", ui.C.BM))
+    g.agenda = None
+
+
+def run_capital(g: Kremlin) -> None:
+    """v6: spend political capital on a favour (command bar: `i`)."""
+    if getattr(g, "capital_year", None) == g.year:
+        print(ui.paint("  ✗ You have already called in your favour this year. "
+                       "The rest of the Kremlin is watching.", ui.C.Y))
+        return
+    moves = CAP.available(g)
+    print()
+    print(ui.paint(f"  ── POLITICAL CAPITAL ({getattr(g, 'influence', 0)} ❖) ──", ui.C.BB))
+    if not moves:
+        print(ui.paint("  ✗ Not enough capital for a favour this year.", ui.C.R))
+        return
+    for i, move in enumerate(moves, 1):
+        tag = str(move["cost"]) + " ❖"
+        if move["uses"]:                      # the price of leaning on him again
+            tag += f" (+{move['uses']} repeat)"
+        print(f"   {ui.paint(str(i), ui.C.BB)}. {ui.paint(move['label'], ui.C.W)}"
+              f"  {ui.paint(tag, ui.C.Y)}")
+        print(f"      {ui.paint(move['desc'], ui.C.DIM)}")
+    print(f"   {ui.paint(' 0', ui.C.DIM)}. Keep the capital")
+    pick = ui.ask_choice("  ❯ Spend capital: ", len(moves), g.rng)
+    if pick == 0:
+        return
+    move = moves[pick - 1]
+    g.influence = max(0, getattr(g, "influence", 0) - move["cost"])
+    g.capital_year = g.year
+    CAP.note_use(g, move["id"])
+    before, flags0 = dict(g.stats), set(g.flags)
+    ops.apply_ops(g, move["ops"])
+    g.ledger.append((g.year, "capital: " + move["label"]))
+    ui.show_changes(before, g.stats, flags0, g.flags)
+    print(ui.paint(f"  ▸ {move['cost']} ❖ spent, {g.influence} left.", ui.C.Y))
+
+
+def run_order(g: Kremlin) -> None:
+    """v6: choose the doctrine used when a decision freezes (command bar: `o`)."""
+    current = ORDERS.get(getattr(g, "order", None))
+    print()
+    print(ui.paint("  ── STANDING ORDER — what the Kremlin does when you freeze ──",
+                   ui.C.BB))
+    if current is not None:
+        print(ui.paint(f"  Current doctrine: {current['label']}", ui.C.Y))
+    for i, order in enumerate(ORDERS.ORDERS, 1):
+        print(f"   {ui.paint(str(i), ui.C.BB)}. {ui.paint(order['label'], ui.C.W)}")
+        print(f"      {ui.paint(order['desc'], ui.C.DIM)}")
+    print(f"   {ui.paint(' 0', ui.C.DIM)}. Keep the present doctrine")
+    pick = ui.ask_choice("  ❯ Doctrine: ", len(ORDERS.ORDERS), g.rng)
+    if pick == 0:
+        return
+    order = ORDERS.ORDERS[pick - 1]
+    g.order = order["id"]
+    before, flags0 = dict(g.stats), set(g.flags)
+    ops.apply_ops(g, {"court": order.get("court") or {}})
+    g.ledger.append((g.year, "doctrine: " + order["label"]))
+    ui.show_changes(before, g.stats, flags0, g.flags)
+    print(ui.paint(f"  ▸ Standing order: {order['label']}.", ui.C.Y))
 
 
 def apply_drift(g: Kremlin) -> None:
@@ -388,6 +541,11 @@ def apply_drift(g: Kremlin) -> None:
         g.stats["MILITARY"] = clamp(g.stats["MILITARY"] - 2)
         g.stats["ECONOMY"] = clamp(g.stats["ECONOMY"] - 1)
         g.stats["FAITH"] = clamp(g.stats["FAITH"] - 1)
+    # v6: the standing order is the weather you chose ─────────────
+    order = ORDERS.get(getattr(g, "order", None))
+    if order:
+        for stat, delta in (order.get("drift") or {}).items():
+            g.stats[stat] = clamp(g.stats[stat] + delta)
 
 
 # ---------------------------------------------------------------
@@ -455,12 +613,21 @@ def apply_systems(g: Kremlin) -> None:
         print(ui.paint(f"  ⚠ The {_FACTION_TITLES[despairing[0]]} are booking "
                        f"your conference room. Whispers, Thursday.", ui.C.BM))
 
+    # ── v6: a quiet trickle of capital from the standing order ─────
+    order = ORDERS.get(getattr(g, "order", None))
+    if order:
+        trickle = int((order.get("yearly") or {}).get("influence", 0))
+        if trickle:
+            g.influence = min(100, getattr(g, "influence", 0) + trickle)
+
 
 # ---------------------------------------------------------------
 # A single year
 # ---------------------------------------------------------------
 def year_step(g: Kremlin) -> str:
     """Returns 'ok' | 'quit'."""
+    if getattr(g, "agenda", None) is None:
+        g.agenda = AGENDA.open_agenda(g)
     briefing(g)
     if not maybe_lifeline(g):
         return "quit"
@@ -469,7 +636,10 @@ def year_step(g: Kremlin) -> str:
                    mode_tag=m["tag"], reserves_cap=m["lifelines"],
                    hc=g.hard_currency, court=g.court,
                    world=WORLD.oil_status(g.year),
-                   timeline=g.timeline_def.label, history=g.history)
+                   timeline=g.timeline_def.label, history=g.history,
+                   influence=getattr(g, "influence", 0),
+                   order=(ORDERS.get(getattr(g, "order", None)) or {}).get("label", ""),
+                   agenda=AGENDA.describe(getattr(g, "agenda", None)))
     if not run_action(g):
         return "quit"
     if not run_directive(g):
@@ -479,6 +649,7 @@ def year_step(g: Kremlin) -> str:
             return "quit"
     apply_drift(g)
     apply_systems(g)
+    _settle_agenda(g)
     # v5 visuals: keep a small end-of-year series for the sparklines
     g.history.append({"year": g.year, "stats": dict(g.stats),
                       "hc": g.hard_currency, "oil": WORLD.oil_price(g.year)})
@@ -550,6 +721,12 @@ def run(seed: int | None = None, mode: str | None = None,
             return
         if cmd == "dossier":
             dossier.show_roadmap(g)
+            continue
+        if cmd == "capital":
+            run_capital(g)
+            continue
+        if cmd == "orders":
+            run_order(g)
             continue
         if cmd == "save":
             if persistence.save_game(g):

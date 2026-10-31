@@ -10,6 +10,7 @@
 
   const PY_URL = "https://cdn.jsdelivr.net/pyodide/v0.28.0/full/";
   const STORE_KEY = "kreml1991.web.run.v1";
+  const TIMEOUT = "__timeout__";      // keep in sync with kreml_web.TIMEOUT_TOKEN
 
   const $ = (id) => document.getElementById(id);
   const setup = $("setup"), game = $("game"), screenEl = $("screen");
@@ -19,6 +20,7 @@
 
   let call = null;            // Python _call()
   let busy = false, finished = false;
+  let clockTimer = null, clockEnd = 0, clockTick = null;
   let plain = "";             // recent output without ANSI, for parsing menus
   let record = null;          // the run in this tab (answers + config)
 
@@ -132,6 +134,8 @@
     if (lastLine().includes("[Enter] proceed")) {
       add("Continue ▸", "");
       add("d", "dossier");
+      add("i", "capital");
+      add("o", "orders");
       add("s", "save");
       add("l", "load");
       add("q", "resign");
@@ -175,6 +179,35 @@
     }
   }
 
+  /* ─────────────────────────── the v6 clock ────────────────────────── */
+
+  function clearClock() {
+    if (clockTimer !== null) {
+      clearInterval(clockTimer);
+      clockTimer = null;
+    }
+    clockTick = null;
+  }
+
+  function armClock() {
+    clearClock();
+    if (finished || busy || !call) return;
+    const m = plain.slice(-400).match(/\u23f1 (\d+)s\)\s*$/);
+    if (!m) return;
+    clockEnd = Date.now() + Number(m[1]) * 1000;
+    const tick = () => {
+      const left = Math.max(0, Math.ceil((clockEnd - Date.now()) / 1000));
+      statusEl.textContent = `\u23f1 ${left}s`;
+      if (left <= 0) {
+        clearClock();
+        submitLine(TIMEOUT);          // the room moves on without you
+      }
+    };
+    clockTick = tick;
+    tick();
+    clockTimer = setInterval(tick, 200);
+  }
+
   function applyResult(res) {
     append(res.text || "", !!res.reset);
     finished = !!res.done;
@@ -191,6 +224,7 @@
       lineEl.placeholder = "Type your answer, then Enter";
       lineEl.focus();
     }
+    if (finished) clearClock(); else armClock();
     remember();
   }
 
@@ -205,6 +239,7 @@
 
   async function submitLine(value) {
     if (busy || finished || !call) return;
+    clearClock();
     lineEl.value = "";
     applyResult(await invoke("answer", { text: value }));
   }
@@ -243,6 +278,7 @@
   }
 
   async function startRun() {
+    clearClock();
     showGame();
     append("", true);
     record = null;
@@ -253,6 +289,7 @@
 
   async function resumeRun() {
     if (!record) return;
+    clearClock();
     showGame();
     append("", true);
     applyResult(await invoke("restore", record));
@@ -361,9 +398,17 @@ def _call(kind="snapshot", payload="{}"):
     e.preventDefault();
     submitLine(lineEl.value);
   });
+
+  // A background tab throttles timers; on return, settle the clock immediately
+  // from its real deadline instead of waiting for the next throttled tick.
+  ["visibilitychange", "focus"].forEach((evt) =>
+    document.addEventListener(evt, () => {
+      if (!document.hidden && clockTick) clockTick();
+    }));
   startBtn.addEventListener("click", startRun);
   resumeBtn.addEventListener("click", resumeRun);
   restartBtn.addEventListener("click", () => {
+    clearClock();
     finished = false;
     record = null;
     resumeBtn.hidden = true;

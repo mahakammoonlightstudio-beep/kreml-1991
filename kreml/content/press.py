@@ -183,3 +183,23 @@ PRESS = PRESS + (
       "The treaty is delayed a year; nine capitals keep their stationery ready.",
       requires={"flags": ["treaty_delayed"]}, w=6),
 )
+
+# ── v6: headlines that follow the clock, the agenda and the capital ──
+PRESS = PRESS + (
+    P("night_alarm", "REUTERS",
+      "Moscow's Night of Telephones",
+      "Regiments started in the snow; by morning the tracks were weather.",
+      requires={"flags": ["night_alarm"], "min_year": 1989}, w=8),
+    P("tass_policy", "THE TIMES",
+      "The Quotation That Became Policy",
+      "A sentence TASS put in the Secretary's mouth is now being implemented.",
+      requires={"flags": ["tass_gaffe"]}, w=7),
+    P("walkout_yard", "THE GUARDIAN",
+      "The Yard in the Snow",
+      "A night shift, a stopped line, and a Secretary who came himself.",
+      requires={"flags": ["walkout"]}, w=6),
+    P("credit_wave", "FINANCIAL TIMES",
+      "Instalments Come to the Union",
+      "Twenty-four months for a refrigerator: consumer credit, Soviet edition.",
+      requires={"flags": ["consumer_credit"], "min_year": 1989}, w=5),
+)

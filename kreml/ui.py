@@ -16,6 +16,13 @@ DRAMA = False
 # output (tests, recorders) gets the plain, deterministic text.
 ANIM = bool(getattr(sys.stdout, "isatty", lambda: False)()) if sys.stdout else False
 
+# v6: the wall clock. Off unless `python main.py --timed` is used (or the FLASH
+# CRISIS mode is chosen with --timed). The terminal draws a live countdown on
+# Windows (msvcrt) and Linux/macOS (termios cbreak); the browser page owns its
+# own clock. Tests never arm it, so a (seed, answers) pair is always one run.
+TIMED = False
+CLOCK_DEFAULT = 10.0
+
 
 def pause(seconds: float) -> None:
     if ANIM and seconds > 0:
@@ -49,7 +56,7 @@ BANNER = r"""
    К Р Е М Л Ь
       1 9 9 1
 
-     V E R S I O N  5
+     V E R S I O N  6
 """
 
 
@@ -141,7 +148,8 @@ def banner() -> None:
 def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = "BALANCED",
                 reserves_cap: int = 3, hc: int = 50, court: dict | None = None,
                 world: str = "", timeline: str = "",
-                history: list | None = None) -> None:
+                history: list | None = None, influence: int = 0,
+                order: str = "", agenda: str = "") -> None:
     hist = history or []
     print(paint(f"  ━━━━━━━━━━━━━━━ ☭  YEAR {year}  ☭  [{era} · {mode_tag}] ━━━━━━━━━━━━━━", C.BB))
     if timeline:
@@ -173,6 +181,11 @@ def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = 
             warn = paint(" ⚠PLOT", C.BM) if m <= 22 else ""
             bits.append(paint(f"{label} {bar(m, 6)} {m:>3}", col) + warn)
         print("   Politburo " + " · ".join(bits))
+    bar_inf = "❖" * min(10, influence // 10) + "·" * max(0, 10 - influence // 10)
+    print(paint(f"   {'Political capital':<22} {bar_inf} {influence:>3}"
+                f"{paint('  · ' + order, C.DIM) if order else ''}", C.Y))
+    if agenda:
+        print(paint(f"   {'Agenda':<22} {agenda}", C.DIM))
     print()
 
 
@@ -193,23 +206,241 @@ def list_options(options) -> None:
             print(f"       {paint(outcomes, C.DIM)}")
 
 
-def ask_choice(prompt: str, limit: int, rng: random.Random) -> int:
-    """0 = retire / decline, 1..limit = choice, EOF (piped tests) = random valid."""
+# The host may supply its own clock reader. The browser build does: the page
+# draws the countdown and submits a sentinel when the seconds run out.
+TIMED_READER = None
+
+
+def _read_timed_thread(prompt: str, seconds: float) -> str | None:
+    """Fallback clock: a daemon reader on stdin, no live countdown."""
+    import queue
+    import threading
+
+    box: "queue.Queue[str | None]" = queue.Queue(maxsize=1)
+
+    def reader() -> None:
+        try:
+            box.put(input(f"{prompt}(\u23f1 {seconds:.0f}s) "))
+        except (EOFError, KeyboardInterrupt):
+            box.put(None)
+
+    threading.Thread(target=reader, daemon=True).start()
+    try:
+        return box.get(timeout=seconds)
+    except queue.Empty:
+        print()
+        return None
+
+
+def _read_timed_msvcrt(prompt: str, seconds: float, *, kb=None,
+                       now=None) -> str | None:
+    """Windows console clock: a live countdown, edited in place, no threads.
+
+    `kb` and `now` are injectable so the countdown can be tested without a
+    keyboard or a real second passing.
+    """
+    import time as _time
+    if kb is None:
+        import msvcrt
+        kb = msvcrt
+    now = now or _time.monotonic
+    deadline = now() + float(seconds)
+    buf: list[str] = []
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    shown = None
+    while True:
+        left = deadline - now()
+        if left <= 0:
+            sys.stdout.write("\r" + prompt + "(\u23f1  0s) \u2014 time.        \n")
+            sys.stdout.flush()
+            return None
+        secs = int(left + 0.999)
+        if secs != shown:
+            sys.stdout.write("\r" + prompt + f"(\u23f1 {secs:>2}s) " + "".join(buf))
+            sys.stdout.flush()
+            shown = secs
+        if kb.kbhit():
+            ch = kb.getwch()
+            if ch == "\r":
+                sys.stdout.write("\n")
+                sys.stdout.flush()
+                return "".join(buf)
+            if ch == "\x08":
+                if buf:
+                    buf.pop()
+            elif ch == "\x03":
+                raise KeyboardInterrupt
+            elif ch in ("\x00", "\xe0"):
+                if kb.kbhit():
+                    kb.getwch()                # extended key: swallow the pair
+            elif ch >= " ":
+                buf.append(ch)
+            continue
+        _time.sleep(0.05)
+
+
+def _read_timed_posix(prompt: str, seconds: float, *, read_char=None,
+                      now=None) -> str | None:
+    """Linux/macOS clock: cbreak mode, one character at a time, live countdown.
+
+    `read_char` and `now` are injectable, so the loop is testable on any OS
+    without touching a real terminal or waiting a real second.
+    """
+    import time as _time
+
+    now = now or _time.monotonic
+    deadline = now() + float(seconds)
+    buf: list[str] = []
+    fd = None
+    old = None
+    termios = None
+    if read_char is None:
+        import select
+        import termios as _termios
+        import tty
+
+        termios = _termios
+        fd = sys.stdin.fileno()
+        old = termios.tcgetattr(fd)
+        tty.setcbreak(fd)
+
+        def read_char(timeout: float) -> str:
+            ready, _, _ = select.select([fd], [], [], timeout)
+            if not ready:
+                return ""
+            return os.read(fd, 1).decode("utf-8", "ignore")
+
+    sys.stdout.write(prompt)
+    sys.stdout.flush()
+    shown = None
+    try:
+        while True:
+            left = deadline - now()
+            if left <= 0:
+                sys.stdout.write("\r" + prompt + "(\u23f1  0s) \u2014 time.        \n")
+                sys.stdout.flush()
+                return None
+            secs = int(left + 0.999)
+            if secs != shown:
+                sys.stdout.write("\r" + prompt + f"(\u23f1 {secs:>2}s) " + "".join(buf))
+                sys.stdout.flush()
+                shown = secs
+            ch = read_char(0.05)
+            if not ch:
+                _time.sleep(0.02)
+                continue
+            if ch in ("\r", "\n"):
+                sys.stdout.write("\n")
+                sys.stdout.flush()
+                return "".join(buf)
+            if ch in ("\x7f", "\x08"):
+                if buf:
+                    buf.pop()
+            elif ch == "\x03":
+                raise KeyboardInterrupt
+            elif ch == "\x1b":
+                continue                    # escape sequence: ignore it
+            elif ch >= " ":
+                buf.append(ch)
+    finally:
+        if termios is not None and old is not None:
+            termios.tcsetattr(fd, termios.TCSADRAIN, old)
+
+
+def _read_timed_select(prompt: str, seconds: float) -> str | None:
+    """POSIX terminal clock: wait for a whole line, then read it."""
+    import select
+    import time as _time
+
+    fd = sys.stdin.fileno()
+    deadline = _time.monotonic() + float(seconds)
+    sys.stdout.write(f"{prompt}(\u23f1 {int(seconds)}s) ")
+    sys.stdout.flush()
+    while True:
+        left = deadline - _time.monotonic()
+        if left <= 0:
+            sys.stdout.write("\n  \u23f1 time.\n")
+            sys.stdout.flush()
+            return None
+        ready, _, _ = select.select([fd], [], [], min(0.1, left))
+        if not ready:
+            continue
+        line = sys.stdin.readline()
+        if line == "":
+            return None
+        return line.rstrip("\r\n")
+
+
+def _pick_clock_reader():
+    """A real terminal can be timed without threads; anything else cannot."""
+    if not (sys.stdin and getattr(sys.stdin, "isatty", lambda: False)()):
+        return None
+    if os.name == "nt":
+        return _read_timed_msvcrt
+    try:
+        import select      # noqa: F401
+        import termios     # noqa: F401
+        import tty         # noqa: F401
+    except ImportError:    # a terminal without termios still gets a clock
+        return _read_timed_select
+    return _read_timed_posix
+
+
+_KEYBOARD_READER = _pick_clock_reader()
+
+
+def _read_timed(prompt: str, seconds: float) -> str | None:
+    """One decision under a wall clock; None when the clock wins.
+
+    Priority: the host's reader (browser page), then the terminal's own
+    countdown, then a daemon-thread fallback for pipes and odd consoles.
+    """
+    if TIMED_READER is not None:
+        return TIMED_READER(prompt, seconds)
+    if _KEYBOARD_READER is not None:
+        return _KEYBOARD_READER(prompt, seconds)
+    return _read_timed_thread(prompt, seconds)
+
+
+def _parse_choice(raw: str, limit: int) -> int | None:
+    """0 = retire, 1..limit = choice, None = not a valid answer."""
+    raw = raw.strip().lower()
+    if raw in {"q", "quit", "retire", "0"}:
+        return 0
+    try:
+        n = int(raw)
+    except ValueError:
+        return None
+    return n if 1 <= n <= limit else None
+
+
+def ask_choice(prompt: str, limit: int, rng: random.Random,
+               seconds: float | None = None) -> int:
+    """0 = retire / decline, 1..limit = choice, EOF (piped tests) = random.
+
+    v6: when `seconds` is set and the wall clock is armed (--timed), the answer
+    is waited for under the clock and -1 means "nobody decided in time".
+    Without a clock the prompt is exactly the v5 prompt.
+    """
+    if seconds and TIMED:
+        raw = _read_timed(prompt, float(seconds))
+        if raw is None:
+            return -1
+        n = _parse_choice(raw, limit)
+        if n is not None:
+            return n
+        print(paint("  ✗ Comrade, that is not on the form — and the clock is gone.", C.R))
     while True:
         try:
             raw = input(prompt)
         except (EOFError, KeyboardInterrupt):
             return rng.randint(1, limit)
-        raw = raw.strip().lower()
-        if raw in {"q", "quit", "retire", "0"}:
-            return 0
-        try:
-            n = int(raw)
-        except ValueError:
-            print(paint("  ✗ Comrade, that is not on the form.", C.R))
-            continue
-        if 1 <= n <= limit:
+        n = _parse_choice(raw, limit)
+        if n is not None:
             return n
+        if raw.strip().lower() in {"q", "quit", "retire", "0"}:
+            return 0
         print(paint("  ✗ That dossier is off the table. Choose again.", C.R))
 
 
@@ -220,7 +451,8 @@ def ask_command(rng: random.Random) -> str:
     EOF (piped tests) behaves like Enter → 'go'.
     """
     while True:
-        prompt = "  ❯ [Enter] proceed │ s save │ l load │ d dossier │ q resign : "
+        prompt = ("  ❯ [Enter] proceed │ s save │ l load │ d dossier │ "
+                  "i capital │ o orders │ q resign : ")
         try:
             raw = input(prompt).strip().lower()
         except (EOFError, KeyboardInterrupt):
@@ -233,9 +465,13 @@ def ask_command(rng: random.Random) -> str:
             return "load"
         if raw in {"d", "dossier", "map", "db"}:
             return "dossier"
+        if raw in {"i", "influence", "capital", "spend"}:
+            return "capital"
+        if raw in {"o", "order", "orders", "doctrine"}:
+            return "orders"
         if raw in {"q", "quit", "resign", "0"}:
             return "quit"
-        print(paint("  ✗ That stamp is not recognised. Try Enter, s, l, d or q.", C.R))
+        print(paint("  ✗ That stamp is not recognised. Try Enter, s, l, d, i, o or q.", C.R))
 
 
 def show_changes(before, after, flags_before, flags_after) -> None:

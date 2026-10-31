@@ -60,6 +60,11 @@ def stage(name: str, stats_over: dict, script: list[str], must_contain: list[str
         self.focus_uses = {}
         self.path = None
         self.history = []
+        self.influence = 8
+        self.order = None
+        self.agenda = None
+        self.agenda_log = []
+        self.hesitations = 0
         self.rng = __import__("random").Random(11)
     engine.Kremlin.__init__ = patched_init
     ok = True

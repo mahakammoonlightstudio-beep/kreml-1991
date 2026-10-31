@@ -71,6 +71,8 @@ def scale_ops(ops: dict | None, mult: float) -> dict | None:
         out["stats"] = {k: _scaled(v, mult) for k, v in ops["stats"].items()}
     if "hc" in ops:
         out["hc"] = _scaled(ops["hc"], mult)
+    if "influence" in ops:
+        out["influence"] = _scaled(ops["influence"], mult)
     if "court" in ops:
         out["court"] = {k: _scaled(v, mult) for k, v in ops["court"].items()}
     return out
@@ -120,6 +122,8 @@ def check_requires(g: Kremlin, req: dict | None) -> tuple[bool, str]:
         return False, f"needs valas reserve ≥ {req['hc']}"
     if "hc_max" in req and g.hard_currency > req["hc_max"]:
         return False, f"only while valas reserve ≤ {req['hc_max']}"
+    if "influence" in req and getattr(g, "influence", 0) < req["influence"]:
+        return False, f"needs political capital ≥ {req['influence']}"
     for f, minimum in (req.get("court_min") or {}).items():
         if g.court.get(f, 50) < minimum:
             return False, f"needs {f.replace('_', ' ')} warming"
@@ -150,6 +154,13 @@ def apply_ops(g: Kremlin, ops: dict | None) -> list[str]:
             hc = g.rng.randint(hc[0], hc[1])
         g.hard_currency = max(0, min(100, g.hard_currency + int(hc)))
         changes.append(f"VALAS {int(hc):+d}")
+    inf = ops.get("influence")
+    if inf is not None:
+        if isinstance(inf, tuple):
+            inf = g.rng.randint(inf[0], inf[1])
+        before_inf = getattr(g, "influence", 0)
+        g.influence = max(0, min(100, before_inf + int(inf)))
+        changes.append(f"INFLUENCE {g.influence - before_inf:+d}")
     court = ops.get("court") or {}
     for f, val in court.items():
         if f not in FACTIONS:
@@ -280,6 +291,17 @@ def _coup_fight(g: Kremlin) -> None:
         print()
         print(ui.paint("  ✗ Twelve hands rise before you finish the sentence. In the corridor,", ui.C.BM))
         print(ui.paint("    two very polite gentlemen are already carrying a briefcase for your papers.", ui.C.BM))
+
+
+@_special("emergency_package")
+def _emergency_package(g: Kremlin) -> None:
+    """v6: influence spent on the two weakest sectors, tonight."""
+    weakest = sorted(STATS, key=lambda s: g.stats[s])[:2]
+    for stat in weakest:
+        g.stats[stat] = clamp(g.stats[stat] + 5)
+    print()
+    print(ui.paint("  ☭ The emergency package is signed before the ink dries:", ui.C.BG))
+    print(ui.paint(f"    {', '.join(weakest)} each gain five points, and nobody asks how.", ui.C.BG))
 
 
 @_special("coup_people")

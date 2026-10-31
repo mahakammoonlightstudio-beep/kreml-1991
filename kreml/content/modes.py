@@ -24,6 +24,8 @@ MODES: dict[str, dict] = {
         "lifelines": 5,
         "rail": False,
         "divergence": 0,
+        "influence": 10,
+        "agenda": {"reward": 5, "margin": 1},
         "drift": {
             "EARLY":  {"ECONOMY": -1, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
             "MIDDLE": {"ECONOMY": -1, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
@@ -39,6 +41,8 @@ MODES: dict[str, dict] = {
         "lifelines": 3,
         "rail": False,
         "divergence": 0,
+        "influence": 8,
+        "agenda": {"reward": 4, "margin": 2},
         "drift": {
             "EARLY":  {"ECONOMY": -2, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
             "MIDDLE": {"ECONOMY": -2, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
@@ -54,6 +58,8 @@ MODES: dict[str, dict] = {
         "lifelines": 2,
         "rail": False,
         "divergence": 0,
+        "influence": 6,
+        "agenda": {"reward": 3, "margin": 3},
         "drift": {
             "EARLY":  {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -1, "PRESTIGE": -1},
             "MIDDLE": {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -1, "PRESTIGE": -1},
@@ -64,11 +70,13 @@ MODES: dict[str, dict] = {
     "extreme": {
         "label": "THE SYSTEM ITSELF",
         "tag": "EXTREME",
-        "desc": "Everything fails at once: drift −8/−10, late Economy −5, one "
+        "desc": "Everything fails at once: drift −8 to −12, late Economy −5, one "
                 "crisis reserve. The Union is a rumour you must keep alive.",
         "lifelines": 1,
         "rail": False,
         "divergence": 0,
+        "influence": 4,
+        "agenda": {"reward": 2, "margin": 4},
         "drift": {
             "EARLY":  {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -1, "PRESTIGE": -1},
             "MIDDLE": {"ECONOMY": -4, "MILITARY": -1, "ORDER": -2, "FAITH": -2, "PRESTIGE": -1},
@@ -84,6 +92,8 @@ MODES: dict[str, dict] = {
         "lifelines": 2,
         "rail": True,
         "divergence": 5,
+        "influence": 6,
+        "agenda": {"reward": 4, "margin": 2},
         "drift": {
             "EARLY":  {"ECONOMY": -2, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
             "MIDDLE": {"ECONOMY": -2, "MILITARY": -1, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
@@ -91,9 +101,31 @@ MODES: dict[str, dict] = {
             "NEW":    {"ECONOMY": -3, "MILITARY": 0, "ORDER": -1, "FAITH": -1, "PRESTIGE": -1},
         },
     },
+
+    # ── v6: the clock is the antagonist ────────────────────────────────
+    "flash": {
+        "label": "FLASH CRISIS",
+        "tag": "FLASH",
+        "desc": "Every decision is on the clock: the telephone rings, the "
+                "committee waits, and hesitation decides for you. Two reserves, "
+                "a generous political budget, no time to think.",
+        "lifelines": 2,
+        "rail": False,
+        "divergence": 0,
+        "influence": 14,
+        "agenda": {"reward": 5, "margin": 2},
+        "clock": 9,
+        "drift": {
+            "EARLY":  {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -1, "PRESTIGE": -1},
+            "MIDDLE": {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -2, "PRESTIGE": -1},
+            "LATE":   {"ECONOMY": -4, "MILITARY": -2, "ORDER": -2, "FAITH": -2, "PRESTIGE": -1},
+            "NEW":    {"ECONOMY": -3, "MILITARY": -1, "ORDER": -2, "FAITH": -2, "PRESTIGE": -1},
+        },
+    },
 }
 
-MODE_ORDER: tuple[str, ...] = ("easy", "medium", "hard", "extreme", "historical")
+MODE_ORDER: tuple[str, ...] = ("easy", "medium", "hard", "extreme", "flash",
+                               "historical")
 
 # v4 shipped "normal"; keep the old word working for saves/CLI and the README.
 MODE_ALIASES: dict[str, str] = {"normal": "medium", "medium": "medium"}

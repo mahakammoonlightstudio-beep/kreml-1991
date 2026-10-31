@@ -40,6 +40,11 @@ def _patch(stats_over, mode="normal"):
         self.focus_uses = {}
         self.path = None
         self.history = []
+        self.influence = 8
+        self.order = None
+        self.agenda = None
+        self.agenda_log = []
+        self.hesitations = 0
         self.rng = __import__("random").Random(seed)
     engine.Kremlin.__init__ = patched_init
 
@@ -68,6 +73,8 @@ def main() -> int:
                        {"ECONOMY": 4}, mode="hard")
         ok &= scenario("reform playground, SWEEPING REFORMS",
                        {"ECONOMY": 75, "ORDER": 60}, mode="easy")
+        ok &= scenario("flash-crisis run (v6, clock unarmed)",
+                       {"ECONOMY": 70}, mode="flash")
     finally:
         if backup is not None:
             hall.write_bytes(backup)

@@ -183,6 +183,23 @@ def t_colours_do_not_leak_out() -> None:
     assert (ui.ANIM, ui.DRAMA, ui._use_colour) == before, "ui globals must be restored"
 
 
+def t_timed_flash_decision() -> None:
+    """v6: a flash decision advertises its clock, and the sentinel hesitates."""
+    with sandbox():
+        s = session()
+        s.start("flash", "rails")
+        s.answer("Tester")
+        s.answer("1")                      # the mandate
+        for _ in range(80):
+            if "(\u23f1 " in s.transcript:
+                break
+            s.answer(next_answer(s))
+        assert "(\u23f1 " in s.transcript, "flash mode must advertise its clock"
+        out = s.answer(kreml_web.TIMEOUT_TOKEN)
+        assert "clock runs out" in s.transcript, "the sentinel must mean hesitation"
+        assert out["done"] is False, "a hesitation must not end the run"
+
+
 def t_snapshot_restores_the_same_run() -> None:
     with sandbox():
         s = session(11)
@@ -207,6 +224,7 @@ def main() -> int:
     check("web: boot never offers to resume", t_boot_never_asks_to_resume)
     check("web: a finished run ends cleanly", t_finished_run_ends_cleanly)
     check("web: colours do not leak into other runs", t_colours_do_not_leak_out)
+    check("web: timed flash decision & hesitation", t_timed_flash_decision)
     check("web: snapshot/restore round-trip", t_snapshot_restores_the_same_run)
     print()
     if FAIL:

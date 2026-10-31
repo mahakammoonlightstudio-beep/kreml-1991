@@ -33,6 +33,25 @@ class NeedInput(BaseException):
     """
 
 
+# v6: the page draws the countdown, so a timed prompt is answered by either a
+# real line or this sentinel, which means "nobody decided in time".
+TIMEOUT_TOKEN = "__timeout__"
+_ANSWERS: list[str] = []
+
+
+def timed_reader(prompt: str, seconds: float) -> str | None:
+    """Clock reader for the browser: mark the prompt, or stop for an answer."""
+    sys.stdout.write(f"{prompt}(\u23f1 {int(seconds)}s) ")
+    if not _ANSWERS:
+        raise NeedInput()
+    line = _ANSWERS.pop(0)
+    if line == TIMEOUT_TOKEN:
+        sys.stdout.write("\u23f1 no answer \u2014 the room moves on\n")
+        return None
+    sys.stdout.write(f"{line}\n")
+    return line
+
+
 class Session:
     """One browser session: a seed, a difficulty, a timeline, and the answers."""
 
@@ -99,11 +118,13 @@ class Session:
         """Replay the game with the answers so far; return the new output."""
         from kreml import engine, ui, persistence
 
-        saved = (ui.ANIM, ui.DRAMA, ui._use_colour)
-        # Deterministic, coloured, instant: the browser terminal does the rest.
+        saved = (ui.ANIM, ui.DRAMA, ui._use_colour, ui.TIMED, ui.TIMED_READER)
+        # Deterministic and coloured; the page owns the clock and the terminal.
         ui.ANIM = False
         ui.DRAMA = False
         ui._use_colour = True
+        ui.TIMED = True
+        ui.TIMED_READER = timed_reader
 
         # Never offer to resume at boot: the replay must always start at 1964.
         # ('l' typed later still reaches the real loader and works in-session.)
@@ -134,7 +155,7 @@ class Session:
             done = True
         finally:
             persistence.load_game = real_load
-            ui.ANIM, ui.DRAMA, ui._use_colour = saved
+            ui.ANIM, ui.DRAMA, ui._use_colour, ui.TIMED, ui.TIMED_READER = saved
 
         text = buf.getvalue().replace("\r\n", "\n")
         prefix = self.transcript
@@ -151,6 +172,8 @@ class Session:
 @contextlib.contextmanager
 def _stdin(answers: list[str]):
     """Echo a real prompt+answer into the transcript, or stop the replay."""
+    global _ANSWERS
+    _ANSWERS = answers        # the timed reader pops from this same list
     original = builtins.input
 
     def fake_input(prompt: str = "") -> str:
@@ -167,3 +190,4 @@ def _stdin(answers: list[str]):
         yield
     finally:
         builtins.input = original
+        _ANSWERS = []

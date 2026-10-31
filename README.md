@@ -14,7 +14,7 @@ and a plenum that erases you from the portraits.
 
 **Pure Python. No installs, no dependencies, no graphics card — just `python main.py`.**
 
-[![release](https://img.shields.io/badge/release-BETA%20v5-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)
+[![release](https://img.shields.io/badge/release-BETA%20v6-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)
 [![python](https://img.shields.io/badge/python-3.8%2B-3776ab?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![dependencies](https://img.shields.io/badge/dependencies-none-success?style=flat-square)](#quick-start)
 [![license](https://img.shields.io/badge/license-MIT-3da639?style=flat-square)](LICENSE)
@@ -22,7 +22,7 @@ and a plenum that erases you from the portraits.
 [![web](https://img.shields.io/badge/web-live%20page-c8102e?style=flat-square&logo=githubpages&logoColor=white)](https://mahakammoonlightstudio-beep.github.io/kreml-1991/)
 
 [**▶ Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·
-[**⬇ Download BETA v5**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
+[**⬇ Download BETA v6**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
 [**🌐 Landing page**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/) ·
 [**🐛 Report a bug**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/issues)
 
@@ -48,10 +48,12 @@ Then the plan grinds you down again, and the numbers decide whether the Union is
 still a country on 31 December.
 
 It is a **text-based strategy game** with the depth of a board game and the tone of a
-Politburo briefing: **110 events**, five difficulty presets, four starting timelines,
+Politburo briefing: **121 events**, six difficulty presets, four starting timelines,
 three divergence forks, five multi-stage chain reactions, and a closing divergence
-report that tells you exactly where your century left ours — all in a codebase where
-**the content is data and the logic is one generic engine**.
+report that tells you exactly where your century left ours — plus, in v6, **a wall
+clock on decisions, political capital to spend, standing orders and a yearly Politburo
+agenda** — all in a codebase where **the content is data and the logic is one generic
+engine**.
 
 > *"Soviet difficulty is fair, comrade — it is merely not explained."*
 
@@ -64,7 +66,7 @@ report that tells you exactly where your century left ours — all in a codebase
 | [Quick start](#quick-start) | Three commands and you are in the chair |
 | [Screenshots](#screenshots) | What the terminal actually looks like |
 | [The systems](#the-systems) | Gauges, valas, the court, forks, chains |
-| [Difficulty & timelines](#five-difficulties-four-timelines) | Five modes, four openings |
+| [Difficulty & timelines](#six-difficulties-four-timelines) | Six modes, four openings |
 | [A year in the Kremlin](#a-year-in-the-kremlin) | The loop, step by step |
 | [Endings & scoring](#endings-and-scoring) | How you win, how you are erased |
 | [Survival notes](#survival-notes) | The arithmetic, declassified |
@@ -93,7 +95,7 @@ cd kreml-1991
 python main.py
 ```
 
-Prefer a zip? Grab the **[BETA v5 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)**,
+Prefer a zip? Grab the **[BETA v6 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)**,
 unzip it, and run `python main.py` from the folder.
 
 On Windows, if `python` opens the Microsoft Store, use `py main.py` instead.
@@ -135,7 +137,11 @@ Menus take numbers. That is the whole interface, and it has survived since 1964.
 | **🗂 The Dossier** | Press `d`: your full decision ledger, every conditional road (*done ▸ open ✖ locked, with the reason*), the forks still in play, delayed consequences in the pipeline, a **TREND** page of 30-year charts, and history's own timetable beside yours. |
 | **🌍 Real life & the Western press** | Each year prints a **REAL LIFE** box — the world, and the Soviet street — plus a foreign headline that reacts to what you actually did. |
 | **⌛ Plan fatigue** | Repeating the same directive or private habit shrinks its gains (100% → 85% → 70% → … → 35%) while the cost stays whole. Spam one lever and it goes stale. |
-| **💾 Save & resume** | `s` writes the whole state — gauges, flags, queues, court, path, fatigue counters, RNG — to `kreml_save.json`. The title screen offers to resume it. Saves from older versions are refused politely instead of crashing. |
+| **⏱ The wall clock (v6)** | `--timed` puts a real countdown on decisions: drawn live in Windows consoles, Linux/macOS terminals (cbreak) and above the browser's input. Freeze, and the crisis decides for you — the standing order answers in your place, and the ledger records the hesitation. |
+| **❖ Political capital (v6)** | A second currency. Influence is earned from the agenda, from doctrines and from a few choices, and spent at `i` on dinners, institutes, the vault, a crisis team or an emergency package. **One favour a year**, and a favour you have already bought costs more each time — the court cannot simply be purchased back. |
+| **🏛 The Politburo agenda (v6)** | Every year the strongest faction tables a demand. Meet it and the Kremlin owes you; miss it and that faction remembers — a faction with nothing left withdraws instead. |
+| **📜 Standing orders (v6)** | `o` sets the doctrine — party discipline, reform, the mailed fist, patience. It nudges yearly drift, colours the court, and becomes your instinct under the clock. |
+| **💾 Save & resume** | `s` writes the whole state — gauges, flags, queues, court, path, fatigue counters, capital, doctrine, agenda, RNG — to `kreml_save.json`. The title screen offers to resume it. Saves from older versions are refused politely instead of crashing. |
 
 ### Terminal visuals (v5)
 
@@ -150,7 +156,7 @@ a terminal** — so tests, pipes and the video recorder stay byte-for-byte deter
 
 ---
 
-## Five difficulties, four timelines
+## Six difficulties, four timelines
 
 **Difficulty** changes the yearly drift, your crisis reserves, and whether alternate
 history is even allowed.
@@ -160,7 +166,8 @@ history is even allowed.
 | `easy` | **SWEEPING REFORMS** | Gentle drift (−1, −2 after 1985), 5 reserves. For architecting the future. |
 | `medium` | **BALANCED** | The historical grind: −2 drift, −4 late Economy, 3 reserves. The Union fell once; the margins are thin. |
 | `hard` | **OLD GUARD IRON GRASP** | Economy −3, Order −2 a year, 2 reserves. The system fights back. |
-| `extreme` | **THE SYSTEM ITSELF** | Drift −8/−10, late Economy −5, a single reserve. The Union is a rumour you must keep alive. |
+| `extreme` | **THE SYSTEM ITSELF** | Drift −8 to −12, late Economy −5, a single reserve. The Union is a rumour you must keep alive. |
+| `flash` | **FLASH CRISIS** | v6's clock-first mode: 9-second decisions, 2 reserves, 14 political capital. Reading is a luxury; instinct is a doctrine. |
 | `historical` | **HISTORICAL RAILS** | Real decline, alternate-history content **locked**, 2 reserves, and −5 score for every divergence you force (max 40). |
 
 **Timeline** changes who you inherit and when you start. Pick it on the title screen or
@@ -179,7 +186,7 @@ Each timeline has its own opening gauges, court, reserve and closing epilogue.
 
 ## A year in the Kremlin
 
-1. **Command bar** — `[Enter]` proceed · `s` save · `l` load · `d` dossier · `q` resign.
+1. **Command bar** — `[Enter]` proceed · `s` save · `l` load · `d` dossier · `i` political capital · `o` standing order · `q` resign.
 2. **Personal focus** — one small private lever: inspect a factory, give a speech, rest
    at the dacha (softens the next crisis), dine with the Politburo families, walk the
    gold vault by lamplight.
@@ -192,6 +199,7 @@ Each timeline has its own opening gauges, court, reserve and closing epilogue.
    Some years bring two: 1986 runs the congress **and** Chernobyl; 1989 the Wall **and**
    the coal miners' summer.
 5. **The numbers** — drift, war attrition, the oil market, court moods, then the new panel.
+6. **The agenda (v6)** — the demand the strongest faction tabled in January is graded here: capital paid, or patience lost.
 
 Then the year rolls over, the plan goes stale, and the Politburo is one year older.
 
@@ -255,6 +263,8 @@ makes you history. Both are legitimate strategies; one of them scores better.*
 | `--no-anim` | Plain text output: no colour bars, sparklines or animation. |
 | `--anim` | Force visuals even when stdout is piped. |
 | `--drama` | Slow typewriter printing. |
+| `--timed` | v6: decisions run on a wall clock — a live countdown in the terminal, a visible timer in the browser; hesitation has consequences. |
+| `--no-timed` | Force the clock off (the default; the test suite always plays untimed). |
 
 ---
 
@@ -276,7 +286,14 @@ kreml/
   dossier.py            interactive ledger, branch roadmap, pipeline, TREND charts
   content/              PURE DATA, no logic:
     builders.py         tiny constructors shared by every content module
-    events.py           events, pools, scripted years, great congresses
+    events.py           the index: pools, scripted years, great congresses
+    events_early.py     1964–1975 events        events_middle.py  1976–1984
+    events_late.py      1985–1991 events        events_new.py     1992–2001
+    events_fixed.py     scripted years, congresses, queued responses
+    events_v6.py        flash crises and political events (v6)
+    agenda.py           the yearly Politburo demand (v6)
+    orders.py           standing orders / doctrines (v6)
+    capital.py          what political capital is spent on (v6)
     chains.py           the five chain-reaction storylines
     forks.py            divergence forks, paths, path drift, path epilogues
     timelines.py        the four starting scenarios
@@ -308,12 +325,45 @@ branching alternate-history layer declaratively.
 ### Running the checks
 
 ```bash
-python tests/test_mechanics.py    # 41 mechanic-level self checks
+python tests/test_mechanics.py    # 53 mechanic-level self checks
 python tests/test_io_flow.py      # save / load / dossier flow via scripted input
-python tests/run_smoke.py         # headless full-game smoke runs
-python tests/test_web_driver.py   # the browser build's replay contract (8 checks)
+python tests/run_smoke.py         # headless full-game smoke runs, all six modes
+python tests/test_web_driver.py   # the browser build's replay contract (9 checks)
 python tests/test_web_build.py    # the browser bundle is in sync with the game
+python tools/balance.py           # measured survival rates per mode (autopilot)
 ```
+
+### Balance, measured (v6)
+
+`tools/balance.py` plays the market-path autopilot headlessly. Two runs of the same
+bot bracket the game — 12 seeds each, clock off.
+
+**Floor** — the bot ignores the political layer (`--no-capital --no-doctrine`):
+
+| mode | survived | avg score |
+|---|---|---|
+| easy | 12/12 | 372 |
+| medium | 12/12 | 346 |
+| hard | 10/12 | 249 |
+| extreme | 8/12 | 201 |
+| flash | 11/12 | 258 |
+| historical | 12/12 | 301 |
+
+**Ceiling** — the same bot spends influence and adopts a doctrine:
+
+| mode | survived | avg score |
+|---|---|---|
+| easy | 12/12 | 377 |
+| medium | 12/12 | 354 |
+| hard | 12/12 | 277 |
+| extreme | 12/12 | 241 |
+| flash | 12/12 | 270 |
+| historical | 12/12 | 306 |
+
+Reading: ignoring the court is how you die — `hard` and `extreme` lose runs the
+political layer saves. Mastering it buys survival, not comfort: the score still
+falls from 377 (easy) to 241 (extreme). Both tables come from one greedy bot with
+no foresight, so a player who spends capital badly will do worse than the floor.
 
 The video renderer is a developer tool, not a dependency:
 `pip install -r requirements-dev.txt` (Pillow + fonttools) and put `ffmpeg` on PATH.

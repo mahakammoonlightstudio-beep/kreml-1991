@@ -17,7 +17,7 @@ from .content.modes import normalize
 
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                          "kreml_save.json")
-SAVE_VERSION = 5
+SAVE_VERSION = 6
 
 
 def _rng_pack(rng) -> dict:
@@ -71,6 +71,13 @@ def save_game(g: Kremlin, path: str | None = None) -> bool:
         "focus_uses": dict(g.focus_uses),
         "path": g.path,
         "history": g.history,
+        "influence": getattr(g, "influence", 8),
+        "capital_uses": getattr(g, "capital_uses", {}),
+        "capital_year": getattr(g, "capital_year", 0),
+        "order": getattr(g, "order", None),
+        "agenda": getattr(g, "agenda", None),
+        "agenda_log": getattr(g, "agenda_log", []),
+        "hesitations": getattr(g, "hesitations", 0),
         "rng": _rng_pack(g.rng),
     }
     try:
@@ -115,6 +122,14 @@ def load_game(path: str | None = None) -> Kremlin | None:
                         (data.get("focus_uses") or {}).items()}
         g.path = data.get("path")
         g.history = list(data.get("history") or [])
+        g.influence = int(data.get("influence", 8))
+        g.capital_uses = {str(k): int(v) for k, v in
+                          (data.get("capital_uses") or {}).items()}
+        g.capital_year = int(data.get("capital_year", 0))
+        g.order = data.get("order")
+        g.agenda = data.get("agenda")
+        g.agenda_log = list(data.get("agenda_log") or [])
+        g.hesitations = int(data.get("hesitations", 0))
         g.rng = _rng_unpack(data["rng"])
         return g
     except (OSError, KeyError, TypeError, ValueError, json.JSONDecodeError):

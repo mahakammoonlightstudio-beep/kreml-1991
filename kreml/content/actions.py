@@ -64,6 +64,22 @@ FOCUS_ACTIONS: tuple[Action, ...] = (
     make_action("vault_inspect", "Inspect the gold vault by lamplight",
                 "Bars, seals, and a keeper who talks only in loan words.",
                 {"hc": (2, 5)}),
+    # ── v6: evenings that pay in political capital ─────────────────
+    make_action("television_address", "Address the nation on television",
+                "Nine minutes, no notes, and a promise you will have to keep.",
+                {"stats": {"FAITH": (1, 2), "ORDER": -1, "PRESTIGE": 1}}),
+    make_action("party_archive", "Read the Party archive",
+                "Who owed whom in 1956 is still useful in 1979.",
+                {"influence": 2}),
+    make_action("governors_call", "Ring three provincial governors",
+                "Two favours, one warning, and a very good line about the harvest.",
+                {"stats": {"ORDER": 2}, "court": {"old_guard": 2}}),
+    make_action("kitchen_table", "Sit at a worker's kitchen table",
+                "Tea, jam, and the only reliable reporting in the country.",
+                {"stats": {"FAITH": 2, "ECONOMY": -1}, "influence": 1}),
+    make_action("valas_audit", "Audit the valas accounts",
+                "The accountants find a drawer everybody had forgotten.",
+                {"hc": (2, 4), "court": {"reformers": 1}}),
 )
 
 

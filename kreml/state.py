@@ -66,6 +66,14 @@ class Kremlin:
         self.focus_uses: dict[str, int] = {}       # habits go stale too
         self.path: str | None = None               # divergence line from a fork
         self.history: list[dict] = []              # end-of-year snapshots (charts)
+        # ── v6 systems ─────────────────────────────────────────────
+        self.influence = int(MODES[self.mode].get("influence", 8))
+        self.order: str | None = None              # standing order (doctrine)
+        self.agenda: dict | None = None            # this year's Politburo demand
+        self.agenda_log: list[str] = []            # met / missed, for the ending
+        self.capital_uses: dict[str, int] = {}     # favours inflate when repeated
+        self.capital_year = 0                      # one favour per year, no more
+        self.hesitations = 0                       # flash decisions that froze
         self.rng = random.Random(seed)
 
     @property

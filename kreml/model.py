@@ -26,6 +26,8 @@ class Event:
     once: bool = False
     requires: dict[str, Any] = field(default_factory=dict)
     alt: bool = False        # alternate-history content: locked on the rails
+    clock: int = 0           # v6: seconds on the wall (only enforced with --timed)
+    hesitate: dict[str, Any] = field(default_factory=dict)  # v6: frozen? this happens
 
 
 @dataclass(frozen=True)

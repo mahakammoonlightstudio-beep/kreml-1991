@@ -32,6 +32,8 @@ from kreml.state import STATS
 from kreml.content import events as EV
 from kreml.content import directives as DR
 from kreml.content import actions as AC
+from kreml.content import capital as CAP
+from kreml.content import orders as OR
 
 # ─────────────────────────────────────────────────────────────────────
 # The autopilot bot
@@ -87,9 +89,22 @@ def _flags(oplist) -> list:
     return oplist if isinstance(oplist, str) else list(oplist)
 
 
+def _ops_of(item) -> dict:
+    """Options are `Option` objects; v6 capital moves are plain dicts."""
+    if isinstance(item, dict):
+        return item.get("ops") or {}
+    return getattr(item, "ops", None) or {}
+
+
+def _label_of(item) -> str:
+    if isinstance(item, dict):
+        return item.get("label", "") or ""
+    return getattr(item, "label", "") or ""
+
+
 def score_option(g, item) -> float:
     """Weighted score: stat deltas weighted by how low the gauge is, plus flags."""
-    op = item.ops or {}
+    op = _ops_of(item)
     sc = 0.0
     for s, dv in (op.get("stats") or {}).items():
         if dv is None:
@@ -98,13 +113,18 @@ def score_option(g, item) -> float:
             dv = (dv[0] + dv[1]) / 2.0
         w = 1.0 + max(0.0, (55.0 - g.stats[s])) / 25.0  # deficits weigh more
         sc += dv * w
+    for f, dv in (op.get("court") or {}).items():        # v6: a court costs too
+        sc += dv * (1.0 + max(0.0, 50.0 - g.court.get(f, 50)) / 25.0)
     for f in _flags(op.get("flag_add")):
         sc += _flag_bonus(g, f)
     for f in _flags(op.get("flag_rm")):
         sc += FLAG_RM_BONUS.get(f, 0)
     for sp in _flags(op.get("special")):
         sc += SPECIAL_BONUS.get(sp, 0)
-    label = getattr(item, "label", "") or ""
+    cost = item.get("cost", 0) if isinstance(item, dict) else 0
+    if cost:                                          # capital: value per point
+        sc -= cost * 0.9
+    label = _label_of(item)
     sc += LABEL_BONUS.get(label, 0) * 1.0
     sc += LABEL_BOOST_DIRECTIVES.get(label, 0)
     # the coup: only defy if the tanks can be bribed back
@@ -142,6 +162,10 @@ def _lifeline_pick(g) -> int:
 # Recording harness
 # ─────────────────────────────────────────────────────────────────────
 CUR_G: dict = {}
+# Research switches: `tools/balance.py --no-capital / --no-doctrine` turns one
+# subsystem off, so the survival it buys can be measured instead of assumed.
+USE_CAPITAL = True
+USE_DOCTRINE = True
 EVENT_QUEUE = deque()
 OUTCOME: dict = {"survived": False, "collapsed": False, "retired": False}
 
@@ -210,10 +234,39 @@ def bot_input(prompt: str = "") -> str:
     if "Continue into the new era" in p:
         return "1"                      # take the Red Millennium when offered
     if "proceed" in p or "[Enter] " in p:
+        g = CUR_G.get("g")
+        if g is not None:
+            if USE_DOCTRINE and getattr(g, "order", None) is None:
+                return "o"               # v6: a doctrine, once
+            if (USE_CAPITAL and getattr(g, "capital_year", 0) != g.year
+                    and getattr(g, "influence", 0) >= 8
+                    and min(g.court.values()) <= 32 and CAP.available(g)):
+                return "i"               # v6: repair the angriest faction
         return ""                        # year boundary → go
     g = CUR_G.get("g")
     if g is None:
         return ""
+    if "Spend capital:" in p:
+        if not USE_CAPITAL:
+            return "0"
+        moves = CAP.available(g)
+        if not moves:
+            return "0"
+        return str(1 + argmax([score_option(g, m) for m in moves]))
+    if "Doctrine:" in p:
+        if not USE_DOCTRINE:
+            return "0"
+        best, best_i = -1e9, 0
+        for i, order in enumerate(OR.ORDERS, 1):
+            sc = 0.0
+            for stat, dv in (order.get("drift") or {}).items():
+                sc += dv * (1.0 + max(0.0, (55.0 - g.stats[stat])) / 25.0)
+            for f, dv in (order.get("court") or {}).items():
+                sc += dv * (1.0 + max(0.0, (50.0 - g.court.get(f, 50))) / 25.0)
+            sc += (order.get("yearly") or {}).get("influence", 0) * 1.5
+            if sc > best:
+                best, best_i = sc, i
+        return str(best_i)
     if "Focus on:" in p:
         acts = AC.available_actions(g)
         return str(1 + argmax([score_option(g, a) for a in acts]))

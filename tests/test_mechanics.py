@@ -102,7 +102,7 @@ def t_war_attrition():
     assert g.stats["FAITH"] == f0 - 1 - 1
 
 
-def t_erа_and_clamps():
+def t_era_and_clamps():
     g = Kremlin(0)
     g.year = 1985
     assert g.era == "LATE"
@@ -169,6 +169,12 @@ def t_save_load_roundtrip():
     g.timeline = "flashpoint"
     g.directive_uses = {"heavy_industry": 3}
     g.focus_uses = {"factory_visit": 2}
+    g.influence = 21
+    g.order = "order_force"
+    g.agenda = {"faction": "military", "stat": "MILITARY", "target": 70,
+                "text": "x", "met": None}
+    g.agenda_log = ["1964: met — MILITARY ≥ 70 (military)"]
+    g.hesitations = 2
     ops.apply_ops(g, {"stats": {"ECONOMY": (3, 3), "ORDER": 5}})
     snap = g.rng.getstate()                 # snapshot AFTER the random roll
     try:
@@ -188,6 +194,11 @@ def t_save_load_roundtrip():
         assert g2.timeline == "flashpoint"
         assert g2.directive_uses == {"heavy_industry": 3}
         assert g2.focus_uses == {"factory_visit": 2}
+        assert g2.influence == 21 and g2.order == "order_force"
+        assert g2.agenda == {"faction": "military", "stat": "MILITARY",
+                             "target": 70, "text": "x", "met": None}
+        assert g2.agenda_log == ["1964: met — MILITARY ≥ 70 (military)"]
+        assert g2.hesitations == 2
         assert g2.rng.getstate() == snap
     finally:
         try:
@@ -473,15 +484,19 @@ def t_new_events_and_directives():
 
 
 # ─────────────────────────────── v5 ──────────────────────────────
-def t_five_modes():
+def t_six_modes():
     from kreml.content.modes import MODE_ORDER as ORDER, normalize
-    assert len(ORDER) == 5, ORDER
-    assert ORDER == ("easy", "medium", "hard", "extreme", "historical")
+    assert len(ORDER) == 6, ORDER
+    assert ORDER == ("easy", "medium", "hard", "extreme", "flash",
+                     "historical")
     assert normalize("normal") == "medium"          # v4 alias still works
     assert normalize("nonsense") == "medium"
     assert MODES["historical"]["rail"] is True
     assert MODES["extreme"]["lifelines"] == 1
+    assert MODES["flash"]["lifelines"] == 2
+    assert MODES["flash"]["clock"] == 9 and MODES["flash"]["influence"] == 14
     assert Kremlin(0, mode="normal").mode == "medium"
+    assert Kremlin(0, mode="flash").influence == 14
 
 
 def t_timeline_application():
@@ -755,6 +770,308 @@ def t_ui_visuals():
     assert "1970" in buf2.getvalue() and "░" in buf2.getvalue()
 
 
+# ─────────────────────────────── v6 ──────────────────────────────
+def t_influence_currency():
+    g = Kremlin(0)
+    start = g.influence
+    ops.apply_ops(g, {"influence": 5})
+    assert g.influence == start + 5
+    ops.apply_ops(g, {"influence": -500})
+    assert g.influence == 0
+    ops.apply_ops(g, {"influence": 500})
+    assert g.influence == 100
+    ok, _ = ops.check_requires(g, {"influence": 100})
+    assert ok
+    ok, _ = ops.check_requires(g, {"influence": 101})
+    assert not ok
+    scaled = ops.scale_ops({"influence": 10, "stats": {"ECONOMY": 4}}, 0.5)
+    assert scaled["influence"] == 5
+
+
+def t_capital_moves():
+    from kreml.content import capital as CAP
+    g = Kremlin(0)
+    g.influence = 4
+    assert CAP.available(g) == []                  # nothing affordable
+    g.influence = 40
+    ids = {m["id"] for m in CAP.available(g)}
+    assert {"army_dinner", "emergency_package"} <= ids
+    g.flags.add("crisis_team")
+    assert "crisis_team" not in {m["id"] for m in CAP.available(g)}
+    g.stats = {"ECONOMY": 30, "MILITARY": 90, "ORDER": 20, "FAITH": 90,
+               "PRESTIGE": 90}
+    ops.apply_ops(g, {"special": "emergency_package"})
+    assert g.stats["ORDER"] == 25 and g.stats["ECONOMY"] == 35
+
+
+def t_posix_termios_branch():
+    """Run the real cbreak branch with faked OS modules, so it is tested here too."""
+    import io as _io
+    import sys as _sys
+    import types
+    from contextlib import redirect_stdout
+    from kreml import ui
+
+    class FakeStdin:
+        def fileno(self):
+            return 7
+
+        def isatty(self):
+            return True
+
+    seen = {}
+    fake_termios = types.ModuleType("termios")
+    fake_termios.TCSADRAIN = 1
+    fake_termios.tcgetattr = lambda fd: ["old", fd]
+    fake_termios.tcsetattr = lambda fd, when, old: seen.setdefault(
+        "restored", (fd, when, old))
+    fake_tty = types.ModuleType("tty")
+    fake_tty.setcbreak = lambda fd: seen.setdefault("cbreak", fd)
+    fake_select = types.ModuleType("select")
+    fake_select.select = lambda r, w, x, t: ([r[0]], [], [])
+    keys = [b"1", b"\r"]
+
+    saved_mods = {n: _sys.modules.get(n) for n in ("termios", "tty", "select")}
+    saved_read, saved_stdin, saved_sleep = ui.os.read, ui.sys.stdin, ui.time.sleep
+    _sys.modules["termios"] = fake_termios
+    _sys.modules["tty"] = fake_tty
+    _sys.modules["select"] = fake_select
+    ui.os.read = lambda fd, n: keys.pop(0) if keys else b""
+    ui.sys.stdin = FakeStdin()
+    ui.time.sleep = lambda *_: None
+    buf = _io.StringIO()
+    try:
+        with redirect_stdout(buf):
+            assert ui._read_timed_posix("  ❯ t: ", 5, now=lambda: 0.0) == "1"
+    finally:
+        ui.os.read, ui.sys.stdin, ui.time.sleep = saved_read, saved_stdin, saved_sleep
+        for name, mod in saved_mods.items():
+            if mod is None:
+                _sys.modules.pop(name, None)
+            else:
+                _sys.modules[name] = mod
+    assert seen.get("cbreak") == 7, "cbreak must be entered on the real fd"
+    assert seen.get("restored", (None,))[0] == 7, "terminal mode must be restored"
+    assert "\u23f1" in buf.getvalue()
+
+
+def t_capital_inflation():
+    from kreml.content import capital as CAP
+    g = Kremlin(0)
+    g.influence = 60
+    base = {m["id"]: m["cost"] for m in CAP.available(g)}
+    assert base["army_dinner"] == 8
+    g.capital_uses = {"army_dinner": 2}
+    prices = {m["id"]: m["cost"] for m in CAP.available(g)}
+    assert prices["army_dinner"] == 8 + 2 * CAP.INFLATION
+    assert CAP.note_use is not None
+    CAP.note_use(g, "army_dinner")
+    assert CAP.cost_of(g, CAP.MOVES[0]) == 8 + 3 * CAP.INFLATION
+    # one favour per year: the command bar cannot buy the court back twice
+    g.capital_year = g.year
+    before = g.influence
+    engine.run_capital(g)
+    assert g.influence == before
+
+
+def t_politburo_agenda():
+    from kreml.content import agenda as A
+    g = Kremlin(0)
+    g.court = {"old_guard": 20, "reformers": 62, "military": 30}
+    ag = A.open_agenda(g)
+    assert ag["faction"] == "reformers"        # the strongest ask, not the weakest
+    assert ag["stat"] in ("ECONOMY", "FAITH", "PRESTIGE")
+    margin = A.terms("medium")["margin"]
+    drift = MODES["medium"]["drift"][g.era].get(ag["stat"], 0)
+    assert ag["target"] == max(18, min(92, g.stats[ag["stat"]] + drift + margin))
+    assert A.describe(ag).startswith(ag["stat"])
+    # the favour market tightens with the difficulty (a flat reward was farmable)
+    rewards = [A.terms(m)["reward"] for m in ("easy", "medium", "hard", "extreme")]
+    assert rewards == sorted(rewards, reverse=True) and rewards[0] > rewards[-1]
+    # met: capital paid, table cleared
+    g.agenda = {"faction": "military", "stat": "MILITARY", "target": 60,
+                "text": "x", "met": None}
+    g.stats["MILITARY"] = 60
+    g.influence = 5
+    engine._settle_agenda(g)
+    assert g.influence == 5 + A.terms("medium")["reward"] and g.agenda is None
+    assert g.agenda_log
+    # missed: the faction remembers
+    g.agenda = {"faction": "reformers", "stat": "ECONOMY", "target": 90,
+                "text": "x", "met": None}
+    court0, faith0 = g.court["reformers"], g.stats["FAITH"]
+    engine._settle_agenda(g)
+    assert g.court["reformers"] == max(0, court0 - 5)
+    assert g.stats["FAITH"] == faith0          # an internal quota, not a promise
+    # mercy rule: a faction with nothing left withdraws its demand instead
+    g.agenda = {"faction": "old_guard", "stat": "ORDER", "target": 90,
+                "text": "x", "met": None}
+    g.court["old_guard"] = 20
+    engine._settle_agenda(g)
+    assert g.court["old_guard"] == 20
+
+
+def t_standing_order():
+    from kreml.content import orders as O
+    ev = type("E", (), {"hesitate": {"stats": {"ORDER": -2}}})()
+    g = Kremlin(0)
+    assert O.instinct(g, ev) == {"stats": {"ORDER": -2}}
+    g.order = "order_discipline"
+    assert O.instinct(g, ev)["stats"]["ORDER"] == 2
+    before = dict(g.stats)
+    engine.apply_drift(g)
+    assert g.stats["ORDER"] == before["ORDER"]        # -1 era, +1 doctrine
+    assert g.stats["FAITH"] == before["FAITH"] - 2
+    engine.apply_systems(g)
+    assert g.influence == 9                            # +1 yearly trickle
+
+
+def t_clock_and_hesitation():
+    from kreml import ui
+    g = Kremlin(0)
+    ev = type("E", (), {"title": "T", "clock": 8,
+                       "hesitate": {"stats": {"ORDER": -3}}})()
+    assert ui.TIMED is False
+    assert engine._seconds_for(g, ev) is None          # no clock by default
+    ui.TIMED = True
+    try:
+        assert engine._seconds_for(g, ev) == 8.0
+        g.flags.add("crisis_team")
+        assert engine._seconds_for(g, ev) == 10.0      # capital buys seconds
+        policy = Kremlin(0, mode="flash")
+        assert engine._seconds_for(policy, type("E", (), {"clock": 0})()) == 9.0
+    finally:
+        ui.TIMED = False
+    g.order = "order_reform"
+    before = dict(g.stats)
+    assert engine._hesitate(g, ev) == "ok"
+    assert g.hesitations == 1
+    assert g.stats["ECONOMY"] == before["ECONOMY"] + 2
+    assert g.stats["FAITH"] == before["FAITH"] - 1
+    assert g.ledger[-1][1].endswith("hesitated")
+
+
+def t_v6_content_wiring():
+    from kreml.content import events as EV
+    from kreml.content import actions as AC
+    from kreml.content import press as PR
+    pooled = {eid for ids in EV.RANDOM_POOLS.values() for eid in ids}
+    flash = [e for e in EV.EVENTS.values() if getattr(e, "clock", 0)]
+    assert len(flash) >= 4, [e.id for e in flash]
+    for ev in flash:
+        assert ev.id in pooled, ev.id
+        assert ev.hesitate, ev.id
+    g = Kremlin(0)
+    g.year = 1972
+    ids = {d.id for _, ds in DR.available_directives(g) for d in ds}
+    assert "consumer_credit" in ids and "food_programme" not in ids
+    g.year = 1986
+    ids = {d.id for _, ds in DR.available_directives(g) for d in ds}
+    assert "televised_presser" in ids and "mir_station" in ids
+    g.flags.add("helsinki")
+    ids = {d.id for _, ds in DR.available_directives(g) for d in ds}
+    assert "helsinki_followup" in ids
+    focus = {a.id for a in AC.available_actions(g)}
+    assert {"party_archive", "kitchen_table", "valas_audit"} <= focus
+    assert any(p["id"] == "night_alarm" for p in PR.PRESS)
+
+
+def t_capital_and_order_commands():
+    original = engine.ui.ask_choice
+    g = Kremlin(0)
+    g.influence = 30
+    engine.ui.ask_choice = lambda *a, **k: 1
+    try:
+        engine.run_capital(g)
+        assert g.influence == 22                  # the general staff dinner: 8 ❖
+        assert g.court["military"] > 50
+        engine.run_order(g)
+        assert g.order == "order_discipline"
+        assert g.court["old_guard"] > 50
+        assert g.ledger[-1][1].startswith("doctrine:")
+    finally:
+        engine.ui.ask_choice = original
+
+
+def t_timed_prompt_path():
+    import builtins
+    from kreml import ui
+    rng = __import__("random").Random(0)
+    real_reader = ui.TIMED_READER
+    ui.TIMED = True
+    try:
+        ui.TIMED_READER = lambda prompt, seconds: None   # the clock wins
+        assert ui.ask_choice("  ❯ t: ", 3, rng, seconds=0.01) == -1
+        ui.TIMED_READER = lambda prompt, seconds: "2"
+        assert ui.ask_choice("  ❯ t: ", 3, rng, seconds=9) == 2
+        ui.TIMED_READER = lambda prompt, seconds: "nonsense"
+        real_input = builtins.input
+        builtins.input = lambda prompt="": "3"           # patient fallback
+        try:
+            assert ui.ask_choice("  ❯ t: ", 3, rng, seconds=9) == 3
+        finally:
+            builtins.input = real_input
+    finally:
+        ui.TIMED_READER = real_reader
+        ui.TIMED = False
+
+
+def t_terminal_clock_reader():
+    import io as _io
+    import os
+    from contextlib import redirect_stdout
+    from kreml import ui
+    if os.name != "nt":
+        return                       # the live countdown is a Windows path
+    keys = ["2", "\r"]
+
+    class Kb:
+        @staticmethod
+        def kbhit():
+            return bool(keys)
+
+        @staticmethod
+        def getwch():
+            return keys.pop(0)
+
+    old_sleep = ui.time.sleep
+    ui.time.sleep = lambda *_: None
+    buf = _io.StringIO()
+    try:
+        with redirect_stdout(buf):
+            assert ui._read_timed_msvcrt("  ❯ t: ", 5, kb=Kb(),
+                                         now=lambda: 0.0) == "2"
+            assert ui._read_timed_msvcrt("  ❯ t: ", 0, kb=Kb(),
+                                         now=lambda: 0.0) is None
+    finally:
+        ui.time.sleep = old_sleep
+    assert "\u23f1" in buf.getvalue(), "the reader must draw a countdown"
+
+
+def t_posix_clock_reader():
+    """The Linux/macOS reader is testable on any OS when injected."""
+    import io as _io
+    from contextlib import redirect_stdout
+    from kreml import ui
+    keys = ["2", "\r"]
+
+    def reader(timeout):
+        return keys.pop(0) if keys else ""
+
+    old_sleep = ui.time.sleep
+    ui.time.sleep = lambda *_: None
+    buf = _io.StringIO()
+    try:
+        with redirect_stdout(buf):
+            assert ui._read_timed_posix("  ❯ t: ", 5, read_char=reader,
+                                        now=lambda: 0.0) == "2"
+            assert ui._read_timed_posix("  ❯ t: ", 0, read_char=reader,
+                                        now=lambda: 0.0) is None
+    finally:
+        ui.time.sleep = old_sleep
+    assert "\u23f1" in buf.getvalue(), "the POSIX reader must draw a countdown"
+
+
 def main() -> int:
     check("queued delayed event fires next year", t_queued_event)
     check("dacha rest halves next event damage", t_rested_softening)
@@ -764,7 +1081,7 @@ def main() -> int:
     check("coup failure collapses", t_coup_failure)
     check("coup success sets flag", t_coup_success_flags)
     check("war attrition applies", t_war_attrition)
-    check("era detection & clamping", t_erа_and_clamps)
+    check("era detection & clamping", t_era_and_clamps)
     check("congress replaces its year", t_congress_year)
     check("chernobyl hidden flag option", t_chernobyl_and_congress_1986)
     check("difficulty drift & reserves", t_difficulty_drift)
@@ -786,7 +1103,7 @@ def main() -> int:
     check("red millennium outcome bonuses", t_red_millennium_outcome)
     check("new events, valas directives", t_new_events_and_directives)
     # ── v5 ──
-    check("five modes + v4 alias", t_five_modes)
+    check("six modes + flash clock", t_six_modes)
     check("timeline presets apply", t_timeline_application)
     check("plan fatigue scaling", t_fatigue_scaling)
     check("divergence forks fire once", t_fork_fires_once)
@@ -799,6 +1116,19 @@ def main() -> int:
     check("chain reactions wired", t_chain_reactions_wired)
     check("grumbling court & glut pressure", t_grumble_costs_and_glut_pressure)
     check("ui visuals: bars, sparklines, panels", t_ui_visuals)
+    # ── v6 ──
+    check("influence currency & requirements", t_influence_currency)
+    check("political capital moves", t_capital_moves)
+    check("politburo agenda met/missed", t_politburo_agenda)
+    check("standing order: drift & instinct", t_standing_order)
+    check("clock, hesitation, doctrine", t_clock_and_hesitation)
+    check("v6 content wiring", t_v6_content_wiring)
+    check("capital & order command flows", t_capital_and_order_commands)
+    check("timed prompt: timeout & answer", t_timed_prompt_path)
+    check("terminal clock: live countdown reader", t_terminal_clock_reader)
+    check("posix clock: cbreak countdown reader", t_posix_clock_reader)
+    check("capital: favours inflate when repeated", t_capital_inflation)
+    check("posix clock: termios branch (faked OS)", t_posix_termios_branch)
     failed = [r for r in results if not r[1]]
     for name, ok, err in results:
         print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" — {err}" if err else ""))
