@@ -1,0 +1,2004 @@
+
+
+        ★  ☭  ★
+   К Р Е М Л Ь
+      1 9 9 1
+
+     V E R S I O N  6
+
+  A GENERAL SECRETARY ALTERNATE-HISTORY SIMULATOR
+  1964 ────────────── ► 1991   (+ the RED MILLENNIUM, 2001)
+
+  The Politburo awaits your signature, Comrade.
+
+ ══ HALL OF FAME (last records) ══
+   2026-10-28 | Nikolai Vetrov | SURVIVED · BALANCED | score 405 | Hero of Socialist Labour (twice)
+   2026-10-28 | fauziin lafazrohabsy | COLLAPSED · SWEEPING REFORMS | score 146 | Removed from the portraits
+
+  Before the year begins, the Politburo asks a few questions.
+
+  ✦ Difficulty set: BALANCED — 3 crisis reserves.
+
+  ✦ Timeline: RAILS OF HISTORY — 1964 to 1991.
+
+  Your name for the history books: Lazar Fiend
+
+   1. Appointed by the Old Guard
+      Order +6, Faith −4, Economy +2. Stalinesque paperwork welcomes you.
+   2. Balanced committee choice
+      A quiet vote. The dacha stays as it is.
+   3. Dark-horse reformer
+      Faith +6, Prestige +4, Order −8. The Old Guard sharpens its teeth.
+  ❯ Your mandate: 3
+
+  ☭ Welcome, Lazar Fiend. The Union is yours. Try not to lose it.
+
+  EVERY YEAR: a personal focus, a public directive, and the year's
+  v6 adds the clock: 'i' spends political capital, 'o' sets the doctrine
+  that answers for you when a flash crisis freezes the room.
+  crisis event(s). The command bar between years: s = save game,
+  l = load, d = dossier (timeline & road map), q = retire.
+  Watch TWO extra skies: the valas reserve (the world market pays/hauls)
+  and the Politburo moods (Old Guard · Reformers · Army). A faction in
+  despair will book the velvet meeting room. Keep all gauges alive.
+  Repeating one lever every year goes STALE: vary the plan, or it pays less.
+
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1964 ☭
+  Khrushchev has been 'retired for reasons of health'. The Central Committee looks to you.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Khrushchev falls; China tests its first bomb; the Vietnam war widens.
+  │ 🏠 Bread 24 kopecks, a tram 3; the queues start before the shops.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ Gosplan wants 55 on the economy line by December, or an explanation.
+  │ now ECONOMY 55 → target 55
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1964  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ████████████████▌░░░░░░░░░░░░░  55
+   Military  (Red Army)   █████████████████████░░░░░░░░░  70
+   Order     (Control)    ████████████████████▏░░░░░░░░░  67
+   People    (Belief)     █████████████████▍░░░░░░░░░░░░  58
+   Prestige  (World)      ███████████████████▊░░░░░░░░░░  66
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   ███████████████░░░░░░░░░░░░░░░  50 ·  oil SOFT 
+   Politburo Old Guard ██▎░░░  38 · Reformers ███▌░░  58 · Army ███░░░  50
+   Political capital      ··········   8
+   Agenda                 ECONOMY ≥ 55 (reformers)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲2 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▲1 | ORDER ▲7 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Vodka Shortage
+  Distilleries ship crates but shop windows are dry. Queueing men hum mourning songs.
+  └────────────────────────────────────────┘
+    1. Ration via Party stores
+       The queues thin; the grumbling thickens.
+    2. Import rum confidence from Cuba
+       Rum bottles arrive; confidence arrives later.
+    3. Deny the problem entirely
+       Pravda announces a surplus of patience and grain spirit.
+  ❯ Your decision: 1
+   ( ORDER ▲1 | FAITH ▼2 )
+  ✔ Agenda met: ECONOMY ≥ 55 (reformers). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1965 ☭
+  The Kosygin reforms dangle before Gosplan: profit, accountability... heresy?
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 US Marines land at Da Nang; Singapore leaves Malaysia.
+  │ 🏠 Kosygin's profit experiment fills Pravda's letters page.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Foreign Ministry wants 64 in the world's eyes before the summit.
+  │ now PRESTIGE 63 → target 64
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1965  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ████████████████▊░░░░░░░░░░░░░  56 ▄·
+   Military  (Red Army)   ████████████████████▊░░░░░░░░░  69 ▄·
+   Order     (Control)    ██████████████████████▎░░░░░░░  74 ▄·
+   People    (Belief)     ███████████████▋░░░░░░░░░░░░░░  52 ▄·
+   Prestige  (World)      ██████████████████▉░░░░░░░░░░░  63 ▄·
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   ██████████████▍░░░░░░░░░░░░░░░  48 ▄ ·  oil SOFT ▄
+   Politburo Old Guard ██▊░░░  45 · Reformers ███▏░░  53 · Army ██▉░░░  47
+   Political capital      ❖·········  12
+   Agenda                 PRESTIGE ≥ 64 (reformers)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲2 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ORDER ▲6 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 2x): gains at 85%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Coal Strike in Kuzbass
+  Miners list grievances: boots, bread, and a ration coupon of dignity.
+  └────────────────────────────────────────┘
+    1. Send boots and meat
+       Mittens arrive wearing slogans. Back to work.
+    2. Send the Internal Troops
+       The pit resumes; so does the whispering.
+    3. Pretend it didn't happen
+       Western newspapers run a headline you cannot see.
+  ❯ Your decision: 1
+   ( ECONOMY ▼3 | FAITH ▲2 )
+  ✖ Agenda missed: PRESTIGE ≥ 64 (reformers). Reformers lose 5 patience.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1966 ☭
+  The World Festival of Youth prepares to flood Tbilisi with Western music.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 The Cultural Revolution begins in China; the first artificial heart.
+  │ 🏠 The Volga plant ships its millionth car; spare parts stay theoretical.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 80 by the plenum, or a resignation.
+  │ now ORDER 79 → target 80
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1966  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ███████████████▉░░░░░░░░░░░░░░  53 █▁·
+   Military  (Red Army)   ████████████████████▍░░░░░░░░░  68 █▁·
+   Order     (Control)    ███████████████████████▊░░░░░░  79 ▁█·
+   People    (Belief)     ███████████████░░░░░░░░░░░░░░░  50 █▁·
+   Prestige  (World)      ██████████████████░░░░░░░░░░░░  60 █▁·
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   █████████████▊░░░░░░░░░░░░░░░░  46 █▁ ·  oil SOFT ▄▄
+   Politburo Old Guard ███▏░░  52 · Reformers ██▋░░░  43 · Army ██▋░░░  44
+   Political capital      ❖·········  12
+   Agenda                 ORDER ≥ 80 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲2 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▲1 | ORDER ▲5 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 3x): gains at 70%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Three-Shift Experiment
+  A young director proposes running the plant around the clock, with the profits staying in the plant. Two ministries have opinions.
+  └────────────────────────────────────────┘
+    1. Let him try it for a year
+       Output climbs; the ministry's statistics climb more slowly.
+    2. Approve it, but take the profits
+       The plant works nights and the budget works days.
+    3. Decline: the plan is the plan
+       The director is promoted sideways, with a diploma.
+  ❯ Your decision: 1
+   ( ECONOMY ▲4 | ORDER ▼1 )
+   ( ⚑rota )
+  ✔ Agenda met: ORDER ≥ 80 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1967 ☭
+  The fiftieth anniversary of October is celebrated with parades and fresh paint.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 The Six-Day War; the first heart transplant, in Cape Town.
+  │ 🏠 The fiftieth anniversary of October is printed in two colours.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 83 by the plenum, or a resignation.
+  │ now ORDER 82 → target 83
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1967  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    █████████████████▍░░░░░░░░░░░░  58 ▅▁█·
+   Military  (Red Army)   ████████████████████▏░░░░░░░░░  67 █▅▁·
+   Order     (Control)    ████████████████████████▋░░░░░  82 ▁▅█·
+   People    (Belief)     █████████████▊░░░░░░░░░░░░░░░░  46 █▆▁·
+   Prestige  (World)      █████████████████▏░░░░░░░░░░░░  57 █▅▁·
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   █████████████▎░░░░░░░░░░░░░░░░  44 █▅▁ ·  oil SOFT ▁▁█
+   Politburo Old Guard ███▍░░  57 · Reformers ██▋░░░  43 · Army ██▋░░░  43
+   Political capital      ❖·········  16
+   Agenda                 ORDER ≥ 83 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲2 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼1 | ORDER ▲4 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 4x): gains at 55%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Coal Strike in Kuzbass
+  Miners list grievances: boots, bread, and a ration coupon of dignity.
+  └────────────────────────────────────────┘
+    1. Send boots and meat
+       Mittens arrive wearing slogans. Back to work.
+    2. Send the Internal Troops
+       The pit resumes; so does the whispering.
+    3. Pretend it didn't happen
+       Western newspapers run a headline you cannot see.
+  ❯ Your decision: 1
+   ( ECONOMY ▼3 | FAITH ▲2 )
+  ✔ Agenda met: ORDER ≥ 83 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1968 ☭
+  Tanks are idling outside Prague. Dubček talks of 'socialism with a human face'.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Prague Spring ends under tanks; Paris erupts; Apollo 8 orbits the Moon.
+  │ 🏠 Students queue for jazz records and hide the sleeves in textbooks.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 86 by the plenum, or a resignation.
+  │ now ORDER 85 → target 86
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1968  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ████████████████▎░░░░░░░░░░░░░  54 ▅▁█▂·
+   Military  (Red Army)   ███████████████████▊░░░░░░░░░░  66 █▆▃▁·
+   Order     (Control)    █████████████████████████▌░░░░  85 ▁▄▆█·
+   People    (Belief)     █████████████▎░░░░░░░░░░░░░░░░  44 █▆▃▁·
+   Prestige  (World)      ████████████████▎░░░░░░░░░░░░░  54 █▆▃▁·
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   ████████████▋░░░░░░░░░░░░░░░░░  42 █▆▃▁ ·  oil SOFT ▁▁▅█
+   Politburo Old Guard ███▊░░  62 · Reformers ██▍░░░  40 · Army ██▍░░░  40
+   Political capital      ❖❖········  20
+   Agenda                 ORDER ≥ 86 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▲1 | ORDER ▲3 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 5x): gains at 45%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Prague Spring, 1968
+  Dubček insists on 'socialism with a human face'. The Politburo faces faces.
+  └────────────────────────────────────────┘
+    1. Send tanks in
+       Operation Danube proceeds. The word 'normalization' acquires teeth.
+    2. Negotiate with Dubček
+       Talks in Czech. Kissinger takes notes; the Party upholsters itself.
+    3. Pressure him to end reforms
+       Letters and telephone calls accomplish partial awkwardness.
+  ❯ Your decision: 1
+   ( ORDER ▲4 | FAITH ▼3 | PRESTIGE ▼5 )
+   ( ⚑prague_tanks )
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ FORK: WHAT PRAGUE MEANS
+  The tanks are gone or never went. The Politburo wants one sentence that defines the next twenty years of doctrine.
+  └────────────────────────────────────────┘
+    1. Follow the tanks with a doctrine
+       The Brezhnev Doctrine gets a name, a border, and a budget line.
+    2. Turn Prague into a negotiation table
+       Socialism keeps its human face; the apparatus keeps its doubts.
+    3. Say nothing and let the dust settle
+       Silence, filed under 'doctrine, provisional'.
+  ❯ Your decision: 1
+   ( ORDER ▲4 | FAITH ▼3 | PRESTIGE ▼2 )
+   ( ⚑path_hardline )
+  ✔ Agenda met: ORDER ≥ 86 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1969 ☭
+  Border clashes crackle along the Ussuri river. Mao is not a friend.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Apollo 11 lands; Woodstock; Sino-Soviet border clashes.
+  │ 🏠 A colour television broadcast runs forty minutes and is a triumph.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «LE MONDE» — The Doctrine Gets a Second Volume
+    Tanks, again, and a paragraph explaining why last time was different.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 97 → target 92
+  └──────────────────────────────────────────────────────
+
+  ⚠ A gauge met the red line (FAITH).
+  The Politburo still holds 3 reserve(s). Spend one?
+   1. Inject currency reserves into Gosplan
+       Soviet gold quietly covers three months of shelves.
+   2. Emergency KGB sweep
+       Telephones tremble; order firms up for a season.
+   3. Nationwide subsidy & payout
+       Bread prices held; gratitude ripples through the queue.
+   4. Accelerate strategic missile upgrades
+       New warheads gleam; the general staff straightens its backs.
+    0. Keep the reserve
+  ❯ Reserve decision: 
+  ✗ That dossier is off the table. Choose again.
+  ❯ Reserve decision: 1
+   ( ECONOMY ▲7 | PRESTIGE ▼1 )
+  ▸ Reserve spent. 2 left.
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1969  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████████▎░░░░░░░░░░░  61 ▅▁█▂▂▲
+   Military  (Red Army)   ███████████████████▌░░░░░░░░░░  65 █▆▅▃▁·
+   Order     (Control)    █████████████████████████████▏  97 ▁▃▃▄█·
+   People    (Belief)     █████████▉░░░░░░░░░░░░░░░░░░░░  33 █▇▆▅▁·
+   Prestige  (World)      ████████████▉░░░░░░░░░░░░░░░░░  43 █▇▆▅▁▼
+   Kremlin reserves (lifelines · BALANCED): ● ● ◦ 
+   Valas     (gold & $)   ████████████░░░░░░░░░░░░░░░░░░  40 █▆▅▃▁ ·  oil STEADY ▁▁▅██
+   Politburo Old Guard ████▎░  71 · Reformers █▉░░░░  31 · Army ██▍░░░  39
+   Political capital      ❖❖········  24
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼1 | ORDER ▲2 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 6x): gains at 35%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Ussuri River Border Clashes
+  Sino-Soviet skirmishes on Damansky Island. Mao recites ancient insults.
+  └────────────────────────────────────────┘
+    1. Mass troops at the border
+       Red banners face red banners. Somewhere, a colonel's phone rings.
+    2. Secret talks in Beijing
+       Two delegations exchange tea and veiled rationales.
+    3. Broadcast propaganda only
+       Radio Moscow explains the Chinese perfidy in four dialects.
+  ❯ Your decision: 1
+   ( ECONOMY ▼3 | MILITARY ▲3 | PRESTIGE ▼1 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1970 ☭
+  Zorki cameras and Zil trucks roll out. The N1 moon rocket awaits its next flight.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Biafra surrenders; the Boeing 747 enters service; Allende wins Chile.
+  │ 🏠 The Lenin centenary is celebrated with a new metro station.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Apparatus Approves
+    A rare mood in Moscow's corridors: quiet, well-fed satisfaction.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+
+  ⚠ A gauge met the red line (FAITH).
+  The Politburo still holds 2 reserve(s). Spend one?
+   1. Inject currency reserves into Gosplan
+       Soviet gold quietly covers three months of shelves.
+   2. Emergency KGB sweep
+       Telephones tremble; order firms up for a season.
+   3. Nationwide subsidy & payout
+       Bread prices held; gratitude ripples through the queue.
+   4. Accelerate strategic missile upgrades
+       New warheads gleam; the general staff straightens its backs.
+    0. Keep the reserve
+  ❯ Reserve decision: 
+  ✗ That dossier is off the table. Choose again.
+  ❯ Reserve decision: 1
+   ( ECONOMY ▲7 | PRESTIGE ▼1 )
+  ▸ Reserve spent. 1 left.
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1970  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████████▋░░░░░░░░░░░  62 ▅▁█▂▂▄▲
+   Military  (Red Army)   ████████████████████▏░░░░░░░░░  67 █▆▅▃▁▅·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▄▇█·
+   People    (Belief)     ████████▍░░░░░░░░░░░░░░░░░░░░░  28 █▇▆▆▂▁·
+   Prestige  (World)      ███████████▍░░░░░░░░░░░░░░░░░░  38 █▇▆▅▂▁▼
+   Kremlin reserves (lifelines · BALANCED): ● ◦ ◦ 
+   Valas     (gold & $)   ███████████▏░░░░░░░░░░░░░░░░░░  37 █▇▅▄▃▁ ·  oil STEADY ▁▁▃▆▆█
+   Politburo Old Guard ████▌░  74 · Reformers █▋░░░░  27 · Army ██▏░░░  36
+   Political capital      ❖❖········  28
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+   Defense
+     5. Military buildup  · New tanks, new rockets, new uniforms.
+     6. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     7. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     8. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+     9. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    10. KGB crackdown  · Silence is the mother of order... allegedly.
+    11. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    12. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    13. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    14. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▲1 | FAITH ▼3 | PRESTIGE ▼2 )
+  ▸ Directive issued: KGB crackdown
+  ▸ The plan is stale (used 7x): gains at 35%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ ☰ THE 1970 PLENUM: On Growth
+  The Central Committee gathers for grand strategy. One law of the decade gets signed here.
+  └────────────────────────────────────────┘
+    1. Sign the full Kosygin package
+       Profit indicators enter the law. Factory directors blink in the light.
+    2. Legislate organic stability
+       Order becomes a construction project with decades of blueprints.
+    3. Consumer offensive law
+       Britain's shelves seem far, but the road starts here.
+    4. Deterrence & arms law
+       The rocket forces gain a decade of budget arithmetic.
+  ❯ Your decision: 1
+   ( ECONOMY ▲6 | ORDER ▼2 | FAITH ▲2 )
+   ( ⚑kosygin_pilot )
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Dissident Samizdat
+  KGB agents seize nine mimeographed pages typed on onionskin.
+  └────────────────────────────────────────┘
+    1. Trial the editors
+       A show trial produces quiet applause and loud Western letters.
+    2. Let it slide
+       The pages pass hand to hand like legislative jokes.
+    3. Confine them to a psychiatric ward
+       Diagnosis: 'sluggish schizophrenia'. The typewriters register it.
+  ❯ Your decision: 1
+   ( ORDER ▲2 | FAITH ▼3 | PRESTIGE ▼2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1971 ☭
+  Gosplan meets for the Ninth Five-Year Plan. The Party breathes slow, thick smoke.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 India and Pakistan go to war; the microprocessor goes on sale.
+  │ 🏠 The Ninth Five-Year Plan promises 42 million apartments; concrete is ordered.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+
+  ⚠ A gauge met the red line (FAITH, PRESTIGE).
+  The Politburo still holds 1 reserve(s). Spend one?
+   1. Inject currency reserves into Gosplan
+       Soviet gold quietly covers three months of shelves.
+   2. Emergency KGB sweep
+       Telephones tremble; order firms up for a season.
+   3. Nationwide subsidy & payout
+       Bread prices held; gratitude ripples through the queue.
+   4. Accelerate strategic missile upgrades
+       New warheads gleam; the general staff straightens its backs.
+    0. Keep the reserve
+  ❯ Reserve decision: 
+  ✗ That dossier is off the table. Choose again.
+  ❯ Reserve decision: 1
+   ( ECONOMY ▲7 | PRESTIGE ▼1 )
+  ▸ Reserve spent. 0 left.
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1971  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████████████▎░░░░░░░  74 ▃▁▄▂▂▂█▲
+   Military  (Red Army)   ███████████████████▊░░░░░░░░░░  66 █▆▅▃▁▅▃·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▄▇██·
+   People    (Belief)     ██████▉░░░░░░░░░░░░░░░░░░░░░░░  23 ██▇▆▃▂▁·  ⚠ CRITICAL
+   Prestige  (World)      █████████▋░░░░░░░░░░░░░░░░░░░░  32 █▇▇▆▄▂▁▼
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   ██████████▎░░░░░░░░░░░░░░░░░░░  34 █▇▆▅▄▃▁ ·  oil SOFT ▁▁▃▆▆██
+   Politburo Old Guard ████▋░  77 · Reformers █▍░░░░  23 · Army ██░░░░  33
+   Political capital      ❖❖❖·······  32
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+   Defense
+     6. Military buildup  · New tanks, new rockets, new uniforms.
+     7. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     8. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+     9. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    10. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    11. KGB crackdown  · Silence is the mother of order... allegedly.
+    12. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    13. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    14. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    15. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▲1 | ORDER ▼1 | FAITH ▲3 | PRESTIGE ▲2 )
+  ▸ Directive issued: Culture, sport & education
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Vodka Shortage
+  Distilleries ship crates but shop windows are dry. Queueing men hum mourning songs.
+  └────────────────────────────────────────┘
+    1. Ration via Party stores
+       The queues thin; the grumbling thickens.
+    2. Import rum confidence from Cuba
+       Rum bottles arrive; confidence arrives later.
+    3. Deny the problem entirely
+       Pravda announces a surplus of patience and grain spirit.
+  ❯ Your decision: 1
+   ( ORDER ▲1 | FAITH ▼2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1972 ☭
+  Nixon flies to Moscow. SALT negotiations open over samovar tea.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Nixon in Moscow; SALT I signed; Watergate begins.
+  │ 🏠 Pepsi is bottled in Novorossiysk under a trade treaty.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1972  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    █████████████████████▉░░░░░░░░  73 ▂▁▃▁▁▂▆█·
+   Military  (Red Army)   ███████████████████▌░░░░░░░░░░  65 █▆▅▃▁▅▃▁·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▄▇███·
+   People    (Belief)     ██████▉░░░░░░░░░░░░░░░░░░░░░░░  23 ██▇▆▃▂▁▁·  ⚠ CRITICAL
+   Prestige  (World)      █████████▉░░░░░░░░░░░░░░░░░░░░  33 █▇▇▆▄▂▁▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   █████████▋░░░░░░░░░░░░░░░░░░░░  32 █▇▆▅▅▃▂▁ ·  oil STEADY ▁▁▃▆▆██▆
+   Politburo Old Guard ████▋░  77 · Reformers █▌░░░░  24 · Army █▉░░░░  32
+   Political capital      ❖❖❖·······  36
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     6. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     7. Military buildup  · New tanks, new rockets, new uniforms.
+     8. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+     9. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼3 | MILITARY ▲4 )
+  ▸ Directive issued: Professionalise the officer corps
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Gosplan's Tables Turn Negative
+  Planned growth produces negative growth in four ministries.
+  └────────────────────────────────────────┘
+    1. Tweak the plan numbers
+       Statistics find courage and rise a little.
+    2. Request foreign technology
+       Fiat diesels arrive at two pilot plants.
+    3. Blame managers, change none
+       Two ministers are 'transferred for health'.
+  ❯ Your decision: 1
+   ( ECONOMY ▼1 | FAITH ▼1 )
+  ⚠ The Reformers are booking your conference room. Whispers, Thursday.
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1973 ☭
+  The OPEC embargo sends oil prices soaring. Currency flows toward the Urals pipelines.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 The oil embargo; the October War; the Chilean coup.
+  │ 🏠 Petrol coupons appear; the dacha season is declared productive.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1973  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ████████████████████▏░░░░░░░░░  67 ▂▁▃▁▁▂▆█▆·
+   Military  (Red Army)   ████████████████████▍░░░░░░░░░  68 █▆▅▃▁▅▃▁▆·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▄▇████·
+   People    (Belief)     ██████▎░░░░░░░░░░░░░░░░░░░░░░░  21 ██▇▆▄▃▁▁▁·  ⚠ CRITICAL
+   Prestige  (World)      █████████▋░░░░░░░░░░░░░░░░░░░░  32 █▇▇▆▄▃▁▁▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   █████████░░░░░░░░░░░░░░░░░░░░░  30 █▇▆▆▅▄▃▂▁ ·  oil STEADY ▁▁▃▅▅▆▆▅█
+   Politburo Old Guard ████▋░  77 · Reformers █▍░░░░  22 ⚠PLOT · Army ██▎░░░  37
+   Political capital      ❖❖❖❖······  40
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. Sell gold reserves (quietly)  · The special export account refills; the Swiss suspect nothing loudly.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Great Party purge (show trials)  · Old comrades read confessions aloud. The archives expand.
+    11. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    12. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    13. KGB crackdown  · Silence is the mother of order... allegedly.
+    14. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    15. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    16. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    17. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼1 | FAITH ▼6 | PRESTIGE ▼4 )
+   ( ⚑purge )
+  ▸ Directive issued: Great Party purge (show trials)
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Golden Orlov Dacha
+  A Politburo member's new dacha grows a private boat dock. Rumours multiply.
+  └────────────────────────────────────────┘
+    1. Ignore, as always
+       The dock gains a second mooring.
+    2. Quietly reshuffle him
+       He becomes an ambassador with a lake view instead.
+    3. Public anti-corruption trial
+       People cheer. Officials elsewhere clear their desks.
+  ❯ Your decision: 1
+   ( FAITH ▼1 | PRESTIGE ▼1 )
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Velvet Meeting
+  The Politburo has reserved your own conference room for Thursday. Nobody will say what the agenda is. Everybody smiles too tightly.
+  └────────────────────────────────────────┘
+    1. Walk in and face the plenum
+       Room 14, third floor. Bring accomplices and everyone else.  ·  needs ORDER+MILITARY >= 115 or Old Guard >= 30 (yours: 168/87)
+    2. Buy the plenum off
+       Dachas, titles, and the radio timetable change hands.
+  ❯ Your decision: 1
+
+  ★ You walk into your own conference room and simply sit down.
+    The room re-decides, in eleven minutes, that this was always
+    the plan. The apparatus obeys. You remain General Secretary.
+   ( FAITH ▲4 | PRESTIGE ▲2 )
+   ( ⚑survived_plot )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1974 ☭
+  Voznesensky recites to packed stadiums. Western correspondents fill hotel lobbies.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Nixon resigns; Turkey invades Cyprus; India tests a bomb.
+  │ 🏠 The Baikal pulp mill starts; the scientists' letters are filed.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «NEW YORK TIMES» — The Show Trials Return to Moscow
+    Confessions are read with the punctuation of fear.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1974  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ███████████████████▌░░░░░░░░░░  65 ▂▁▃▁▁▂▆█▆▅·
+   Military  (Red Army)   ████████████████████▏░░░░░░░░░  67 █▆▅▃▁▅▃▁▆▅·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▄▇█████·
+   People    (Belief)     █████▏░░░░░░░░░░░░░░░░░░░░░░░░  17 ██▇▆▄▃▂▂▂▁·  ⚠ CRITICAL
+   Prestige  (World)      ████████▍░░░░░░░░░░░░░░░░░░░░░  28 █▇▇▆▄▃▂▂▂▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   █████████░░░░░░░░░░░░░░░░░░░░░  30 █▇▆▆▅▄▃▂▁▁ ·  oil BOOM ▁▁▁▂▂▂▂▂▂█
+   Politburo Old Guard █████▎  87 · Reformers █▊░░░░  30 · Army ██▍░░░  40
+   Political capital      ❖❖❖❖······  44
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. Sell gold reserves (quietly)  · The special export account refills; the Swiss suspect nothing loudly.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼1 | MILITARY ▲3 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 2x): gains at 85%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Coal Strike in Kuzbass
+  Miners list grievances: boots, bread, and a ration coupon of dignity.
+  └────────────────────────────────────────┘
+    1. Send boots and meat
+       Mittens arrive wearing slogans. Back to work.
+    2. Send the Internal Troops
+       The pit resumes; so does the whispering.
+    3. Pretend it didn't happen
+       Western newspapers run a headline you cannot see.
+  ❯ Your decision: 1
+   ( ECONOMY ▼3 | FAITH ▲2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1975 ☭
+  The Apollo–Soyuz docking is photographed as the world shrinks to one orbit.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Saigon falls; the Helsinki Final Act; the Apollo–Soyuz handshake.
+  │ 🏠 The new Constitution is read aloud; the queues keep their place.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1975  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████████░░░░░░░░░░░░  60 ▁▃▁▁▂▆█▆▅▃·
+   Military  (Red Army)   ████████████████████▊░░░░░░░░░  69 ▆▅▃▁▅▃▁▆▅█·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▃▇██████·
+   People    (Belief)     █████▏░░░░░░░░░░░░░░░░░░░░░░░░  17 █▇▇▄▃▂▂▂▁▁·  ⚠ CRITICAL
+   Prestige  (World)      ████████▏░░░░░░░░░░░░░░░░░░░░░  27 █▇▇▅▄▂▂▂▁▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   █████████▉░░░░░░░░░░░░░░░░░░░░  33 █▇▆▅▄▃▂▁▁▂ ·  oil BOOM ▁▁▁▁▂▂▁▂▅█
+   Politburo Old Guard █████▎  88 · Reformers █▊░░░░  30 · Army ██▋░░░  44
+   Political capital      ❖❖❖❖······  48
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. The Second Pipeline to Europe  · Urengoy sniffs out foreign wallets. Pumps, valves, deutschmarks.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼2 | MILITARY ▲3 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 3x): gains at 70%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Vodka Shortage
+  Distilleries ship crates but shop windows are dry. Queueing men hum mourning songs.
+  └────────────────────────────────────────┘
+    1. Ration via Party stores
+       The queues thin; the grumbling thickens.
+    2. Import rum confidence from Cuba
+       Rum bottles arrive; confidence arrives later.
+    3. Deny the problem entirely
+       Pravda announces a surplus of patience and grain spirit.
+  ❯ Your decision: 1
+   ( FAITH ▼2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1976 ☭
+  The Twenty-Fifth Party Congress convenes. Brezhnev reads written greetings to himself.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Mao dies; Viking lands on Mars; a MiG-25 defects to Japan.
+  │ 🏠 The black-market jeans trade is estimated at a million pairs a year.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «TIME» — Andropov's Long Shadow
+    Brezhnev-era paperwork meets the world's biggest oil bill.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1976  ☭  [MIDDLE · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    █████████████████▏░░░░░░░░░░░░  57 ▂▁▁▁▆█▆▅▃▂·
+   Military  (Red Army)   █████████████████████▎░░░░░░░░  71 ▃▂▁▃▂▁▅▃▆█·
+   Order     (Control)    ██████████████████████████████ 100 ▁▂▇███████·
+   People    (Belief)     ███▉░░░░░░░░░░░░░░░░░░░░░░░░░░  13 ██▅▄▃▃▃▂▂▁·  ⚠ CRITICAL
+   Prestige  (World)      ███████▊░░░░░░░░░░░░░░░░░░░░░░  26 █▇▅▄▃▃▂▁▁▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   ██████████▌░░░░░░░░░░░░░░░░░░░  35 █▇▆▅▃▂▁▁▃▄ ·  oil STEADY ▁▁▁▁▁▁▂▅█▇
+   Politburo Old Guard █████▍  90 · Reformers █▊░░░░  30 · Army ██▊░░░  46
+   Political capital      ❖❖❖❖❖·····  52
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. The Second Pipeline to Europe  · Urengoy sniffs out foreign wallets. Pumps, valves, deutschmarks.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼3 | MILITARY ▲2 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 4x): gains at 55%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ 03:12 — The Telephone
+  The duty officer's voice is very calm. The screen shows three tracks over the Arctic and the second confirmation has not arrived.
+  └────────────────────────────────────────┘
+    1. Order the regiments up, wake nobody
+       Tanks start in the snow. Nobody in the Politburo knows why.
+    2. Wake the Politburo and confirm together
+       Forty minutes of dialling; the tracks turn out to be weather.
+    3. Demand the raw telemetry first
+       A colonel reads numbers aloud until the sun comes up.
+  ❯ Your decision: (⏱ 8s) 1
+   ( ECONOMY ▼1 | MILITARY ▲2 )
+   ( ⚑night_alarm )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1977 ☭
+  A new Constitution praises the 'developed socialist society'. The archives multiply.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Elvis dies; the first personal computers ship; Voyager launches.
+  │ 🏠 Article 6 keeps the Party's monopoly, and the paper it is printed on.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «TIME» — Andropov's Long Shadow
+    Brezhnev-era paperwork meets the world's biggest oil bill.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1977  ☭  [MIDDLE · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ███████████████▋░░░░░░░░░░░░░░  52 ▂▂▂▆█▆▅▄▃▁·
+   Military  (Red Army)   ██████████████████████▎░░░░░░░  74 ▂▁▃▂▁▃▃▄▆█·
+   Order     (Control)    ██████████████████████████████ 100 ▁▇████████·
+   People    (Belief)     ███▎░░░░░░░░░░░░░░░░░░░░░░░░░░  11 █▆▅▄▄▃▂▂▁▁·  ⚠ CRITICAL
+   Prestige  (World)      ███████▌░░░░░░░░░░░░░░░░░░░░░░  25 █▆▄▃▃▃▂▁▁▁·
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   ██████████▊░░░░░░░░░░░░░░░░░░░  36 █▇▅▃▂▁▁▃▄▅ ·  oil STEADY ▁▁▁▁▁▁▅█▇▆
+   Politburo Old Guard █████▍  90 · Reformers █▊░░░░  29 · Army ██▊░░░  46
+   Political capital      ❖❖❖❖❖·····  56
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. The Second Pipeline to Europe  · Urengoy sniffs out foreign wallets. Pumps, valves, deutschmarks.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼3 | MILITARY ▲2 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 5x): gains at 45%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Grain Train Is Blocked
+  Eleven wagons of imported wheat stand at a junction while a district committee argues about whose plan they belong to.
+  └────────────────────────────────────────┘
+    1. Send a plenipotentiary with a rifle
+       The wagons move within the hour, and so do three resignations.
+    2. Bribe the junction with a fuel allocation
+       Diesel is political currency; the bread arrives warm.
+    3. Let the local committee decide
+       The argument becomes a precedent, and the precedent becomes a habit.
+  ❯ Your decision: (⏱ 12s) 1
+   ( FAITH ▼2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1978 ☭
+  The Central Committee drafts the blueprint of the next decade. Cameras, chips, grain.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Camp David; two popes in one year; China opens.
+  │ 🏠 The Siberian pipeline is laid at two kilometres a day.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «TIME» — Andropov's Long Shadow
+    Brezhnev-era paperwork meets the world's biggest oil bill.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1978  ☭  [MIDDLE · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████▏░░░░░░░░░░░░░░░  47 ▃▃▆█▆▆▅▄▂▁·
+   Military  (Red Army)   ██████████████████████▌░░░░░░░  75 ▁▂▂▁▃▂▄▅▇█·
+   Order     (Control)    ██████████████████████████████ 100 ▁█████████·
+   People    (Belief)     ██▏░░░░░░░░░░░░░░░░░░░░░░░░░░░   7 █▇▅▅▅▄▄▃▂▁·  ⚠ CRITICAL
+   Prestige  (World)      ███████▎░░░░░░░░░░░░░░░░░░░░░░  24 █▆▄▄▄▂▂▂▁▁·  ⚠ CRITICAL
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   ███████████▏░░░░░░░░░░░░░░░░░░  37 █▆▄▂▁▁▃▅▅▆ ·  oil STEADY ▁▁▁▁▁▅█▇▆▅
+   Politburo Old Guard █████▌  92 · Reformers █▋░░░░  28 · Army ██▉░░░  47
+   Political capital      ❖❖❖❖❖❖····  60
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. The Second Pipeline to Europe  · Urengoy sniffs out foreign wallets. Pumps, valves, deutschmarks.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼2 | MILITARY ▲1 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 6x): gains at 35%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ ☰ THE 1978 BLUEPRINT
+  The development congress drafts the middle-generation programme. One mission is chosen.
+  └────────────────────────────────────────┘
+    1. Siberian oil & gas blitz
+       Pipelines will finance something, someday, maybe.
+    2. Microelectronics academy
+       A generation learns binary arithmetic and jokes about clerks.
+    3. Grain sovereignty programme
+       Tractors queue to queue for tractors.
+    4. Ocean navy doctrine
+       Flags of steel splatter across the seven seas.
+  ❯ Your decision: 1
+   ( ECONOMY ▲5 | PRESTIGE ▲1 )
+   ( ⚑siberian )
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ The Grain Train Is Blocked
+  Eleven wagons of imported wheat stand at a junction while a district committee argues about whose plan they belong to.
+  └────────────────────────────────────────┘
+    1. Send a plenipotentiary with a rifle
+       The wagons move within the hour, and so do three resignations.
+    2. Bribe the junction with a fuel allocation
+       Diesel is political currency; the bread arrives warm.
+    3. Let the local committee decide
+       The argument becomes a precedent, and the precedent becomes a habit.
+  ❯ Your decision: (⏱ 12s) 1
+   ( FAITH ▼2 )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1979 ☭
+  Soviet advisors remain in Kabul while the Politburo argues about Hafizullah Amin.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Iran's revolution; Thatcher elected; Soviet tanks enter Kabul.
+  │ 🏠 Moscow prepares the Olympics; hotel rooms are counted twice.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE TIMES» — The Iron Hand Returns to Moscow
+    Order is up; so are the whispers in hotel lobbies.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 92 by the plenum, or a resignation.
+  │ now ORDER 100 → target 92
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1979  ☭  [MIDDLE · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    ██████████████▍░░░░░░░░░░░░░░░  48 ▃▆█▆▆▅▄▂▁▁·
+   Military  (Red Army)   ██████████████████████▌░░░░░░░  75 ▂▂▁▃▂▄▅▇██·
+   Order     (Control)    ██████████████████████████████ 100 ▄▄▄▄▄▄▄▄▄▄·
+   People    (Belief)     ▉░░░░░░░░░░░░░░░░░░░░░░░░░░░░░   3 █▇▇▆▅▅▄▃▂▁·  ⚠ CRITICAL
+   Prestige  (World)      ███████▎░░░░░░░░░░░░░░░░░░░░░░  24 █▅▅▅▃▂▂▁▁▁·  ⚠ CRITICAL
+   Kremlin reserves (lifelines · BALANCED): ◦ ◦ ◦ 
+   Valas     (gold & $)   ███████████▏░░░░░░░░░░░░░░░░░░  37 █▅▃▁▁▄▆▇██ ·  oil BOOM ▁▁▁▁▅█▇▆▅▅
+   Politburo Old Guard █████▊  95 · Reformers █▋░░░░  27 · Army ██▊░░░  46
+   Political capital      ❖❖❖❖❖❖····  64
+   Agenda                 ORDER ≥ 92 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 1
+   ( ECONOMY ▲1 )
+  ── YEARLY DIRECTIVE ──
+   Economy
+     1. Five-Year Plan: heavy industry  · Cement, steel, more cement.
+     2. Consumer goods & light industry  · Refrigerators, TVs, better shoes.
+     3. Agriculture reform  · Private plot concessions, tractors promised.
+     4. Oil & gas exports  · Purchases abroad with pipeline money.
+     5. The Second Pipeline to Europe  · Urengoy sniffs out foreign wallets. Pumps, valves, deutschmarks.
+     6. UNLEASH Kosygin 2.0 market reforms  · Profit indicators become law. Gosplan trembles.
+     7. Consumer credit & instalment shops  · Refrigerators on twenty-four months; the rouble learns patience.
+   Defense
+     8. Military buildup  · New tanks, new rockets, new uniforms.
+     9. Espionage & intelligence ops  · The KGB loves quiet paperwork.
+    10. Professionalise the officer corps  · Academies, staff tours, and fewer promotions by telephone.
+   Society
+    11. Culture, sport & education  · Libraries, stadiums, lyrical films.
+    12. KGB crackdown  · Silence is the mother of order... allegedly.
+    13. Relax censorship (soft glasnost)  · Let writers breathe a little.
+    14. Party discipline & propaganda  · Posters, meetings, correct slogans.
+   Foreign
+    15. Détente diplomacy  · Summits, treaties, handshakes.
+   Science
+    16. Space science & exploration  · Cosmonauts and robots on the Moon.
+    ( 0. Retire / resign )
+  ❯ Directive of the year: 10
+   ( ECONOMY ▼2 | MILITARY ▲1 )
+  ▸ Directive issued: Professionalise the officer corps
+  ▸ The plan is stale (used 7x): gains at 35%, costs unchanged.
+
+  ┌────────────── EVENT ───────────────────┐
+  ☈ Afghanistan: The Amin Problem
+  Herat burns. Taraki is dead. The Politburo holds three midnight sessions.
+  └────────────────────────────────────────┘
+    1. Intervene with the 40th Army
+       Soviet columns cross the Amu Darya. The mountains are patient.
+    2. Support the regime with materiel only
+       Mi-24s and advisers cross the border; columns do not.
+    3. Wash your hands of Kabul
+       Kabul resolves its arithmetic without you. For now.
+  ❯ Your decision: 1
+   ( ECONOMY ▼2 | MILITARY ▲4 | PRESTIGE ▼4 )
+   ( ⚑at_war )
+  ✔ Agenda met: ORDER ≥ 92 (old guard). Political capital +4.
+
+══════════════════════════════════════════════════════════════════════════════
+  ██ COLLAPSE, 1979 ██
+  Mass uprisings everywhere. Crowds carry portraits of nobody at all.
+══════════════════════════════════════════════════════════════════════════════
+  Governed years: 15   Final gauges → {'ECONOMY': 41, 'MILITARY': 77, 'ORDER': 100, 'FAITH': 0, 'PRESTIGE': 19}
+  Valas reserve: 39 · Politburo 96/26/47
+  Legacy score: 133 — Removed from the portraits
+   The doctrine of the hard line outlived the tanks that taught it.
+
+ ═══ DIVERGENCE REPORT — where you bent real history ═══
+   ☄ The 40th Army still grinds through the Afghan mountains.
+   ☄ Gosplan runs pilot plots where profit is legal.
+   ☄ Portraits were once again signed in blood.
+   ☄ The Siberian resource blitz became the decade's spine.
+   ☄ A velvet room one Thursday met you, and blinked.
+   ☄ The hard line became doctrine, then furniture.
+

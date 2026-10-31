@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Play КРЕМЛЬ 1991 in your browser — Soviet alternate-history game</title>
+<title>Play КРЕМЛЬ 1991 in your browser: the real Python game</title>
 <meta name="description" content="Play КРЕМЛЬ 1991 free in your browser, no install: run the Soviet Union as General Secretary from 1964 to 1991 — and into the Red Millennium of 2001. The real Python game, compiled to WebAssembly.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
@@ -13,104 +13,129 @@
 <meta property="og:url" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
 <meta property="og:image" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/media/shot_panel.jpg">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#c8102e">
+<meta name="theme-color" content="#171d19">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='85'>☭</text></svg>">
+<link rel="stylesheet" href="../assets/fonts.css">
+<link rel="stylesheet" href="../assets/tokens.css">
+<link rel="stylesheet" href="../assets/base.css">
 <style>
-  :root{
-    --red:#c8102e; --red-dark:#7a0b1e; --bg:#0d0d10; --panel:#15161a;
-    --ink:#e8e4da; --dim:#9a958b; --gold:#d4af37; --line:#26272d;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);line-height:1.55;
-    font-family:"Cascadia Mono","Consolas","DejaVu Sans Mono",ui-monospace,monospace}
-  a{color:var(--gold);text-decoration:none}
-  a:hover{color:#fff}
-  .wrap{max-width:1040px;margin:0 auto;padding:0 16px}
+/* Hallmark · shape: app screen · genre: atmospheric · theme: Terminal (deal 1/3, seed in-browser-play-kreml-1991-211d·b200046e·2026-10-30·r0)
+ * the page is the console: one panel signs the appointment, one panel runs it,
+ * square surfaces, hairline rules, phosphor accent. no photos on an app screen.
+ * control states (8): default / hover / active / focus-visible / disabled /
+ * [aria-pressed=true] / focus-within form / prefers-reduced-motion.
+ * sole engine glyph: the multiprompt caret, kept verbatim from the terminal build.
+ */
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--color-paper); color: var(--color-ink); font-family: var(--font-body); font-size: var(--text-md); font-stretch: var(--stretch-body); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+::selection { background: color-mix(in oklab, var(--color-accent) 22%, transparent); color: var(--color-ink); }
+:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.16em; }
+h1, h2, h3 { margin: 0; font-family: var(--font-display); font-weight: var(--display-weight); font-stretch: var(--stretch-display); line-height: 1.12; overflow-wrap: break-word; min-width: 0; }
+[hidden] { display: none !important; }
 
-  header{border-bottom:1px solid var(--line);background:#101115}
-  header .wrap{display:flex;align-items:center;justify-content:space-between;
-    gap:14px;flex-wrap:wrap;padding-top:12px;padding-bottom:12px}
-  .brand{font-weight:900;letter-spacing:2px;color:#fff;font-size:15px}
-  .brand b{color:var(--red)}
-  .nav{display:flex;gap:16px;font-size:13px;color:var(--dim)}
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); background: var(--color-ink); color: var(--color-paper); text-decoration: none; white-space: nowrap; }
+.skip:focus-visible { top: var(--space-md); }
 
-  main{padding:22px 0 40px}
+.wrap { max-width: var(--container); margin-inline: auto; padding-inline: var(--gutter); }
 
-  /* ── appointment (setup) ── */
-  .card{background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--red);
-    border-radius:10px;padding:22px;margin-bottom:18px}
-  .kick{color:var(--red);letter-spacing:3px;font-size:12px;font-weight:700}
-  h1{font-size:clamp(22px,3.4vw,30px);color:#fff;letter-spacing:1px;margin:6px 0 10px}
-  .lede{color:var(--dim);font-size:14px;max-width:70ch}
-  .row{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;margin-top:18px}
-  .group h3{font-size:12px;letter-spacing:2px;color:var(--dim);font-weight:700;margin-bottom:8px}
-  .chips{display:flex;flex-wrap:wrap;gap:8px}
-  .chip{background:#0b0b0e;border:1px solid var(--line);border-radius:6px;color:var(--ink);
-    padding:8px 12px;font:inherit;font-size:12.5px;letter-spacing:.4px;cursor:pointer;
-    transition:border-color .15s,color .15s,background .15s}
-  .chip:hover{border-color:#4a4b53}
-  .chip[aria-pressed="true"]{border-color:var(--gold);color:var(--gold);background:#171713}
-  .chip small{display:block;color:var(--dim);font-size:11px;letter-spacing:0;margin-top:2px}
-  .chip[aria-pressed="true"] small{color:#b9ad86}
-  .actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:20px}
-  .btn{background:var(--red);border:1px solid #e0283f;color:#fff;font:inherit;font-size:13.5px;
-    letter-spacing:1.2px;padding:11px 20px;border-radius:6px;cursor:pointer}
-  .btn:hover{background:#d8152f}
-  .btn:disabled{opacity:.5;cursor:wait}
-  .btn.ghost{background:transparent;border-color:#3a3b43;color:var(--ink)}
-  .btn.ghost:hover{border-color:var(--gold);color:var(--gold)}
-  .note{color:var(--dim);font-size:12px;margin-top:14px;max-width:78ch}
-  .note b{color:var(--ink);font-weight:400}
+/* ── nav: 56px, edge aligned, hairline ── */
+.sitehead { border-bottom: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); }
+.sitehead .wrap { display: flex; align-items: center; justify-content: space-between; gap: var(--space-md); min-height: 56px; flex-wrap: wrap; padding-block: var(--space-2xs); }
+.wordmark { font-weight: var(--display-weight); font-stretch: var(--stretch-display); font-size: var(--text-md); letter-spacing: 0.06em; color: var(--color-ink); text-decoration: none; white-space: nowrap; }
+.wordmark .uv { color: var(--color-muted); }
+.sitehead nav { display: flex; gap: var(--space-lg); }
+.sitehead nav a { font-size: var(--text-sm); color: var(--color-ink-2); text-decoration: underline dotted; text-decoration-color: var(--color-rule); text-underline-offset: 0.22em; }
+.sitehead nav a:hover { color: var(--color-accent); text-decoration-color: var(--color-accent); }
 
-  /* ── terminal ── */
-  .term{margin-top:6px}
-  .term .bar{display:flex;align-items:center;gap:10px;background:#1c1d22;
-    border:1px solid var(--line);border-bottom:0;border-radius:8px 8px 0 0;padding:8px 12px}
-  .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
-  .term .bar .title{font-size:12px;color:#8b8c94;letter-spacing:1px}
-  .term .bar .status{margin-left:auto;font-size:12px;color:var(--gold)}
-  #screen{background:#050506;border:1px solid var(--line);border-top:0;
-    padding:14px 16px;height:min(58vh,560px);overflow:auto;white-space:pre-wrap;
-    overflow-wrap:break-word;font-size:13.5px;line-height:1.45;color:#d8d4ca}
-  #screen .r{color:#ff6b6b} #screen .g{color:#7ee787} #screen .y{color:#ffd866}
-  #screen .b{color:#79c0ff} #screen .m{color:#e2a8ff} #screen .c{color:#76e3ea}
-  #screen .w{color:#ffffff} #screen .dim{color:#8b8c94} #screen .bold{font-weight:700}
-  #screen .err{color:#ff6b6b}
+main { padding-block: var(--space-xl) var(--space-3xl); }
 
-  .choices{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 0}
-  .choices:empty{display:none}
-  .choices button{background:#0b0b0e;border:1px solid #33343c;color:var(--ink);
-    border-radius:6px;padding:7px 11px;font:inherit;font-size:12.5px;cursor:pointer;
-    max-width:100%;text-align:left}
-  .choices button:hover{border-color:var(--gold);color:var(--gold)}
-  .choices button .n{color:var(--red);font-weight:700;margin-right:6px}
-  .choices button .d{color:var(--dim)}
+/* ── the appointment panel ── */
+.panel { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); padding: var(--space-xl); color: var(--color-ink); }
+.kick { color: var(--color-muted); font-size: var(--text-xs); letter-spacing: 0.02em; }
+.panel h1 { font-size: var(--text-title); margin-block: var(--space-xs) var(--space-sm); }
+.lede { color: var(--color-ink-2); font-size: var(--text-sm); line-height: 1.65; max-width: 68ch; }
+.lede code, .note code { font-family: var(--font-body); color: var(--color-ink); }
+.row { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--space-lg); margin-block-start: var(--space-lg); }
+.group h2 { font-size: var(--text-xs); font-weight: var(--display-weight); font-stretch: var(--stretch-display); color: var(--color-muted); margin-block: 0 var(--space-xs); }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-xs); }
+.chip { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); color: var(--color-ink); padding: var(--space-xs) var(--space-md); font: 400 var(--text-sm)/1.3 var(--font-body); font-stretch: var(--stretch-body); text-align: left; cursor: pointer; transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out), background-color var(--dur-short) var(--ease-out); }
+.chip:hover { border-color: var(--color-rule-2); color: var(--color-ink); }
+.chip:active { transform: translateY(1px); }
+.chip[aria-pressed="true"] { border-color: var(--color-accent); color: var(--color-accent); background: var(--color-accent-wash); }
+.chip small { display: block; color: var(--color-muted); font-size: var(--text-xs); letter-spacing: 0; margin-block-start: 2px; }
+.chip[aria-pressed="true"] small { color: color-mix(in oklab, var(--color-accent) 66%, var(--color-ink)); }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: var(--space-sm); margin-block-start: var(--space-lg); }
+.note { color: var(--color-muted); font-size: var(--text-xs); line-height: 1.6; margin-block-start: var(--space-md); max-width: 74ch; }
+.note b { color: var(--color-ink); font-weight: 500; }
 
-  form#answer{display:flex;gap:8px;align-items:center;margin-top:10px;
-    background:#0b0b0e;border:1px solid var(--line);border-radius:8px;padding:8px 10px}
-  form#answer .caret{color:var(--gold)}
-  #line{flex:1;background:transparent;border:0;outline:none;color:#fff;font:inherit;font-size:13.5px}
-  #line::placeholder{color:#5d5e66}
-  form#answer button{background:#1d1e24;border:1px solid #33343c;color:var(--ink);
-    font:inherit;font-size:12.5px;padding:6px 12px;border-radius:5px;cursor:pointer}
-  form#answer button:hover{border-color:var(--gold);color:var(--gold)}
+/* ── buttons ── */
+.btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-accent); background: var(--color-accent); color: var(--color-accent-ink); font: 500 var(--text-md)/1 var(--font-body); font-stretch: var(--stretch-body); white-space: nowrap; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn:hover { background: var(--color-accent-wash); color: var(--color-accent); }
+.btn:active { transform: translateY(1px); }
+.btn:disabled { background: var(--color-paper-3); color: var(--color-muted); border-color: var(--color-rule); cursor: wait; transform: none; }
+.btn.ghost:disabled { background: transparent; color: var(--color-muted); border-color: var(--color-rule); cursor: wait; }
+.btn.ghost { background: transparent; color: var(--color-ink-2); border-color: var(--color-rule-2); }
+.btn.ghost:hover { border-color: var(--color-accent); color: var(--color-accent); background: var(--color-paper-3); }
 
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px;align-items:center}
-  .toolbar .spacer{flex:1}
-  .muted{color:var(--dim);font-size:12px}
+/* ── the console ── */
+.term { margin-block-start: 0; }
+.bar { display: flex; align-items: center; gap: var(--space-md); background: var(--color-paper-3); border: var(--rule-hair) solid var(--color-rule); border-block-end: 0; padding: var(--space-xs) var(--space-md); }
+.bar .title { color: var(--color-muted); font-size: var(--text-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .status { margin-inline-start: auto; color: var(--color-accent); font-size: var(--text-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
+#screen { margin: 0; background: color-mix(in oklab, var(--color-paper) 78%, black); border: var(--rule-hair) solid var(--color-rule); padding: var(--space-md) var(--space-lg); height: min(62vh, 620px); overflow: auto; white-space: pre-wrap; overflow-wrap: break-word; font-family: var(--font-body); font-stretch: var(--stretch-body); font-size: var(--text-sm); line-height: 1.5; color: var(--color-ink); }
+#screen .r { color: var(--color-error); }
+#screen .g { color: var(--color-accent); }
+#screen .y { color: color-mix(in oklab, var(--color-accent) 45%, var(--color-error)); }
+#screen .b { color: color-mix(in oklab, var(--color-accent) 18%, var(--color-ink)); }
+#screen .m { color: color-mix(in oklab, var(--color-accent) 35%, var(--color-ink-2)); }
+#screen .c { color: color-mix(in oklab, var(--color-accent) 55%, var(--color-ink)); }
+#screen .w { color: var(--color-ink); }
+#screen .dim { color: var(--color-muted); }
+#screen .bold { font-weight: 700; }
+#screen .err { color: var(--color-error); }
 
-  footer{border-top:1px solid var(--line);padding:18px 0 30px;color:var(--dim);font-size:12px}
-  footer a{color:var(--gold)}
-  [hidden]{display:none !important}
+.choices { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-block-start: var(--space-sm); }
+.choices:empty { display: none; }
+.choices button { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule-2); color: var(--color-ink); padding: var(--space-2xs) var(--space-sm); font: 400 var(--text-sm)/1.35 var(--font-body); font-stretch: var(--stretch-body); max-width: 100%; text-align: left; cursor: pointer; transition: border-color var(--dur-short) var(--ease-out), color var(--dur-short) var(--ease-out); }
+.choices button:hover { border-color: var(--color-accent); color: var(--color-accent); }
+.choices button:active { transform: translateY(1px); }
+.choices button .n { color: var(--color-accent); font-weight: 500; margin-inline-end: var(--space-xs); }
+.choices button .d { color: var(--color-muted); }
+
+form#answer { display: flex; align-items: center; gap: var(--space-xs); margin-block-start: var(--space-sm); background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule); padding: var(--space-2xs) var(--space-sm); }
+form#answer:focus-within { border-color: var(--color-accent); }
+form#answer .caret { color: var(--color-accent); font-weight: 500; flex: none; }
+#line { flex: 1; min-width: 0; background: transparent; border: 0; outline: none; color: var(--color-ink); font: 400 var(--text-md)/1.4 var(--font-body); font-stretch: var(--stretch-body); padding-block: var(--space-2xs); }
+#line::placeholder { color: var(--color-muted); }
+#line:disabled { color: var(--color-muted); background: var(--color-paper-3); cursor: not-allowed; }
+form#answer button { background: var(--color-paper-3); border: var(--rule-hair) solid var(--color-rule-2); color: var(--color-ink-2); font: 500 var(--text-sm)/1 var(--font-body); padding: var(--space-2xs) var(--space-md); min-height: 34px; cursor: pointer; flex: none; }
+form#answer button:hover { border-color: var(--color-accent); color: var(--color-accent); }
+form#answer button:active { transform: translateY(1px); }
+
+.toolbar { display: flex; align-items: center; gap: var(--space-sm); flex-wrap: wrap; margin-block-start: var(--space-md); }
+.toolbar .spacer { flex: 1; }
+.toolbar .btn { min-height: 40px; padding: 0 var(--space-md); font-size: var(--text-sm); }
+.muted { color: var(--color-muted); font-size: var(--text-xs); }
+#hint { text-align: end; }
+
+.sitefoot { border-block-start: var(--rule-hair) solid var(--color-rule); background: var(--color-paper-2); padding-block: var(--space-lg); color: var(--color-muted); font-size: var(--text-xs); }
+.sitefoot p { margin: 0; }
+.sitefoot a { color: var(--color-ink-2); }
+
+@media (min-width: 60rem) { .row { grid-template-columns: 1fr 1fr; } }
+@media (prefers-reduced-motion: reduce) { .btn, .chip, .choices button, form#answer button { transition: none; } .btn:active, .chip:active, .choices button:active, form#answer button:active { transform: none; } }
 </style>
 </head>
 <body>
 
-<header>
+<a class="skip" href="#setup">Skip to the console</a>
+
+<header class="sitehead">
   <div class="wrap">
-    <div class="brand"><b>☭</b> КРЕМЛЬ 1991 <span class="muted">— web edition</span></div>
-    <nav class="nav">
-      <a href="../index.html">Landing page</a>
+    <a class="wordmark" href="../index.html">КРЕМЛЬ 1991 <span class="uv">web edition</span></a>
+    <nav aria-label="Site">
+      <a href="../index.html">Landing</a>
       <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source</a>
       <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">Download</a>
     </nav>
@@ -121,54 +146,54 @@
 
   <!-- ── the appointment ─────────────────────────────────────── -->
   <section id="setup">
-    <div class="card">
-      <div class="kick">ПОСТАНОВЛЕНИЕ ПОЛИТБЮРО</div>
+    <div class="panel">
+      <div class="kick">Politburo decree № 211</div>
       <h1>The Politburo awaits your signature, Comrade</h1>
-      <p class="lede">This is the real game — the same Python that runs in your terminal — compiled to
+      <p class="lede">This is the real game: the same Python that runs in your terminal, compiled to
       WebAssembly and running in this tab. Choose how harsh history should be and which decade you
-      inherit, then type your answers below the console. Nothing is installed, nothing is uploaded.</p>
+      inherit, then type your answers below the console. Nothing is installed; nothing is uploaded.
+      v6 adds <b>political capital</b> (<code>i</code>), <b>standing orders</b> (<code>o</code>), a
+      yearly <b>Politburo agenda</b> and a <b>wall clock</b>: when a decision is timed, the countdown
+      appears above the input, and at zero the room moves on without you.</p>
 
       <div class="row">
         <div class="group">
-          <h3>DIFFICULTY</h3>
+          <h2>Difficulty</h2>
           <div class="chips" id="modes" role="group" aria-label="Difficulty"></div>
         </div>
         <div class="group">
-          <h3>TIMELINE</h3>
+          <h2>Timeline</h2>
           <div class="chips" id="timelines" role="group" aria-label="Timeline"></div>
         </div>
       </div>
 
       <div class="actions">
-        <button class="btn" id="start">Take the appointment ▸</button>
+        <button class="btn" id="start">Take the appointment</button>
         <button class="btn ghost" id="resume" hidden>Continue last run</button>
         <span class="muted" id="bootnote">Loading Python…</span>
       </div>
-      <p class="note"><b>First load pulls about 12 MB</b> of Python (Pyodide) from a CDN, once per browser.
-      After that the game runs entirely offline in the tab. Deep runs work best on a desktop; the
-      terminal scrolls on a phone too.</p>
+      <p class="note"><b>First load pulls about 12 MB</b> of Python (Pyodide) from a CDN, once per browser;
+      after that the game runs entirely offline in the tab. Deep runs work best on a desktop.</p>
     </div>
   </section>
 
-  <!-- ── the terminal ────────────────────────────────────────── -->
+  <!-- ── the console ─────────────────────────────────────────── -->
   <section id="game" class="term" hidden>
     <div class="bar">
-      <i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i>
-      <i class="dot" style="background:#28c840"></i>
-      <span class="title" id="termtitle">kreml_1991 — python in the browser</span>
+      <span class="title" id="termtitle">kreml_1991 · python in the browser</span>
       <span class="status" id="status"></span>
     </div>
     <pre id="screen" aria-live="polite" aria-label="Game console"></pre>
     <div class="choices" id="choices"></div>
     <form id="answer" autocomplete="off">
-      <span class="caret">❯</span>
+      <span class="caret" aria-hidden="true">❯</span>
       <input id="line" type="text" placeholder="Type your answer, then Enter" aria-label="Your answer">
       <button type="submit">Enter</button>
     </form>
     <div class="toolbar">
       <button class="btn ghost" id="restart">New appointment</button>
       <span class="spacer"></span>
-      <span class="muted" id="hint">Enter submits · the buttons below the console pick a number for you</span>
+      <span class="muted" id="hint">Enter submits, or press a numbered button under the console</span>
     </div>
   </section>
 
@@ -176,10 +201,12 @@
     <b>python main.py</b> instead.</p></noscript>
 </main>
 
-<footer class="wrap">
-  <p>A Mahakam Moonlight Studio ☭ production — by
-    <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a>
-    and <b>Mr. Fozan</b>. MIT licence.</p>
+<footer class="sitefoot">
+  <div class="wrap">
+    <p>A Mahakam Moonlight Studio production, by
+      <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a>
+      and <b>Mr. Fozan</b>. MIT licence.</p>
+  </div>
 </footer>
 
 <script src="game_bundle.js"></script>

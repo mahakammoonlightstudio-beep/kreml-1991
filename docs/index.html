@@ -3,24 +3,24 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>КРЕМЛЬ 1991 — Soviet Union Alternate History Game (Text-Based, Python)</title>
-<meta name="description" content="КРЕМЛЬ 1991 is a free text-based Soviet Union alternate-history strategy game — play it in your browser or in the terminal. Rule the USSR as General Secretary from 1964 to 1991, or into the Red Millennium of 2001. Pure Python, no dependencies.">
+<title>КРЕМЛЬ 1991: a text-based Soviet Union alternate-history game (Python)</title>
+<meta name="description" content="КРЕМЛЬ 1991 is a free text-based Soviet Union alternate-history strategy game, playable in your browser or in the terminal. Rule the USSR as General Secretary from 1964 to 1991, or into the Red Millennium of 2001. Pure Python, no dependencies.">
 <meta name="keywords" content="Kremlin 1991, Soviet Union game, alternate history game, text based strategy game, Cold War simulator, terminal game, Python game, General Secretary, USSR simulator, political strategy game, free indie game, open source game">
 <meta name="author" content="mahakammoonlightstudio-beep, Mr. Fozan — Mahakam Moonlight Studio">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="КРЕМЛЬ 1991 — General Secretary">
-<meta property="og:title" content="КРЕМЛЬ 1991 — a text-based Soviet Union alternate-history game">
-<meta property="og:description" content="Play free in your browser: run the USSR as General Secretary, 1964–1991 — and into the Red Millennium of 2001. Five gauges, an oil-driven hard-currency vault and three factions that can remove you.">
+<meta property="og:title" content="КРЕМЛЬ 1991: a text-based Soviet Union alternate-history game">
+<meta property="og:description" content="Play free in your browser: run the USSR as General Secretary, 1964 to 1991, and into the Red Millennium of 2001. Five gauges, an oil-driven hard-currency vault and three factions that can remove you.">
 <meta property="og:url" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/">
 <meta property="og:image" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/media/shot_panel.jpg">
 <meta property="og:image:alt" content="The КРЕМЛЬ 1991 stat panel: five Soviet gauges, the valas reserve and three Politburo faction meters">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="КРЕМЛЬ 1991 — Soviet Union alternate-history game">
-<meta name="twitter:description" content="A free, text-based Cold War strategy game for your terminal. Rule the USSR 1964–1991, then the Red Millennium 1992–2001. python main.py">
+<meta name="twitter:description" content="A free, text-based Cold War strategy game for your terminal. Rule the USSR from 1964 to 1991, then the Red Millennium of 1992 to 2001. python main.py">
 <meta name="twitter:image" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/media/shot_panel.jpg">
-<meta name="theme-color" content="#c8102e">
+<meta name="theme-color" content="#0d0f0d">
 <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='80' font-size='85'>☭</text></svg>">
 <script type="application/ld+json">
 {
@@ -53,176 +53,417 @@
   "sameAs": ["https://github.com/mahakammoonlightstudio-beep/kreml-1991"]
 }
 </script>
+<script>document.documentElement.classList.add('js');</script>
 <style>
-  :root{
-    --red:#c8102e; --red-dark:#7a0b1e; --bg:#0d0d10; --panel:#15161a;
-    --ink:#e8e4da; --dim:#9a958b; --gold:#d4af37;
-  }
-  *{margin:0;padding:0;box-sizing:border-box}
-  body{background:var(--bg);color:var(--ink);font-family:"Courier New",ui-monospace,monospace;line-height:1.6}
-  a{color:var(--gold);text-decoration:none}
-  a:hover{color:#fff}
-  .wrap{max-width:1060px;margin:0 auto;padding:0 20px}
+/* Hallmark · shape: Narrative Workflow (draw 21df4c) · genre: atmospheric · theme: Terminal (deal 1/3, seed in-browser-play-kreml-1991-211d·b200046e·2026-10-30·r0) · job: try · draw: 21df4c
+ * hero: Counter (the action under a shorter head, the screen beneath) · nav: edge-aligned square (the dealt pill is refused: the theme forbids round surfaces) · footer: colophon block · imagery: none · signature: the real 1964 Politburo board, verbatim, full width under the action
+ * axes: dark/mono/chromatic-green · posture: committed · contrast: pass · fold: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S5 R4 V4 · weakest: P, the argument is "the page is the terminal"; the hero shows the product's own output, not a picture of it */
+/* Hallmark · answered F1 · the plain quotes are the game's own typewriter output, captured verbatim: colouring may stage it, retouching may not */
+/* Hallmark · gate note (floor 30a) · the locked-road cross from the engine's dossier is typeset with the multiplication sign instead of codepoint U+2716, which the gate blocks as pictographic; the ledger meaning, locked versus available, is untouched */
+@import url("./assets/fonts.css");
+@import url("./assets/tokens.css");
+@import url("./assets/base.css");
 
-  /* ── red top banner ── */
-  .banner{background:linear-gradient(180deg,#b10e28,#7a0b1e);border-bottom:4px solid #4d0612;
-    text-align:center;padding:52px 16px 44px;position:relative;overflow:hidden}
-  .banner:before{content:"☭";position:absolute;font-size:340px;color:rgba(0,0,0,.14);
-    left:-70px;top:-110px;transform:rotate(-12deg)}
-  .banner:after{content:"☭";position:absolute;font-size:340px;color:rgba(0,0,0,.14);
-    right:-70px;top:-110px;transform:rotate(12deg)}
-  .banner .star{color:var(--gold);letter-spacing:14px;font-size:15px}
-  .banner h1{font-size:clamp(44px,9vw,84px);letter-spacing:6px;color:#fff;
-    text-shadow:0 3px 0 rgba(0,0,0,.45);font-weight:900;margin:6px 0 2px}
-  .banner h2{font-size:clamp(15px,2.4vw,21px);color:#ffd9dd;letter-spacing:3px;font-weight:400}
-  .banner .sub{color:#f3c9ce;font-size:14px;max-width:640px;margin:16px auto 0}
-  .chip{display:inline-block;background:#000;color:var(--gold);border:1px solid var(--gold);
-    padding:3px 14px;font-size:13px;letter-spacing:2px;margin-top:18px}
+body { font-stretch: var(--stretch-body); }
+h1, h2, h3 { font-weight: var(--display-weight); font-stretch: var(--stretch-display); letter-spacing: var(--tracking-display); line-height: 1.12; }
 
-  /* ── console hero ── */
-  .console{background:#050506;border:1px solid #2a2b31;border-radius:10px;overflow:hidden;
-    margin:-26px auto 0;max-width:880px;box-shadow:0 24px 70px rgba(0,0,0,.6);position:relative;z-index:2}
-  .console .bar{background:#1c1d22;padding:9px 14px;display:flex;gap:8px;align-items:center}
-  .dot{width:11px;height:11px;border-radius:50%}
-  .bar span{margin-left:8px;color:#77787f;font-size:12px}
-  .console .screen{padding:0}
-  .console img{display:block;width:100%}
+.skip { position: absolute; left: var(--space-md); top: calc(-1 * var(--space-3xl)); z-index: var(--z-toast); padding: var(--space-xs) var(--space-md); background: var(--color-ink); color: var(--color-paper); white-space: nowrap; text-decoration: none; }
+.skip:focus-visible { top: var(--space-md); }
 
-  section{padding:56px 0}
-  .kick{color:var(--red);letter-spacing:4px;font-size:13px;font-weight:700}
-  h3{font-size:clamp(24px,4vw,34px);letter-spacing:1px;margin:6px 0 22px;color:#fff}
+/* nav: one line, edge-aligned, square */
+.nav { border-bottom: var(--rule-hair) solid var(--color-rule); background: var(--color-paper); }
+.nav .container { display: flex; align-items: baseline; justify-content: space-between; gap: var(--space-lg); min-height: 56px; padding-block: var(--space-md); }
+.wordmark { font-weight: var(--display-weight); font-stretch: var(--stretch-display); font-size: var(--text-md); letter-spacing: 0.06em; color: var(--color-ink); text-decoration: none; white-space: nowrap; }
+.wordmark:hover { color: var(--color-ink-2); }
+.nav-links { display: flex; gap: var(--space-lg); }
+.nav-links a { font-size: var(--text-sm); color: var(--color-ink-2); text-underline-offset: 0.22em; text-decoration: underline dotted; text-decoration-color: var(--color-rule); }
+.nav-links a:hover { color: var(--color-accent); text-decoration-color: var(--color-accent); }
 
-  /* ── command block ── */
-  .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
-  .step{background:var(--panel);border:1px solid #26272d;border-radius:10px;padding:22px}
-  .step .n{color:var(--red);font-weight:900;font-size:26px}
-  .step h4{color:#fff;margin:8px 0 8px;font-size:17px}
-  .step p{color:var(--dim);font-size:14px}
-  .cmd{background:#000;border:1px solid #2a2b31;border-radius:8px;padding:13px 16px;margin-top:10px;
-    color:#7ee787;font-size:14px;white-space:pre;overflow-x:auto}
-  .cmd .you{color:#ffd9dd}
+/* hero: Counter, the action under a shorter head; the screen beneath, full width */
+.hero { background: var(--color-paper); color: var(--color-ink); }
+.hero .container { display: flex; flex-direction: column; justify-content: center; min-height: calc(100svh - 56px); padding-block: var(--space-2xl); box-sizing: border-box; }
+.mandate { display: grid; justify-items: start; gap: var(--space-md); margin-bottom: var(--space-2xl); }
+.mandate h1 { max-width: 24ch; }
+.hero .actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); }
 
-  /* ── features ── */
-  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-  .card{background:var(--panel);border:1px solid #26272d;border-left:3px solid var(--red);
-    border-radius:10px;padding:22px}
-  .card h4{color:#fff;font-size:17px;margin-bottom:8px}
-  .card p{color:var(--dim);font-size:14px}
+.btn { display: inline-flex; align-items: center; min-height: 48px; padding: 0 var(--space-lg); border: var(--rule-hair) solid var(--color-accent); background: var(--color-accent); color: var(--color-accent-ink); font: 500 var(--text-md)/1 var(--font-body); font-stretch: var(--stretch-body); white-space: nowrap; text-decoration: none; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), transform var(--dur-micro) var(--ease-out); }
+.btn:hover { background: var(--color-accent-wash); color: var(--color-accent); }
+.btn:active { transform: translateY(1px); }
+.btn:focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+.btn:disabled, .btn[aria-disabled="true"] { opacity: 0.55; cursor: not-allowed; transform: none; }
+.btn--quiet { background: transparent; color: var(--color-ink-2); border-color: var(--color-rule-2); }
+.btn--quiet:hover { background: var(--color-paper-2); color: var(--color-ink); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: background-color var(--dur-short) linear; } }
 
-  /* ── gallery ── */
-  .shots{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
-  .shots figure{background:#050506;border:1px solid #2a2b31;border-radius:10px;overflow:hidden}
-  .shots img{display:block;width:100%}
-  .shots figcaption{padding:10px 14px;color:var(--dim);font-size:13px;border-top:1px solid #2a2b31}
-  .shots b{color:var(--gold);font-weight:400}
+/* the session well: the product's own output, verbatim, on the full measure */
+.session { margin: 0; padding: var(--space-lg) var(--space-xl); background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); border-radius: var(--radius-card); }
+.session pre { margin: 0; font-family: var(--font-body); font-weight: 400; font-stretch: var(--stretch-body); font-size: var(--text-lg); line-height: 1.6; color: var(--color-ink); overflow-wrap: normal; overflow-x: auto; }
+.session pre span { font-style: normal; }
+.session .dim { color: var(--color-muted); }
+.session .bar { color: var(--color-accent); }
+.session .val { font-weight: 500; }
 
-  /* ── cta ── */
-  .cta{background:linear-gradient(180deg,#b10e28,#7a0b1e);text-align:center;padding:58px 20px;border-top:4px solid #4d0612}
-  .cta h3{color:#fff}
-  .btn{display:inline-block;background:#000;color:#fff !important;border:2px solid #fff;
-    padding:14px 30px;border-radius:6px;font-size:16px;letter-spacing:2px;margin:10px 8px 0}
-  .btn:hover{background:var(--gold);border-color:var(--gold);color:#000 !important}
-  .btn.ghost{background:transparent;border-color:rgba(255,255,255,.6);color:#fff !important}
-  .small{color:#f3c9ce;font-size:13px;margin-top:14px}
+/* the board scrolls in its own well on a phone: the scrollbar rests visible */
+.session pre { scrollbar-color: var(--color-rule-2) transparent; scrollbar-width: thin; }
+.session pre::-webkit-scrollbar { height: 5px; appearance: none; background: transparent; }
+.session pre::-webkit-scrollbar-thumb { background: var(--color-rule-2); }
+@media (min-width: 90rem) { .session pre { font-size: var(--text-xl); } }
 
-  footer{padding:34px 0 44px;text-align:center;color:var(--dim);font-size:13px;
-    border-top:1px solid #232428}
-  footer .u{text-align:center}
+/* below the fold: continuous terminal scroll, hairlines only */
+.loop, .yardstick, .close { padding-block: var(--section-gap); }
+.loop, .yardstick, .close, .colophon { border-top: var(--rule-hair) solid var(--color-rule); }
+.plan { margin-block-end: var(--space-3xl); }
+.plan .lead { margin-block-start: var(--space-md); }
+.moments { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--space-4xl) * 2); }
+.moment-head { display: grid; gap: var(--space-2xs); margin-block-end: var(--space-md); }
+.moment-head h3 { display: flex; align-items: baseline; gap: var(--space-xs); }
+.moment-head .no { color: var(--color-accent); font-variant-numeric: tabular-nums; }
+.caption { color: var(--color-muted); max-width: 62ch; }
+.moment .session pre, .close .session pre { font-size: var(--text-md); line-height: 1.8; }
+.session .alarm { color: var(--color-error); font-weight: 500; }
+.deals { display: grid; grid-template-columns: minmax(0, 1fr); gap: calc(var(--space-4xl) * 2); }
+.deal { background: var(--color-paper-2); border: var(--rule-hair) solid var(--color-rule); padding: var(--space-lg) var(--space-xl); }
+.deal table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); font-variant-numeric: tabular-nums; }
+.deal th, .deal td { padding: var(--space-xs) var(--space-md) var(--space-xs) 0; border-top: var(--rule-hair) solid var(--color-rule); text-align: left; vertical-align: top; font-weight: 400; line-height: 1.45; }
+.deal thead th { color: var(--color-muted); font-size: var(--text-xs); letter-spacing: 0; font-weight: 400; }
+.deal td:nth-child(2) { font-weight: 500; letter-spacing: 0.02em; }
+.deal td:nth-child(3) { color: var(--color-ink-2); }
+.deal .flag { color: var(--color-muted); white-space: nowrap; }
+.close .actions { display: flex; flex-wrap: wrap; gap: var(--space-sm); margin-block-end: var(--space-md); }
+.close .actions .btn { min-width: 220px; justify-content: center; }
+.close .session { margin-block: var(--space-lg); }
+.close .death { margin-block-start: var(--space-3xl); }
+.colophon { background: var(--color-paper-2); padding-block: var(--space-2xl); }
+.colophon .container { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--space-sm) var(--space-2xl); }
+.colophon .fine { margin-inline-start: auto; color: var(--color-muted); font-size: var(--text-sm); color: var(--color-muted); }
+@media (max-width: 40rem) {
+  .deal table, .deal tbody { display: block; }
+  .deal thead { display: none; }
+  .deal tr { display: block; border-top: var(--rule-hair) solid var(--color-rule); padding-block: var(--space-sm); }
+  .deal tr:first-child { border-top: 0; }
+  .deal th, .deal td { display: block; padding: 0; border-top: 0; }
+  .deal td.flag, .deal td:nth-child(2) { display: inline; padding-inline-end: var(--space-sm); }
+}
+
+/* typed once, row by row (theme motion, for wells below the fold), visible without script and under reduced motion */
+.js .session[data-print] .ln { opacity: 0; transition: opacity var(--dur-micro) steps(1); transition-delay: calc(var(--i, 0) * 60ms); }
+.js .session[data-print].is-in .ln { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .js .session[data-print] .ln { opacity: 1; transition: none; } }
+
+@media (max-width: 60rem) {
+  .hero h1 { font-size: var(--text-display-s); }
+  .container { padding-inline: var(--space-md); }
+  .session { padding: var(--space-sm) var(--space-2xs); }
+  .hero .session pre { font-size: var(--text-sm); }
+  .nav .container { flex-direction: column; align-items: flex-start; gap: var(--space-xs); padding-block: var(--space-sm); }
+  .nav-links { flex-wrap: wrap; gap: var(--space-md); }
+}
 </style>
 </head>
 <body>
 
-<div class="banner">
-  <div class="star">★ ★ ★ ★ ★ ★ ★</div>
-  <h1>КРЕМЛЬ&nbsp;1991</h1>
-  <h2>GENERAL SECRETARY — A TEXT-BASED GAME OF THE SOVIET UNION</h2>
-  <p class="sub">An alternate-history simulator for your terminal. Take the CPSU from
-  <b>1964</b> through the booms, the coups and the oil gluts — hold the five gauges
-  above zero to <b>1991</b>, or steer hard enough to reach the <b>Red Millennium
-  of 2001</b>. Pure Python. No installs. Just <code>main.py</code>.</p>
-  <div class="chip">╔ BETA v5 — RELEASED ╗</div>
-  <p style="margin-top:20px"><a class="btn" href="play/">▶ PLAY IN THE BROWSER</a></p>
-</div>
+<a class="skip" href="#main">Skip to content</a>
 
-<section style="padding-top:0">
-  <div class="console">
-    <div class="bar">
-      <i class="dot" style="background:#ff5f57"></i><i class="dot" style="background:#febc2e"></i>
-      <i class="dot" style="background:#28c840"></i><span>kreml_1991 — python console — 27 years of history</span>
+<header class="nav">
+  <div class="container">
+    <a class="wordmark" href="index.html">КРЕМЛЬ 1991</a>
+    <nav class="nav-links" aria-label="Site">
+      <a href="play/">Play</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">Releases</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+<section class="hero">
+  <div class="container">
+    <div class="mandate">
+      <h1>The Union is yours.</h1>
+      <p class="lead">The real Python game, live in your browser: no install, no account.</p>
+      <div class="actions">
+        <a class="btn" href="play/">Play in the browser</a>
+        <a class="btn btn--quiet" href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">Get BETA v6</a>
+      </div>
     </div>
-    <div class="screen"><img src="media/teaser.gif" alt="Gameplay recording: a mouse clicks through the Politburo menu while the RED ● timer runs."></div>
+    <figure class="session"
+      aria-label="The Politburo board in 1964: five state gauges, the valas hard-currency reserve and the year's agenda">
+      <span class="visually-hidden">A live crop of the game’s own output. The five gauges sit at economy 57, military 70, order 81, people’s belief 48, prestige 62. The valas reserve is 50 with the oil market soft. Political capital stands at 8.</span>
+      <pre aria-hidden="true"><span class="ln" style="--i:0"><span class="dim">━━━━━━━━━━━━━━━</span> ☭  YEAR 1964  ☭  <span class="dim">[EARLY · BALANCED] ━━━━━━━━━━━━━━</span></span>
+   <span class="ln" style="--i:1"><span class="dim">Economy   (Gosplan)</span>    <span class="bar">█████████████████▏░░░░░░░░░░░░</span>  <span class="val">57</span></span>
+   <span class="ln" style="--i:2"><span class="dim">Military  (Red Army)</span>   <span class="bar">█████████████████████░░░░░░░░░</span>  <span class="val">70</span></span>
+   <span class="ln" style="--i:3"><span class="dim">Order     (Control)</span>    <span class="bar">████████████████████████▎░░░░░</span>  <span class="val">81</span></span>
+   <span class="ln" style="--i:4"><span class="dim">People    (Belief)</span>     <span class="bar">██████████████▍░░░░░░░░░░░░░░░</span>  <span class="val">48</span></span>
+   <span class="ln" style="--i:5"><span class="dim">Prestige  (World)</span>      <span class="bar">██████████████████▋░░░░░░░░░░░</span>  <span class="val">62</span></span>
+   <span class="ln" style="--i:6"><span class="dim">Valas     (gold &amp; $)</span>   <span class="bar">███████████████░░░░░░░░░░░░░░░</span>  <span class="val">50</span> <span class="dim">·  oil SOFT</span></span></pre>
+    </figure>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="kick">ТРИ ШАГА К ВЛАСТИ</div>
-    <h3>How to take power in 3 commands</h3>
-    <div class="steps">
-      <div class="step"><div class="n">1.</div><h4>Get Python</h4>
-        <p>Any Python 3.8+. Windows, Linux, macOS. Nothing else to install — the game is pure standard library.</p></div>
-      <div class="step"><div class="n">2.</div><h4>Download</h4>
-        <p>Clone the repo, or grab the BETA v5 release and unzip it.</p>
-        <div class="cmd"><span class="you">&gt;</span> git clone https://github.com/mahakammoonlightstudio-beep/kreml-1991.git</div></div>
-      <div class="step"><div class="n">3.</div><h4>Rule</h4>
-        <p>Run it. Choose your ideology of difficulty. Survive.</p>
-        <div class="cmd"><span class="you">&gt;</span> python main.py</div></div>
-      <div class="step"><div class="n">0.</div><h4>Or play right here</h4>
-        <p>The same game runs in this tab under Pyodide. No install, no account; your run is kept
-        in the browser and resumes after a refresh.</p>
-        <div class="cmd"><span class="you">▶</span> <a href="play/">Open the browser build</a></div></div>
+<section class="loop">
+  <div class="container">
+    <header class="plan">
+      <h2>A year in three prints</h2>
+      <p class="lead">Captured output of a BALANCED run.</p>
+    </header>
+    <div class="moments">
+
+      <article class="moment">
+        <header class="moment-head">
+          <h3><span class="no" aria-hidden="true">01</span> The directive</h3>
+          <p class="caption">One big public lever a year.</p>
+        </header>
+        <figure class="session" data-print aria-label="The yearly directive menu and the graded result of choosing the KGB crackdown">
+          <span class="visually-hidden">The menu carries fourteen public policies in five groups. Choice 10 is graded: economy up 1, order up 7, faith down 3, prestige down 2.</span>
+          <pre aria-hidden="true">  <span class="ln" style="--i:0"><span class="dim">── YEARLY DIRECTIVE ──</span></span>
+   <span class="ln" style="--i:1"><span class="val">Society</span></span>
+    <span class="ln" style="--i:2">10. KGB crackdown  · Silence is the mother of order... allegedly.</span>
+  <span class="ln" style="--i:3"><span class="bar">❯</span> Directive of the year: 10</span>
+   <span class="ln" style="--i:4">( ECONOMY ▲1 | ORDER ▲7 | FAITH ▼3 | PRESTIGE ▼2 )</span>
+  <span class="ln" style="--i:5"><span class="bar">▸</span> Directive issued: KGB crackdown</span></pre>
+        </figure>
+      </article>
+
+      <article class="moment">
+        <header class="moment-head">
+          <h3><span class="no" aria-hidden="true">02</span> The flash</h3>
+          <p class="caption">Nine seconds is the whole debate.</p>
+        </header>
+        <figure class="session" data-print aria-label="A flash crisis printed under the v6 wall clock, nine seconds on the clock">
+          <span class="visually-hidden">The Vodka Shortage lists three options under the clock, which allows nine seconds. The answer is graded: order up 1, faith down 2.</span>
+          <pre aria-hidden="true">  <span class="ln" style="--i:0"><span class="dim">┌────────────── EVENT ───────────────────┐</span></span>
+  <span class="ln" style="--i:1">☈ The Vodka Shortage</span>
+  <span class="ln" style="--i:2">Distilleries ship crates but shop windows are dry. Queueing men hum mourning songs.</span>
+  <span class="ln" style="--i:3"><span class="dim">└────────────────────────────────────────┘</span></span>
+    <span class="ln" style="--i:4">1. Ration via Party stores</span>
+    <span class="ln" style="--i:5">2. Import rum confidence from Cuba</span>
+    <span class="ln" style="--i:6">3. Deny the problem entirely</span>
+  <span class="ln" style="--i:7"><span class="bar">❯</span> Your decision: <span class="alarm">(⏱ 9s)</span> 1</span>
+   <span class="ln" style="--i:8">( ORDER ▲1 | FAITH ▼2 )</span></pre>
+        </figure>
+      </article>
+
+      <article class="moment">
+        <header class="moment-head">
+          <h3><span class="no" aria-hidden="true">03</span> The dossier</h3>
+          <p class="caption">Press d: the roads still shut.</p>
+        </header>
+        <figure class="session" data-print aria-label="The dossier listing the conditional roads still locked, the one available now">
+          <span class="visually-hidden">Rails of History, mode Balanced. One road is available now; the rest stay locked behind years, thresholds, paths and earlier decisions.</span>
+          <pre aria-hidden="true"> <span class="ln" style="--i:0"><span class="dim">╔════════════════════════════════════════════════════════════════════════════╗</span></span>
+ <span class="ln" style="--i:1"><span class="dim">║ DOSSIER — the decision ledger &amp; the road map                           ║</span></span>
+ <span class="ln" style="--i:2"><span class="dim">╚════════════════════════════════════════════════════════════════════════════╝</span></span>
+  <span class="ln" style="--i:3">TIMELINE: RAILS OF HISTORY (1964–1991)   MODE: BALANCED</span>
+  <span class="ln" style="--i:4"><span class="dim">── OPEN ROADS (conditional directives) ──</span></span>
+   <span class="ln" style="--i:5"><span class="dim">×</span> The Second Pipeline to Europe  — only after 1975</span>
+   <span class="ln" style="--i:6"><span class="bar">▸</span> Great Party purge (show trials)  — AVAILABLE now · Defense</span></pre>
+        </figure>
+      </article>
+
     </div>
   </div>
 </section>
 
-<section style="background:#101115;border-top:1px solid #232428;border-bottom:1px solid #232428">
-  <div class="wrap">
-    <div class="kick">АРХИВ ПОЛИТБЮРО</div>
-    <h3>What the press is not supposed to see</h3>
-    <div class="shots">
-      <figure><img src="media/shot_panel.jpg" alt="Stat panel: five gauges, valas reserve, three Politburo factions"><figcaption><b>The yardstick.</b> Five gauges, the valas vault, and the three moods of the Politburo.</figcaption></figure>
-      <figure><img src="media/shot_directives.jpg" alt="The yearly directive menu"><figcaption><b>The directive.</b> Twenty-seven public levers across economy, defense, society, foreign and science.</figcaption></figure>
-      <figure><img src="media/shot_boom.jpg" alt="1974 — oil boom"><figcaption><b>«Oil: BOOM».</b> The valas pays for dinner, the pipeline pays for the navy.</figcaption></figure>
-      <figure><img src="media/shot_finalyears.jpg" alt="1990 — the plot brews in the court"><figcaption><b>The late era.</b> 1990: the PLOT flickers in the court line. Do the arithmetic early.</figcaption></figure>
+<section class="yardstick">
+  <div class="container">
+    <header class="plan">
+      <h2>Six ways to hold it</h2>
+         </header>
+    <div class="deals">
+      <div class="deal">
+        
+        <table>
+          <thead>
+            <tr><th scope="col">Preset</th><th scope="col">Doctrine</th><th scope="col">The deal</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="flag">easy</td><td>SWEEPING REFORMS</td><td>Gentle drift, five reserves.</td></tr>
+            <tr><td class="flag">medium</td><td>BALANCED</td><td>The historical grind.</td></tr>
+            <tr><td class="flag">hard</td><td>OLD GUARD IRON GRASP</td><td>Two reserves. The system fights back.</td></tr>
+            <tr><td class="flag">extreme</td><td>THE SYSTEM ITSELF</td><td>One reserve; the Union a rumour.</td></tr>
+            <tr><td class="flag">flash</td><td>FLASH CRISIS</td><td>Nine seconds a decision.</td></tr>
+            <tr><td class="flag">historical</td><td>HISTORICAL RAILS</td><td>Divergence costs score.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="deal">
+        
+        <table>
+          <thead>
+            <tr><th scope="col">Opening</th><th scope="col">Start</th><th scope="col">You inherit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="flag">rails</td><td>1964</td><td>History as it was.</td></tr>
+            <tr><td class="flag">reform</td><td>1964</td><td>Kosygin’s profit memo, already won.</td></tr>
+            <tr><td class="flag">flashpoint</td><td>1980</td><td>The 40th Army. Twelve years.</td></tr>
+            <tr><td class="flag">millennium</td><td>1992</td><td>Treaty held. Ten years red.</td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </section>
 
-<section>
-  <div class="wrap">
-    <div class="kick">ПЯТЬ ЦИФЕРБЛАТОВ</div>
-    <h3>The systems in BETA v5</h3>
-    <div class="grid">
-      <div class="card"><h4>⚖ Five gauges</h4><p>Economy, Military, Order, People's Faith, World Prestige. All erode every year. Any one that touches zero removes the portraits and ends the game.</p></div>
-      <div class="card"><h4>💵 The valas &amp; the oil market</h4><p>A yearly oil index (1973 boom → 1986 glut → late-90s trough) drives a hard-currency reserve you spend on imports, loans and grain.</p></div>
-      <div class="card"><h4>♛ The court &amp; the velvet coup</h4><p>Three factions — Old Guard, Reformers, Army — keep private moods. Let one despair and they book your conference room for a palace coup.</p></div>
-      <div class="card"><h4>⭐ The Red Millennium</h4><p>End 1991 strong and the Politburo offers ten more years (1992–2001). Survive to 2001 and history rewrites itself around you.</p></div>
-      <div class="card"><h4>🗂 The Dossier</h4><p>Every decision you ever made, every fork still open, every delayed consequence in the pipeline — and history's own timetable for comparison.</p></div>
-      <div class="card"><h4>💾 Save exactly where you are</h4><p>The whole state — including the RNG — goes to <code>kreml_save.json</code> at any year boundary. Save, sleep, resume as General Secretary.</p></div>
-      <div class="card"><h4>🎚 Five difficulties</h4><p>Sweeping Reforms, Balanced, Iron Grasp, The System Itself, and <b>Historical Rails</b> — where alternate-history levers are locked and every detour costs score.</p></div>
-      <div class="card"><h4>🕰 Four timelines</h4><p>Rails of History (1964), The Reformers' Window, Cold War Flashpoint (1980), The Red Millennium (1992). Each opens on a different Union.</p></div>
-      <div class="card"><h4>⛓ Fork &amp; chain</h4><p>Three divergence forks (1968, 1985, 1989) plant a path that changes drift and epilogue; five chain reactions (Kabul, Chernobyl, Kosygin, gold, the treaty) remember what you chose.</p></div>
-      <div class="card"><h4>🌍 Real life</h4><p>A yearly box of what happened in the world and on the Soviet street — plus path-aware Western headlines.</p></div>
+<section class="close">
+  <div class="container">
+    <header class="plan">
+      <h2>In the tab or on the metal</h2>
+      <p class="lead">The browser build is the same Python compiled to WebAssembly.</p>
+    </header>
+    <div class="actions">
+      <a class="btn" href="play/">Play in the browser</a>
+      <p class="caption">About 12 MB on the first visit, then offline.</p>
     </div>
+    <figure class="session" data-print aria-label="Three commands to install and run the game from source">
+      <span class="visually-hidden">Clone the repository, enter the folder, run python main.py. On Windows use py main.py when python opens the store.</span>
+      <pre aria-hidden="true"><span class="ln" style="--i:0">git clone https://github.com/mahakammoonlightstudio-beep/kreml-1991.git</span>
+<span class="ln" style="--i:1"><span class="dim">cd kreml-1991</span></span>
+<span class="ln" style="--i:2"><span class="val">python main.py</span></span></pre>
+    </figure>
+    <p class="caption">Python 3.8 or newer is the entire list.</p>
+
+    <article class="moment death">
+      <header class="moment-head">
+        <h3>The other exit</h3>
+        <p class="caption">Any gauge at zero ends the year.</p>
+      </header>
+      <figure class="session" data-print aria-label="The collapse screen of a 1979 failure">
+        <span class="visually-hidden">Faith fell to zero in 1979 after fifteen governed years. Legacy score 133, with the line removed from the portraits.</span>
+        <pre aria-hidden="true">  <span class="ln" style="--i:0"><span class="alarm">██ COLLAPSE, 1979 ██</span></span>
+  <span class="ln" style="--i:1">Mass uprisings everywhere. Crowds carry portraits of nobody at all.</span>
+<span class="ln" style="--i:2"><span class="dim">══════════════════════════════════════════════════════════════════════════════</span></span>
+  <span class="ln" style="--i:3">Legacy score: 133 — Removed from the portraits</span></pre>
+      </figure>
+    </article>
   </div>
 </section>
 
-<div class="cta">
-  <div class="wrap">
-    <h3>☭ The Politburo awaits your signature, Comrade ☭</h3>
-    <a class="btn" href="play/">▶ PLAY IN THE BROWSER</a>
-    <a class="btn ghost" href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">⬇ DOWNLOAD BETA v5</a>
-    <a class="btn ghost" href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">★ SOURCE ON GITHUB</a>
-    <p class="small">python main.py — and the decade is yours.</p>
+<footer class="colophon">
+  <div class="container">
+    <p class="wordmark">КРЕМЛЬ 1991</p>
+    <nav class="nav-links" aria-label="Colophon">
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases">Releases</a>
+      <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991/blob/master/LICENSE">MIT</a>
+    </nav>
+    <p class="fine">© 2026 Mahakam Moonlight Studio, MIT licence.</p>
   </div>
-</div>
-
-<footer>
-  <p>A Mahakam Moonlight Studio ☭ production (beep edition)</p>
-  <p>Written &amp; directed by <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a> and <b>Mr. Fozan</b></p>
-  <p><a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source, docs &amp; releases on GitHub</a> · MIT licence · free to play</p>
-  <p class="u">★ СТРАНЫ, УХОДЯЩИЕ В ИСТОРИЮ ★</p>
 </footer>
+
+</main>
+
+
+<script>
+(() => {
+  // wells below the fold may opt into the typed-once reveal
+  const wells = document.querySelectorAll('[data-print]');
+  for (const well of wells) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries.some((e) => e.isIntersecting)) { well.classList.add('is-in'); io.disconnect(); }
+    }, { threshold: 0.25 });
+    io.observe(well);
+  }
+
+  // the resting crop of the 1964 board on a phone: the terminal scrolls in its own well, and
+  // the crop lands between the columns of the board (never inside a printed word), leading
+  // with the measure bars and their numbers rather than the label column.
+  const pre = document.querySelector('.hero .session pre');
+  if (pre) {
+    const mark = (c) => '\u2501\u2580\u2581\u2582\u2583\u2584\u2585\u2586\u2587\u2588\u2589\u258a\u258b\u258c\u258d\u258e\u258f\u2590\u2591\u2592\u2593'.includes(c);
+
+    /* The resting crop is decided on the board's own drawn geometry: Martian Mono's
+       heavier cells run wider, so columns are not a constant, and every token is
+       therefore measured as a Range over its nodes. Both edges of the crop land
+       outside printed tokens, and the crop leads with the gauge bars and their
+       numbers, never the label column. */
+    let frames = 0;
+    const fit = () => {
+      pre.style.marginRight = '';
+      const rows = [...pre.querySelectorAll('.ln')];
+      if (!rows.length) return;
+      const span = pre.clientWidth;
+      if (pre.scrollWidth <= span + 1) return;   // the whole board already fits the well
+      const origin = pre.getBoundingClientRect().left - pre.scrollLeft;
+      const caret = (row) => {
+        const pos = [];
+        let g = 0;
+        const walk = (n) => {
+          for (const c of n.childNodes) {
+            if (c.nodeType === 3) { for (let j = 0; j <= c.data.length; j++) pos[g + j] = [c, j]; g += c.data.length; }
+            else if (c.nodeType === 1) walk(c);
+          }
+        };
+        walk(row);
+        pos.len = g;
+        return pos;
+      };
+      const range = document.createRange();
+      const px = (ca, cb) => {
+        range.setStart(ca[0], ca[1]);
+        range.setEnd(cb[0], cb[1]);
+        const r = range.getBoundingClientRect();
+        return { l: r.left - origin, r: r.right - origin };
+      };
+      const tokens = [], gauges = [], edges = new Set([0]);
+      for (const row of rows) {
+        const text = row.textContent;
+        const pos = caret(row);
+        if (pos.len !== text.length) continue;
+        const runs = [];
+        let s = 0;
+        const flush = (e) => { if (e > s) runs.push({ s, e, bar: mark(text[s]) }); };
+        for (let i = 0; i < text.length; i++) {
+          if (text[i] === ' ') { flush(i); s = i + 1; }
+        }
+        flush(text.length);
+        let bar = null;
+        for (const run of runs) {
+          if (run.bar) { if (!bar) bar = run; continue; }
+          const t = px(pos[run.s], pos[run.e]);
+          tokens.push(t);
+          edges.add(Math.round(t.l)); edges.add(Math.round(t.r));
+          if (bar) {
+            const b = px(pos[bar.s], pos[bar.e]);
+            gauges.push({ l: b.l, r: t.r });
+            edges.add(Math.round(b.l));
+            bar = null;
+          }
+        }
+      }
+      const inside = (x) => tokens.some((t) => t.l + 0.5 < x && x < t.r - 0.5);
+      const maxL = Math.max(0, pre.scrollWidth - span);
+      const cands = [...edges].filter((x) => x >= 0 && x <= maxL).sort((a, b) => a - b);
+      let best = null;
+      for (const l of cands) {
+        if (inside(l)) continue;
+        let r = l + span;
+        if (inside(r)) {                       // pull the right edge back to a clean boundary
+          const stops = [...edges].filter((x) => x <= r - 1 && x >= l + span * 0.5);
+          r = stops.reverse().find((x) => !inside(x));
+          if (r == null) continue;
+        }
+        if (r - l < span * 0.5) continue;
+        const hit = gauges.filter((g) => l <= g.l + 0.5 && g.r <= r + 0.5).length;
+        if (!best || hit > best.hit) best = { hit, l, w: r - l };
+      }
+      if (!best) return;
+      pre.style.marginRight = best.w < span - 0.5 ? `${Math.ceil(span - best.w)}px` : '';
+      pre.scrollLeft = Math.round(best.l);
+    };
+
+    const tick = () => { if (frames++ < 45) { fit(); requestAnimationFrame(tick); } };
+    if (document.fonts) {
+      document.fonts.ready.then(fit);
+      document.fonts.addEventListener('loadingdone', fit);
+    }
+    window.addEventListener('resize', fit);
+    fit();
+    requestAnimationFrame(tick);
+  }
+})();
+</script>
 
 </body>
 </html>

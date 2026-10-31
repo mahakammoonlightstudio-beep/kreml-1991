@@ -1,0 +1,121 @@
+
+
+        ★  ☭  ★
+   К Р Е М Л Ь
+      1 9 9 1
+
+     V E R S I O N  6
+
+  A GENERAL SECRETARY ALTERNATE-HISTORY SIMULATOR
+  1964 ────────────── ► 1991   (+ the RED MILLENNIUM, 2001)
+
+  The Politburo awaits your signature, Comrade.
+
+ ══ HALL OF FAME (last records) ══
+   2026-10-28 | Nikolai Vetrov | SURVIVED · BALANCED | score 405 | Hero of Socialist Labour (twice)
+   2026-10-28 | fauziin lafazrohabsy | COLLAPSED · SWEEPING REFORMS | score 146 | Removed from the portraits
+   2026-10-30 | Lazar Fiend | COLLAPSED · BALANCED · RAILS OF HISTORY | score 133 | Removed from the portraits
+
+  Before the year begins, the Politburo asks a few questions.
+
+  ✦ Difficulty set: BALANCED — 3 crisis reserves.
+
+  ✦ Timeline: RAILS OF HISTORY — 1964 to 1991.
+
+  Your name for the history books: 
+
+   1. Appointed by the Old Guard
+      Order +6, Faith −4, Economy +2. Stalinesque paperwork welcomes you.
+   2. Balanced committee choice
+      A quiet vote. The dacha stays as it is.
+   3. Dark-horse reformer
+      Faith +6, Prestige +4, Order −8. The Old Guard sharpens its teeth.
+  ❯ Your mandate: 1
+
+  ☭ Welcome, Comrade Secretary. The Union is yours. Try not to lose it.
+
+  EVERY YEAR: a personal focus, a public directive, and the year's
+  v6 adds the clock: 'i' spends political capital, 'o' sets the doctrine
+  that answers for you when a flash crisis freezes the room.
+  crisis event(s). The command bar between years: s = save game,
+  l = load, d = dossier (timeline & road map), q = retire.
+  Watch TWO extra skies: the valas reserve (the world market pays/hauls)
+  and the Politburo moods (Old Guard · Reformers · Army). A faction in
+  despair will book the velvet meeting room. Keep all gauges alive.
+  Repeating one lever every year goes STALE: vary the plan, or it pays less.
+
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 1
+  ✗ That stamp is not recognised. Try Enter, s, l, d, i, o or q.
+  ❯ [Enter] proceed │ s save │ l load │ d dossier │ i capital │ o orders │ q resign : 
+
+  ☭ 1964 ☭
+  Khrushchev has been 'retired for reasons of health'. The Central Committee looks to you.
+  ┌─ REAL LIFE ──────────────────────────────────────────
+  │ 🌍 Khrushchev falls; China tests its first bomb; the Vietnam war widens.
+  │ 🏠 Bread 24 kopecks, a tram 3; the queues start before the shops.
+  └──────────────────────────────────────────────────────
+
+  ┌── FOREIGN PRESS ──
+  🗞 «THE ECONOMIST» — The Gerontocracy Problem
+    Heartbeats function as a policy instrument in Moscow.
+  └───
+
+  ┌─ POLITBURO AGENDA ──────────────────────────────────
+  │ The Old Guard wants order at 82 by the plenum, or a resignation.
+  │ now ORDER 81 → target 82
+  └──────────────────────────────────────────────────────
+  ━━━━━━━━━━━━━━━ ☭  YEAR 1964  ☭  [EARLY · BALANCED] ━━━━━━━━━━━━━━
+   RAILS OF HISTORY
+   Economy   (Gosplan)    █████████████████▏░░░░░░░░░░░░  57
+   Military  (Red Army)   █████████████████████░░░░░░░░░  70
+   Order     (Control)    ████████████████████████▎░░░░░  81
+   People    (Belief)     ██████████████▍░░░░░░░░░░░░░░░  48
+   Prestige  (World)      ██████████████████▋░░░░░░░░░░░  62
+   Kremlin reserves (lifelines · BALANCED): ● ● ● 
+   Valas     (gold & $)   ███████████████░░░░░░░░░░░░░░░  50 ·  oil SOFT 
+   Politburo Old Guard ███▊░░  62 · Reformers ██▋░░░  44 · Army ███░░░  50
+   Political capital      ··········   8
+   Agenda                 ORDER ≥ 82 (old guard)
+
+  ── PERSONAL FOCUS (a small matter of one evening) ──
+    1. Inspect a factory floor
+       Wear the rubber boots. Talk to the foundry workers.
+    2. Check on the space programme
+       Baikonur's designers brief you over strong tea.
+    3. Chat with collective farmers
+       You hear more truth at a tractor shed than in any politburo hall.
+    4. Deliver a thunderous speech
+       The hall erupts; the nation listens disturbed but moved.
+    5. A quiet weekend at the dacha
+       Bearskin rug, tea, silence. You will face the next crisis rested.
+    6. Call a republic's first secretary
+       A friendly call recalibrates eight provinces at once.
+    7. Read the enemy newspapers
+       You know exactly what the Pentagon lent the Times to print.
+    8. Sit with the state auditors
+       An hour with ledgers finds money the ministries lost.
+    9. Write one page of a private diary
+       Future historians would kill for this page.
+   10. Dinner with the Politburo families
+       Caviar diplomacy: olives, sturgeon, and very quiet arithmetic.
+   11. Tea with the young economists
+       Institute tables full of charts you would go to prison to see.
+   12. Weekend at the general staff's war games
+       Sand tables, red arrows, and much veneration of your chair.
+   13. Tour the western military districts
+       Garrison towns, new tanks under tarpaulins, and generals who count your motorcade as a promotion.
+   14. Walk the republics' party schools
+       Cadres in nine capitals hear your voice live for once.
+   15. Inspect the gold vault by lamplight
+       Bars, seals, and a keeper who talks only in loan words.
+   16. Address the nation on television
+       Nine minutes, no notes, and a promise you will have to keep.
+   17. Read the Party archive
+       Who owed whom in 1956 is still useful in 1979.
+   18. Ring three provincial governors
+       Two favours, one warning, and a very good line about the harvest.
+   19. Sit at a worker's kitchen table
+       Tea, jam, and the only reliable reporting in the country.
+   20. Audit the valas accounts
+       The accountants find a drawer everybody had forgotten.
+  ❯ Focus on: 

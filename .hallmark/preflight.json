@@ -1,0 +1,19 @@
+{
+  "scanned": "2026-10-30",
+  "findings": {
+    "fonts": "none declared; pages inline \"Courier New\"/\"Cascadia Mono\" stacks (docs/index.html L62, docs/play/index.html L25)",
+    "palette": "hex tokens worth of red/gold/grey in two inline :root blocks; no oklch, no tokens.css",
+    "motion": "none (one chip color transition)",
+    "spacing": "none; ad hoc paddings",
+    "framework": "none: static HTML + custom JS (docs/play/app.js) + a Pyodide bundle; build tool is tools/build_web.py"
+  },
+  "preserve": [
+    "app.js wiring: ids setup, game, screen, choices, line, answer, status, bootnote, start, resume, restart, termtitle, modes, timelines, hint",
+    "app.js CSS hooks: .chip, .note(#setup .card), .choices button .n/.d, aria-pressed, #screen ANSI span classes r g y b m c w dim bold err",
+    "SEO/meta: canonical, og, twitter, ld+json, lang, titles, descriptions",
+    "real content facts: 27 years, 121 events, 6 modes, 4 timelines, 12 MB Pyodide, MIT, Mahakam Moonlight Studio"
+  ],
+  "introduce": [
+    "Hallmark stack: tokens, theme Terminal (atmospheric), gates, hero discipline, slots (none needed), stamp"
+  ]
+}

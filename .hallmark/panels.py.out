@@ -1,0 +1,46 @@
+===directive===
+  <span class="ln" style="--i:0"><span class="dim">── YEARLY DIRECTIVE ──</span></span>
+   <span class="ln" style="--i:1"><span class="val">Economy</span></span>
+     <span class="ln" style="--i:2">1. Five-Year Plan: heavy industry  · Cement, steel, more cement.</span>
+     <span class="ln" style="--i:3">2. Consumer goods &amp; light industry  · Refrigerators, TVs, better shoes.</span>
+     <span class="ln" style="--i:4">4. Oil &amp; gas exports  · Purchases abroad with pipeline money.</span>
+   <span class="ln" style="--i:5"><span class="val">Society</span></span>
+    <span class="ln" style="--i:6">10. KGB crackdown  · Silence is the mother of order... allegedly.</span>
+  <span class="ln" style="--i:7"><span class="bar">❯</span> Directive of the year: 10</span>
+   <span class="ln" style="--i:8">( ECONOMY ▲1 | ORDER ▲7 | FAITH ▼3 | PRESTIGE ▼2 )</span>
+  <span class="ln" style="--i:9"><span class="bar">▸</span> Directive issued: KGB crackdown</span>
+===vodka===
+  <span class="ln" style="--i:0"><span class="dim">┌────────────── EVENT ───────────────────┐</span></span>
+  <span class="ln" style="--i:1">☈ The Vodka Shortage</span>
+  <span class="ln" style="--i:2">Distilleries ship crates but shop windows are dry. Queueing men hum mourning songs.</span>
+  <span class="ln" style="--i:3"><span class="dim">└────────────────────────────────────────┘</span></span>
+    <span class="ln" style="--i:4">1. Ration via Party stores</span>
+       <span class="ln" style="--i:5">The queues thin; the grumbling thickens.</span>
+    <span class="ln" style="--i:6">2. Import rum confidence from Cuba</span>
+       <span class="ln" style="--i:7">Rum bottles arrive; confidence arrives later.</span>
+    <span class="ln" style="--i:8">3. Deny the problem entirely</span>
+       <span class="ln" style="--i:9">Pravda announces a surplus of patience and grain spirit.</span>
+  <span class="ln" style="--i:10"><span class="bar">❯</span> Your decision: <span class="alarm">(⏱ 9s)</span> 1</span>
+   <span class="ln" style="--i:11">( ORDER ▲1 | FAITH ▼2 )</span>
+===dossier===
+ <span class="ln" style="--i:0"><span class="dim">║ DOSSIER — the decision ledger &amp; the road map                           ║</span></span>
+ <span class="ln" style="--i:1"><span class="dim">╚════════════════════════════════════════════════════════════════════════════╝</span></span>
+  <span class="ln" style="--i:2"><span class="dim">TIMELINE: RAILS OF HISTORY (1964–1991)   MODE: BALANCED</span></span>
+  <span class="ln" style="--i:3">PATH: not yet chosen — a fork is waiting in history</span>
+<span class="ln" style="--i:4"></span>
+  <span class="ln" style="--i:5"><span class="dim">── OPEN ROADS (conditional directives) ──</span></span>
+   <span class="ln" style="--i:6"><span class="dim">✖</span> The Second Pipeline to Europe  — only after 1975</span>
+   <span class="ln" style="--i:7"><span class="dim">✖</span> Sell gold reserves (quietly)  — only while valas reserve ≤ 30</span>
+   <span class="ln" style="--i:8"><span class="dim">✖</span> UNLEASH Kosygin 2.0 market reforms  — requires earlier decision: kosygin pilot</span>
+   <span class="ln" style="--i:9"><span class="bar">▸</span> Great Party purge (show trials)  — AVAILABLE now · Defense</span>
+   <span class="ln" style="--i:10"><span class="dim">✖</span> Sign the Renewed Union Treaty  — only after 1989</span>
+===death===
+  <span class="ln" style="--i:0"><span class="alarm">██ COLLAPSE, 1979 ██</span></span>
+  <span class="ln" style="--i:1">Mass uprisings everywhere. Crowds carry portraits of nobody at all.</span>
+<span class="ln" style="--i:2"><span class="dim">══════════════════════════════════════════════════════════════════════════════</span></span>
+  <span class="ln" style="--i:3">Legacy score: 133 — Removed from the portraits</span>
+   <span class="ln" style="--i:4">The doctrine of the hard line outlived the tanks that taught it.</span>
+===install===
+<span class="ln" style="--i:0">git clone https://github.com/mahakammoonlightstudio-beep/kreml-1991.git</span>
+<span class="ln" style="--i:1"><span class="dim">cd kreml-1991</span></span>
+<span class="ln" style="--i:2"><span class="val">python main.py</span></span>
