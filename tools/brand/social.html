@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>КРЕМЛЬ 1991 — social card</title>
+<link rel="stylesheet" href="../../docs/assets/fonts.css">
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; width: 1200px; height: 630px; overflow: hidden; background: #e5dfce; }
+  body { font-family: "Martian Mono", ui-monospace, monospace; color: #1a1714; font-stretch: 87.5%; -webkit-font-smoothing: antialiased; }
+  .card { position: relative; width: 1200px; height: 630px; background: #e5dfce; overflow: hidden; box-shadow: inset 0 0 0 4px #1a1714; }
+  .sym { font-family: "Segoe UI Symbol", "Martian Mono", sans-serif; }
+
+  .file { height: 42px; display: flex; align-items: center; justify-content: space-between; padding: 0 44px; border-bottom: 1px solid #8f8779; font-size: 12px; letter-spacing: .15em; text-transform: uppercase; color: #5a5248; }
+  .file b { color: #8c2a20; font-weight: 700; }
+
+  .main { height: 420px; display: grid; grid-template-columns: 1.5fr .7fr; gap: 40px; padding: 26px 44px 12px; }
+  .copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
+  .kick { font-size: 14px; font-weight: 700; letter-spacing: .16em; text-transform: uppercase; color: #8c2a20; }
+  h1 { margin: 8px 0 0; font-size: 122px; line-height: .84; letter-spacing: -.075em; font-weight: 700; font-stretch: 112.5%; }
+  h1 .year { display: block; color: #8c2a20; font-size: 164px; line-height: .8; letter-spacing: -.08em; }
+  .rule { width: 76px; height: 5px; background: #1a1714; margin: 12px 0 8px; }
+  .sub { font-size: 19px; font-weight: 700; letter-spacing: .08em; }
+  .line { margin-top: 7px; max-width: 42ch; font-size: 14px; line-height: 1.5; color: #4b443a; }
+  .badge { display: inline-block; margin-top: 10px; border: 3px solid #8c2a20; color: #8c2a20; padding: 4px 10px; font-size: 11px; font-weight: 700; letter-spacing: .1em; transform: rotate(-2deg); }
+
+  .docket { align-self: start; margin-top: 16px; border: 4px solid #1a1714; background: #efe8d7; box-shadow: 10px 10px 0 #1a1714; padding: 16px 14px 13px; text-align: center; transform: rotate(-2deg); }
+  .docket img { display: block; width: 205px; height: auto; margin: 0 auto 8px; transform: rotate(4deg); }
+  .docket .role { font-size: 14px; font-weight: 700; line-height: 1.35; letter-spacing: .03em; }
+  .docket .meta { margin-top: 5px; font-size: 10px; line-height: 1.7; color: #5a5248; }
+  .stamp { display: inline-block; margin-top: 14px; border: 3px solid #8c2a20; color: #8c2a20; padding: 4px 8px; font-size: 10px; font-weight: 700; letter-spacing: .08em; transform: rotate(3deg); }
+
+  .console { height: 168px; padding: 12px 44px 9px; background: #171410; color: #e9e2d0; border-top: 4px solid #8c2a20; }
+  .tbar { display: flex; justify-content: space-between; padding-bottom: 6px; border-bottom: 1px solid #3b342c; font-size: 11px; letter-spacing: .07em; color: #b9ae9b; }
+  .tbar b { color: #e9e2d0; font-weight: 700; }
+  .gauges { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; margin-top: 8px; }
+  .g { display: grid; grid-template-columns: 1fr auto; align-items: baseline; gap: 6px; font-size: 9px; line-height: 1.5; color: #b9ae9b; }
+  .g b { color: #e9e2d0; font-weight: 400; text-transform: uppercase; letter-spacing: .04em; }
+  .g i { font-style: normal; color: #e9e2d0; font-variant-numeric: tabular-nums; }
+  .g .bar { grid-column: 1 / -1; display: block; height: 6px; background: repeating-linear-gradient(to right, #171410 0 1px, transparent 1px 6px), linear-gradient(to right, var(--bar, #d7cbb7) 0 var(--fill), #3b342c var(--fill) 100%); }
+  .foot { display: flex; justify-content: space-between; margin-top: 7px; font-size: 9px; letter-spacing: .06em; color: #7a7062; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="file">
+    <span>Фонд 1991 · опись 07 · ед. хр. 1964–2001</span>
+    <b>Сов. секретно</b>
+  </div>
+
+  <div class="main">
+    <div class="copy">
+      <div class="kick">A text-based Soviet alternate-history game</div>
+      <h1>КРЕМЛЬ<span class="year">1991</span></h1>
+      <div class="rule"></div>
+      <div class="sub">GENERAL SECRETARY</div>
+      <div class="line">Twenty-seven years. Five gauges. One signature. No map.</div>
+      <div class="badge">BETA v7 · FREE IN THE BROWSER</div>
+    </div>
+
+    <div class="docket">
+      <img src="../../docs/assets/emblem.svg" alt="">
+      <div class="role">ГЕНЕРАЛЬНЫЙ<br>СЕКРЕТАРЬ</div>
+      <div class="meta">ЦК КПСС · ПОЛИТБЮРО<br>МОСКВА · ОКТЯБРЬ 1964</div>
+      <div class="stamp">СОВ. СЕКРЕТНО</div>
+    </div>
+  </div>
+
+  <div class="console">
+    <div class="tbar"><span><span class="sym">☭</span> <b>КРЕМЛЬ 1991</b> / BETA v7</span><span>THE BOARD · YEAR 1964</span></div>
+    <div class="gauges">
+      <div class="g"><b>Economy</b><i>57</i><span class="bar" style="--fill:57%"></span></div>
+      <div class="g"><b>Military</b><i>70</i><span class="bar" style="--fill:70%"></span></div>
+      <div class="g"><b>Order</b><i>81</i><span class="bar" style="--fill:81%"></span></div>
+      <div class="g"><b>People</b><i>48</i><span class="bar" style="--fill:48%;--bar:#d45a4a"></span></div>
+      <div class="g"><b>Prestige</b><i>62</i><span class="bar" style="--fill:62%"></span></div>
+    </div>
+    <div class="foot"><span>PYTHON · NO INSTALL · 121 EVENTS · FOUR TIMELINES</span><span>MAHAKAM MOONLIGHT STUDIO</span></div>
+  </div>
+</div>
+</body>
+</html>

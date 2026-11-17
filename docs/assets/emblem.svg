@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="A red five-point star holding a hammer and sickle">
+  <defs>
+    <clipPath id="star">
+      <polygon points="50,3 61,34 94,34 67,53 77,85 50,65 23,85 33,53 6,34 39,34"/>
+    </clipPath>
+  </defs>
+  <polygon points="50,3 61,34 94,34 67,53 77,85 50,65 23,85 33,53 6,34 39,34" fill="#8c2a20" stroke="#1a1714" stroke-width="2.4" stroke-linejoin="round"/>
+  <g clip-path="url(#star)">
+    <path d="M17 67 C22 45 39 29 60 29 C71 29 81 33 87 41 C79 36 69 36 61 41 C44 51 36 60 31 73 Z" fill="#e9e2d0"/>
+    <rect x="14" y="64" width="10" height="22" rx="2" transform="rotate(24 19 75)" fill="#e9e2d0"/>
+    <g transform="rotate(-40 55 55)">
+      <rect x="51" y="31" width="8" height="42" fill="#e9e2d0"/>
+      <rect x="38" y="25" width="34" height="12" fill="#e9e2d0"/>
+    </g>
+  </g>
+</svg>

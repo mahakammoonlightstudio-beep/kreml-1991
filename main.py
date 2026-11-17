@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-kreml_1991 v5 — General Secretary: A Soviet Union alternate-history simulator.
+kreml_1991 v7 — General Secretary: A Soviet Union alternate-history simulator.
 
 Run:
     python main.py                        # normal game (asks difficulty + timeline)
@@ -61,7 +61,7 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
     return seed, mode, timeline
 
 
-HELP = """КРЕМЛЬ 1991 v6 — General Secretary
+HELP = """КРЕМЛЬ 1991 v7 — General Secretary
 
 Usage: python main.py [flags]
 

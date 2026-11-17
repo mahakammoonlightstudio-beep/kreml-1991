@@ -132,7 +132,7 @@
     if (finished) return;
 
     if (lastLine().includes("[Enter] proceed")) {
-      add("Continue ▸", "");
+      add("Continue", "");
       add("d", "dossier");
       add("i", "capital");
       add("o", "orders");
@@ -387,7 +387,7 @@ def _call(kind="snapshot", payload="{}"):
       note.innerHTML = "The Python runtime could not be loaded (offline, or a blocked CDN). " +
         "The game itself is fine — <a href=\"https://github.com/mahakammoonlightstudio-beep/kreml-1991\">" +
         "clone the repo</a> and run <b>python main.py</b>.";
-      setup.querySelector(".card").appendChild(note);
+      setup.querySelector(".panel").appendChild(note);
       console.error(err);
     }
   }

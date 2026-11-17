@@ -13,3 +13,12 @@ edit video/
 # Render / autowrite artifacts
 *.tmp
 docs/media/teaser.mp4
+docs/.hallmark/
+docs/play/.hallmark/
+.agents/
+.claude/
+skills-lock.json
+
+# itch.io package (regenerate with python tools/build_itch.py)
+itch_upload/kreml-1991-web/
+itch_upload/*.zip

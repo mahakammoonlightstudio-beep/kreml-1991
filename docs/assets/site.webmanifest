@@ -1,0 +1,22 @@
+{
+  "name": "КРЕМЛЬ 1991 — General Secretary",
+  "short_name": "КРЕМЛЬ 1991",
+  "description": "A text-based Soviet alternate-history game. Twenty-seven years, five gauges, one signature.",
+  "start_url": "../",
+  "scope": "../",
+  "display": "standalone",
+  "background_color": "#e5dfce",
+  "theme_color": "#8c2a20",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

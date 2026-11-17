@@ -51,13 +51,23 @@ STAT_COLOUR = {
     "FAITH": C.G, "PRESTIGE": C.CY,
 }
 
-BANNER = r"""
-        ★  ☭  ★
-   К Р Е М Л Ь
-      1 9 9 1
+VERSION = "7"
+VERSION_TAG = "BETA v7"
 
-     V E R S I O N  6
+# v7: the title screen is drawn, not typed. ANSI Shadow lettering, a docket
+# frame and one red line of classification — the visual grammar the rest of
+# the interface follows: rules, plates and stencilled labels.
+BANNER = r"""
+  ██╗  ██╗██████╗ ███████╗███╗   ███╗██╗
+  ██║ ██╔╝██╔══██╗██╔════╝████╗ ████║██║
+  █████╔╝ ██████╔╝█████╗  ██╔████╔██║██║
+  ██╔═██╗ ██╔══██╗██╔══╝  ██║╚██╔╝██║██║
+  ██║  ██╗██║  ██║███████╗██║ ╚═╝ ██║███████╗
 """
+
+DOCKET_TOP = "  ┌────────────────────────────────────────────────────────────┐"
+DOCKET_ROW = "  │ ФОНД 1991 · ОПИСЬ 7 · ЕД. ХР. 1964–2001   СОВ. СЕКРЕТНО   │"
+DOCKET_BOT = "  └────────────────────────────────────────────────────────────┘"
 
 
 def paint(text: str, code: str) -> str:
@@ -117,17 +127,19 @@ def arrow(delta: int) -> str:
 
 
 def year_banner(year: int, note: str = "") -> None:
-    """The year plate. Three dim frames that settle into the real header."""
+    """The year plate: a stamped docket line, settled from three frames."""
     tail = paint(f"  {note}", C.DIM) if note else ""
+    lead = f"  ╞═ ☭ {year} ═"
+    fill = "═" * max(0, 66 - len(lead) - len(note or ""))
     if not ANIM:
-        print(paint(f"  ☭ {year} ☭", C.BM) + tail)
+        print(paint(lead + fill, C.BM) + tail)
         return
     for frame in ("░", "▒", "▓"):
-        sys.stdout.write("\r" + paint(f"  {frame * 3} {year} {frame * 3}", C.DIM))
+        sys.stdout.write("\r" + paint(f"  {frame * 3} {year} {frame * 3}" + " " * 24, C.DIM))
         sys.stdout.flush()
-        time.sleep(0.06)
-    sys.stdout.write("\r" + " " * 32 + "\r")
-    print(paint(f"  ☭ {year} ☭", C.BM) + tail)
+        time.sleep(0.05)
+    sys.stdout.write("\r" + " " * 66 + "\r")
+    print(paint(lead + fill, C.BM) + tail)
     sys.stdout.flush()
 
 
@@ -137,12 +149,24 @@ def sep(char: str = "─", width: int = 78) -> str:
 
 def banner() -> None:
     print()
-    print(paint(BANNER, C.BM))
-    print(paint("  A GENERAL SECRETARY ALTERNATE-HISTORY SIMULATOR", C.BB))
-    print(paint("  1964 ────────────── ► 1991   (+ the RED MILLENNIUM, 2001)", C.DIM))
+    print(paint(DOCKET_TOP, C.DIM))
+    print(paint(DOCKET_ROW, C.DIM))
+    print(paint(DOCKET_BOT, C.DIM))
+    print()
+    print(paint(BANNER.strip("\n"), C.BM))
+    print()
+    print(paint(f"  КРЕМЛЬ 1991 · ГЕНЕРАЛЬНЫЙ СЕКРЕТАРЬ · {VERSION_TAG}", C.W))
+    print(paint("  1964 ─────────────► 1991 ─────► 2001   ·   the Union is a rumour", C.DIM))
+    print(paint("  ──────────────────────────────────────────────────────────────", C.DIM))
     print()
     print(paint("  The Politburo awaits your signature, Comrade.", C.W))
     print()
+
+
+def _section(title: str) -> None:
+    """A stencilled section rule: label first, the rest of the line cut away."""
+    head = f"  ░ {title} "
+    print(paint(head + "░" * max(0, 68 - len(head)), C.DIM))
 
 
 def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = "BALANCED",
@@ -151,9 +175,14 @@ def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = 
                 history: list | None = None, influence: int = 0,
                 order: str = "", agenda: str = "") -> None:
     hist = history or []
-    print(paint(f"  ━━━━━━━━━━━━━━━ ☭  YEAR {year}  ☭  [{era} · {mode_tag}] ━━━━━━━━━━━━━━", C.BB))
-    if timeline:
-        print(paint(f"   {timeline}", C.DIM))
+    print()
+    left = f"☭ КРЕМЛЬ 1991 / {VERSION_TAG}"
+    print(paint("  ┌" + "─" * 64 + "┐", C.DIM))
+    print(paint("  │ " + left + " " * max(1, 62 - len(left) - 9) + "THE BOARD │", C.BB))
+    print(paint("  └" + "─" * 64 + "┘", C.DIM))
+    where = timeline or "RAILS OF HISTORY"
+    print(paint(f"  ▌ YEAR {year}   {where}   [{era} · {mode_tag}]", C.BB))
+    _section("THE FIVE GAUGES")
     for stat in ("ECONOMY", "MILITARY", "ORDER", "FAITH", "PRESTIGE"):
         v = get_stats()[stat]
         col = C.BM if v < 25 else (C.Y if v < 45 else STAT_COLOUR[stat])
@@ -161,45 +190,53 @@ def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = 
         trend = sparkline([h["stats"][stat] for h in hist], 10)
         trend_txt = paint(" " + trend + arrow(v - hist[-1]["stats"][stat]), C.DIM) \
             if trend else ""
-        row = f"   {STAT_LABEL[stat]:<22} {paint(bar(v), col)} {v:>3}{trend_txt}{warn}"
+        row = (f"   {STAT_LABEL[stat]:<21} [{paint(bar(v, 22), col)}] {v:>3}"
+               f"{trend_txt}{warn}")
         print(row)
+    _section("THE VAULT & THE COURT")
     dots = '● ' * lifelines + '◦ ' * max(0, reserves_cap - lifelines)
-    print(paint(f"   Kremlin reserves (lifelines · {mode_tag}): {dots}", C.DIM))
-    market = f" oil {world}" if world else ""
+    print(paint(f"   {'Kremlin reserves':<21} [{dots.strip():<20}] {lifelines}/{reserves_cap}", C.DIM))
+    market = f"oil {world}" if world else ""
     warn_hc = paint("  ⚠ DRY", C.BM) if hc < 15 else ""
     col_hc = C.BM if hc < 15 else (C.Y if hc < 40 else C.CY)
     hc_trend = sparkline([h["hc"] for h in hist], 10)
     oil_trend = sparkline([h["oil"] for h in hist], 10)
-    print(f"   {'Valas     (gold & $)':<22} {paint(bar(hc), col_hc)} {hc:>3}"
+    print(f"   {'Valas     (gold & $)':<21} [{paint(bar(hc, 22), col_hc)}] {hc:>3}"
           f"{paint(' ' + hc_trend, C.DIM) if hc_trend else ''}"
-          f"{paint(' · ' + market + ' ' + oil_trend, C.DIM) if market else ''}{warn_hc}")
+          f"{paint('  ' + market + ' ' + oil_trend, C.DIM) if market else ''}{warn_hc}")
     if court:
         bits = []
         for f, label in FACTION_ITEMS:
             m = court.get(f, 50)
             col = C.BM if m <= 22 else (C.Y if m <= 34 else C.G)
             warn = paint(" ⚠PLOT", C.BM) if m <= 22 else ""
-            bits.append(paint(f"{label} {bar(m, 6)} {m:>3}", col) + warn)
-        print("   Politburo " + " · ".join(bits))
+            bits.append(paint(f"{label} [{bar(m, 6)}] {m:>3}", col) + warn)
+        print("   Politburo " + "  ".join(bits))
     bar_inf = "❖" * min(10, influence // 10) + "·" * max(0, 10 - influence // 10)
-    print(paint(f"   {'Political capital':<22} {bar_inf} {influence:>3}"
-                f"{paint('  · ' + order, C.DIM) if order else ''}", C.Y))
+    print(paint(f"   {'Political capital':<21} {bar_inf} {influence:>3}"
+                f"{paint('  / ' + order, C.DIM) if order else ''}", C.Y))
     if agenda:
-        print(paint(f"   {'Agenda':<22} {agenda}", C.DIM))
+        print(paint(f"   {'Agenda':<21} {agenda}", C.DIM))
+    print(paint("  " + "▔" * 66, C.DIM))
     print()
 
 
 def event_header(title: str, text: str, note: str = "") -> None:
+    """An incident sheet: a stamped header, wrapped body, a closed file."""
+    import textwrap
     print()
-    print(paint("  ┌────────────── EVENT ───────────────────┐", C.BB))
-    slow(paint("  ☈ " + title, C.BM))
-    slow(paint("  " + text, C.W))
+    print(paint("  ┌─ INCIDENT ─────────────────────────────────────────────────┐", C.BB))
+    slow(paint("  │ ☈ " + title, C.BM))
+    for line in textwrap.wrap(text, 62) or [""]:
+        slow(paint("  │ " + line, C.W))
     if note:
-        slow(paint("  " + note, C.DIM))
-    print(paint("  └────────────────────────────────────────┘", C.DIM))
+        for line in textwrap.wrap(note, 62):
+            slow(paint("  │ " + line, C.DIM))
+    print(paint("  └────────────────────────────────────────────────────────────┘", C.DIM))
 
 
 def list_options(options) -> None:
+    print(paint("  ░░ ORDERS ON THE TABLE " + "░" * 46, C.DIM))
     for i, (label, outcomes) in enumerate(options, 1):
         print(f"   {paint(f'{i:>2}', C.BB)}. {paint(label, C.W)}")
         if outcomes:

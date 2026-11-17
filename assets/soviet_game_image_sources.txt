@@ -1,0 +1,141 @@
+SOVIET-ERA GAME REFERENCE IMAGE SOURCES
+========================================
+Purpose: image-source links for an AI agent building a historically inspired game.
+Main period: USSR, 1960-1991.
+Follow-up period: post-Soviet transition, 1992-2000.
+
+IMPORTANT
+- These are source/category pages, not guaranteed direct image-file URLs.
+- Open each individual file page and check its date, location, author, and license before downloading or using it.
+- Wikimedia Commons files have different licenses; do not assume every image is public domain or free for every use.
+- Prefer files with clear reuse terms (for example, CC0, public domain, or an appropriate Creative Commons license) and keep attribution/license metadata.
+- Check that the photograph depicts the historical period, not a modern reconstruction, museum display, reenactment, or present-day view.
+- A category can contain unrelated or later photographs; verify every candidate image.
+
+[1] BRUTALISM, SOVIET MODERNISM & ARCHITECTURE
+Wikimedia Commons — Architecture of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Architecture_of_the_Soviet_Union
+
+Architecture of the Soviet Union by decade:
+https://commons.wikimedia.org/wiki/Category:Architecture_of_the_Soviet_Union_by_decade
+
+1960s architecture in the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1960s_architecture_in_the_Soviet_Union
+
+1970s architecture in the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1970s_architecture_in_the_Soviet_Union
+
+1980s architecture in the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1980s_architecture_in_the_Soviet_Union
+
+Buildings in the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Buildings_in_the_Soviet_Union
+
+Soviet apartment buildings:
+https://commons.wikimedia.org/wiki/Category:Apartment_buildings_built_in_the_Soviet_Union
+
+Architecture of Pripyat:
+https://commons.wikimedia.org/wiki/Category:Architecture_of_Pripyat
+
+[2] USSR FLAGS, EMBLEMS & PUBLIC SYMBOLS
+Flags of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Flags_of_the_Soviet_Union
+
+National flag of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:National_flag_of_the_Soviet_Union
+
+Photographs of flags of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Photographs_of_flags_of_the_Soviet_Union
+
+Photographs of the national flag of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Photographs_of_the_national_flag_of_the_Soviet_Union
+
+Flags of the Soviet Republics:
+https://commons.wikimedia.org/wiki/Category:Flags_of_the_Soviet_Republics
+
+[3] HISTORICAL PHOTOGRAPHS BY DECADE
+1960s photographs of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1960s_photographs_of_the_Soviet_Union
+
+1970s photographs of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1970s_photographs_of_the_Soviet_Union
+
+1980s photographs of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:1980s_photographs_of_the_Soviet_Union
+
+Black-and-white photographs of the Soviet Union in the 1980s:
+https://commons.wikimedia.org/wiki/Category:Black_and_white_photographs_of_the_Soviet_Union_in_the_1980s
+
+Soviet Union by decade (browse subcategories):
+https://commons.wikimedia.org/wiki/Category:Soviet_Union_by_decade
+
+Photographs of the Soviet Union by year:
+https://commons.wikimedia.org/wiki/Category:Photographs_of_the_Soviet_Union_by_year
+
+[4] PUBLIC LIFE, CEREMONIES & EVERYDAY ATMOSPHERE
+Soviet Union in the 1960s:
+https://commons.wikimedia.org/wiki/Category:Soviet_Union_in_the_1960s
+
+Soviet Union in the 1970s:
+https://commons.wikimedia.org/wiki/Category:Soviet_Union_in_the_1970s
+
+Soviet Union in the 1980s:
+https://commons.wikimedia.org/wiki/Category:Soviet_Union_in_the_1980s
+
+Photographs of Moscow by year (includes 1979-2000 entries):
+https://commons.wikimedia.org/wiki/Category:Photographs_of_Moscow_by_year
+
+Photographs of Soviet flags in Moscow:
+https://commons.wikimedia.org/wiki/Category:Photographs_of_flags_of_the_Soviet_Union_in_Moscow
+
+[5] SPACE PROGRAM & SCIENCE
+Space program of the Soviet Union:
+https://commons.wikimedia.org/wiki/Category:Space_program_of_the_Soviet_Union
+
+Soviet space:
+https://commons.wikimedia.org/wiki/Category:Soviet_space
+
+Salyut space station program:
+https://commons.wikimedia.org/wiki/Category:Salyut_program
+
+[6] MAJOR HISTORICAL EVENTS & LATE-SOVIET CRISIS
+Chernobyl disaster (1986):
+https://commons.wikimedia.org/wiki/Category:Chernobyl_disaster
+
+Chornobyl — locations, buildings, streets and historical material:
+https://commons.wikimedia.org/wiki/Category:Chornobyl
+
+Perestroika (1985-1991):
+https://commons.wikimedia.org/wiki/Category:Perestroika
+
+[7] 1992-2000: POST-SOVIET TRANSITION (NOT THE USSR)
+Moscow in the 1990s:
+https://commons.wikimedia.org/wiki/Category:Moscow_in_the_1990s
+
+1990s architecture in Moscow:
+https://commons.wikimedia.org/wiki/Category:1990s_architecture_in_Moscow
+
+Photographs of Moscow by year (browse 1992-2000):
+https://commons.wikimedia.org/wiki/Category:Photographs_of_Moscow_by_year
+
+[8] SUGGESTED ASSET TAGS FOR THE GAME PIPELINE
+era_1960s
+era_1970s
+era_1980s
+era_1990_1991_late_ussr
+era_1992_2000_post_soviet
+architecture_brutalist
+architecture_soviet_modernist
+architecture_apartment_block
+architecture_public_building
+flag_ussr
+flag_union_republic
+public_celebration
+street_scene
+public_transport
+space_program
+chernobyl_1986
+perestroika
+post_soviet_transition
+
+END OF SOURCE LIST
