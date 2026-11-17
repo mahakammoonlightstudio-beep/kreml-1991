@@ -14,6 +14,7 @@ import os
 
 from .state import Kremlin, STATS, FACTIONS
 from .content.modes import normalize
+from .content.republics import DEFAULT_UNREST, REPUBLICS
 
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                          "kreml_save.json")
@@ -71,6 +72,9 @@ def save_game(g: Kremlin, path: str | None = None) -> bool:
         "focus_uses": dict(g.focus_uses),
         "path": g.path,
         "history": g.history,
+        "republic_unrest": dict(getattr(g, "republic_unrest", DEFAULT_UNREST)),
+        "tutorial": bool(getattr(g, "tutorial", False)),
+        "tutorial_year": int(getattr(g, "tutorial_year", 0)),
         "influence": getattr(g, "influence", 8),
         "capital_uses": getattr(g, "capital_uses", {}),
         "capital_year": getattr(g, "capital_year", 0),
@@ -122,6 +126,11 @@ def load_game(path: str | None = None) -> Kremlin | None:
                         (data.get("focus_uses") or {}).items()}
         g.path = data.get("path")
         g.history = list(data.get("history") or [])
+        saved_unrest = data.get("republic_unrest") or {}
+        g.republic_unrest = {r: int(saved_unrest.get(r, DEFAULT_UNREST[r]))
+                             for r in REPUBLICS}
+        g.tutorial = bool(data.get("tutorial", False))
+        g.tutorial_year = int(data.get("tutorial_year", 0))
         g.influence = int(data.get("influence", 8))
         g.capital_uses = {str(k): int(v) for k, v in
                           (data.get("capital_uses") or {}).items()}

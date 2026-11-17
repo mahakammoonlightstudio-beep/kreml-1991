@@ -9,10 +9,11 @@ Assets here:
 | File | Use |
 |---|---|
 | `cover.png` | Cover image, exactly **630 × 500** (required) |
-| `screenshots/01-board.png` | Screenshot: the v7 board |
+| `screenshots/01-board.png` | Screenshot: the board |
 | `screenshots/02-directive.png` | Screenshot: a yearly directive |
 | `screenshots/03-ending.png` | Screenshot: the 1991 report |
 | `screenshots/04-title.png` | Screenshot: the appointment screen |
+| `screenshots/05-tutorial.png` | Screenshot: the First-Year Orientation memo |
 | `description.html` | Paste into **Description** (itch accepts HTML) |
 
 ---
@@ -40,8 +41,10 @@ Notes:
 - **Pricing.** Keep **No payments**. The game is free and the donation links are
   external (PayPal, Sociabuzz, Saweria). Do not enable itch's "ask for a
   donation" gate unless you deliberately want a second payment path.
-- **Release status.** `Released` is accurate for the current BETA v7 build; the
-  title still says BETA, and updates are expected.
+- **Release status.** `Released` is accurate for the current BETA v7-5 build; the
+  title still says BETA, and updates are expected. The build now includes the
+  optional First-Year Orientation, Republic Unrest and event cues; the paste-ready
+  description in `description.html` is updated for this build.
 
 ---
 
@@ -82,7 +85,7 @@ web manifest, so the embedded page matches the GitHub Pages copy.
 | **Visibility & access** | `Draft` now; `Public` after the URL and page are checked |
 | **Cover image** | `cover.png` (630 × 500) |
 | **Gameplay video** | Leave blank — no trailer exists yet |
-| **Screenshots** | Upload the four files in `screenshots/` |
+| **Screenshots** | Upload the five files in `screenshots/` |
 
 ### AI disclosure wording
 
@@ -94,10 +97,11 @@ A truthful explanation if itch offers a free-text box:
 
 ### Screenshot captions
 
-1. **01-board.png** — The v7 board: five gauges, the valas reserve, the court and the year's agenda.
+1. **01-board.png** — The board: five gauges, the valas reserve, the court, Republic Unrest and the year's agenda.
 2. **02-directive.png** — The yearly directive: one public campaign, chosen from the groups on the table.
 3. **03-ending.png** — The 1991 divergence report: what your century changed, and what it cost.
 4. **04-title.png** — The appointment: difficulty, timeline and the name for the history books.
+5. **05-tutorial.png** — The optional First-Year Orientation: Chief of Staff Volkov's fifth memo on fatigue, the court and Republic Unrest.
 
 ### Content notes
 
@@ -141,7 +145,7 @@ python tools/build_itch.py
 - [ ] Kind = HTML, ZIP has `index.html` at root
 - [ ] Pricing = No payments
 - [ ] Cover 630 × 500 uploaded
-- [ ] Four screenshots uploaded with captions
+- [ ] Five screenshots uploaded with captions
 - [ ] Genre = Strategy, ten tags entered
 - [ ] AI disclosure = Yes
 - [ ] Community = Comments

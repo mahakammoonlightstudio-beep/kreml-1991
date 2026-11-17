@@ -86,6 +86,13 @@ DIVERGENCE_FLAGS = {
     "path_letgo":        "The empire's edges were released; the centre held.",
     "path_hold":         "The held line cost the Pact and bought the decade.",
     "path_market":       "The empire was traded for a market, receipts kept.",
+    # ── v7-5: the republics and the red capstone ──
+    "republic_crackdown": "The republics were held by troops, and remembered it.",
+    "republic_compact":   "A federal compact bought the centre another decade of arguments.",
+    "republic_autonomy":  "The republics were allowed to experiment; the centre kept the stationery.",
+    "red_millennium_federal": "The Red Millennium opened as a federation of equals, red flag and all.",
+    "red_millennium_party":   "The Party stayed at the centre of the Red Millennium, and the centre held.",
+    "red_millennium_disarm":  "The Red Millennium retired the bomb before the century did.",
 }
 
 # ---------------------------------------------------------------
@@ -188,6 +195,7 @@ def show_hall_top() -> None:
 # Endings
 # ---------------------------------------------------------------
 def ending_collapse(g: Kremlin) -> int:
+    ui.cue("ending")
     reason = g.death_reason or DEATH_TEXT.get(g.dead_stat() or "", "The Union dissolves.")
     tag = "DEPOSED" if g.deposed else "COLLAPSED"
     header = ("  ██ REMOVED, {} ██".format(g.year) if g.deposed
@@ -215,6 +223,7 @@ def ending_collapse(g: Kremlin) -> int:
 
 
 def ending_retire(g: Kremlin) -> int:
+    ui.cue("ending")
     score = final_score(g)
     print()
     print(ui.paint("═" * 78, ui.C.BB))
@@ -251,6 +260,10 @@ def survival_outcome(g: Kremlin) -> tuple[str, int, str]:
         score += 4
     if g.end_year >= 2001:
         score += 8
+    if any(flag.startswith("red_millennium_") for flag in g.flags):
+        score += 10
+    if max((getattr(g, "republic_unrest", {}) or {}).values(), default=0) >= 75:
+        score = max(0, score - 8)
     detour = divergence_penalty(g)
     score = max(0, score - detour)
     rails = MODES.get(g.mode, {}).get("rail", False)
@@ -290,6 +303,7 @@ def _epilogue(g: Kremlin) -> list[str]:
 
 
 def ending_union_survives(g: Kremlin) -> int:
+    ui.cue("ending")
     tag, score, header = survival_outcome(g)
     near_miss = tag == "NEAR-MISS"
     text = (f"  {header}\n"
@@ -331,6 +345,7 @@ def ending_union_survives(g: Kremlin) -> int:
 
 
 def ending_red_millennium(g: Kremlin) -> int:
+    ui.cue("ending")
     tag, score, header = survival_outcome(g)
     near_miss = tag == "NEAR-MISS"
     text = (f"  {header}\n"
@@ -352,6 +367,12 @@ def ending_red_millennium(g: Kremlin) -> int:
         text += "\n  More than one velvet Thursday ended with your chair exactly where it was."
     if "treaty_signed" in g.flags:
         text += "\n  The 1991 treaty still binds: nine republics by signature, not by tank."
+    if "red_millennium_federal" in g.flags:
+        text += "\n  The Millennium's first act is a federal charter, signed in daylight."
+    elif "red_millennium_party" in g.flags:
+        text += "\n  The Party enters the Millennium as the centre of a very careful state."
+    elif "red_millennium_disarm" in g.flags:
+        text += "\n  The missile fields are already being ploughed for the first harvest of 2010."
     print()
     print(ui.paint("═" * 78, ui.C.BB))
     for ln in text.split("\n"):

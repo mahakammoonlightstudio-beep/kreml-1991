@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-kreml_1991 v7 — General Secretary: A Soviet Union alternate-history simulator.
+kreml_1991 v7-5 — General Secretary: A Soviet Union alternate-history simulator.
 
 Run:
     python main.py                        # normal game (asks difficulty + timeline)
@@ -11,6 +11,7 @@ Run:
     python main.py --timeline flashpoint  # rails | reform | flashpoint | millennium
     python main.py --no-anim              # plain text (no bars/animations)
     python main.py --timed                # v6: decisions run on a wall clock
+    python main.py --tutorial             # first-year orientation (v7-5)
 
 (The v1 single-file version is kept for reference in v1_kreml.py.)
 """
@@ -25,10 +26,11 @@ from kreml.content.timelines import TIMELINE_ORDER
 VALID_MODES = tuple(MODE_ORDER) + ("normal",)      # "normal" is the v4 alias of medium
 
 
-def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
+def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None, bool]:
     seed: int | None = None
     mode: str | None = None
     timeline: str | None = None
+    tutorial = "--tutorial" in argv or "-tutorial" in argv
     if "--drama" in argv:
         ui.DRAMA = True
     if "--no-anim" in argv:
@@ -41,6 +43,10 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
         ui.TIMED = True
     if "--no-timed" in argv:
         ui.TIMED = False
+    if "--sound" in argv:
+        ui.SOUND = True
+    if "--no-sound" in argv:
+        ui.SOUND = False
     for flag in ("-seed", "--seed"):
         if flag in argv:
             idx = argv.index(flag)
@@ -58,10 +64,10 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None]:
             idx = argv.index(flag)
             if idx + 1 < len(argv) and argv[idx + 1].lower() in TIMELINE_ORDER:
                 timeline = argv[idx + 1].lower()
-    return seed, mode, timeline
+    return seed, mode, timeline, tutorial
 
 
-HELP = """КРЕМЛЬ 1991 v7 — General Secretary
+HELP = """КРЕМЛЬ 1991 v7-5 — General Secretary
 
 Usage: python main.py [flags]
 
@@ -70,7 +76,9 @@ Usage: python main.py [flags]
   --seed <int>     reproducible run
   --timed          decisions run on a wall clock (flash crises breathe)
   --no-timed       force the clock off (default)
+  --tutorial       first-year orientation (dossier, capital, orders, unrest)
   --anim/--no-anim terminal visuals on/off
+  --sound/--no-sound  event cues on/off (terminal bell / winsound)
   --drama          slow typewriter printing
 
 At the year boundary: s save · l load · d dossier · i political capital ·
@@ -82,9 +90,9 @@ def main() -> None:
     if "--help" in sys.argv[1:] or "-h" in sys.argv[1:]:
         print(HELP)
         return
-    seed, mode, timeline = parse_args(sys.argv[1:])
+    seed, mode, timeline, tutorial = parse_args(sys.argv[1:])
     try:
-        engine.run(seed, mode=mode, timeline=timeline)
+        engine.run(seed, mode=mode, timeline=timeline, tutorial=tutorial)
     except BrokenPipeError:
         pass
 

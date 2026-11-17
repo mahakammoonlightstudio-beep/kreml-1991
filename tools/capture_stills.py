@@ -3,7 +3,8 @@
 
 The old JPGs in docs/media were captured in v4 and show the wrong interface.
 This tool replays the deterministic autopilot run with seed 7, picks the title,
-board, directive and ending screens, and writes 1600×900 stills into
+board, directive and ending screens, plus a second tutorial run for the
+First-Year Orientation memo, and writes 1600×900 stills into
 ``itch_page/screenshots/``.
 
     python tools/capture_stills.py
@@ -78,10 +79,14 @@ def main() -> int:
         directive = pick(acts, "Directive of the year", "prompt")
         ending = next(a for a in reversed(acts) if a.kind == "final")
 
+        tutorial_acts, _ = R.capture_run(7, tutorial=True)
+        tutorial = pick(tutorial_acts, "MEMO · 05 / THE FIRST-YEAR ARITHMETIC")
+
         still(title, "04-title.png")
         still(board, "01-board.png", top=0, rows=R.ROWS)
         still(directive, "02-directive.png")
         still(ending, "03-ending.png")
+        still(tutorial, "05-tutorial.png", top=0, rows=R.ROWS)
     finally:
         try:
             (REPO / "kreml_save.json").unlink()

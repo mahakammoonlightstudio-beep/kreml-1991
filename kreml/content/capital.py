@@ -41,6 +41,16 @@ MOVES: tuple[dict, ...] = (
         "requires": {"hc_max": 94},
     },
     {
+        "id": "republic_subsidies",
+        "label": "Send federal subsidies to the republics",
+        "cost": 8,
+        "desc": "Roads, schools, and a first secretary who remembers your name.",
+        "ops": {"stats": {"ECONOMY": -1},
+                "unrest": {"baltic": -4, "ukraine": -4,
+                           "caucasus": -4, "central_asia": -4},
+                "court": {"reformers": 2}},
+    },
+    {
         "id": "press_management",
         "label": "Manage the evening bulletin",
         "cost": 6,

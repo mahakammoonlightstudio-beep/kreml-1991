@@ -10,6 +10,7 @@
 
   const PY_URL = "https://cdn.jsdelivr.net/pyodide/v0.28.0/full/";
   const STORE_KEY = "kreml1991.web.run.v1";
+  const SOUND_KEY = "kreml1991.sound.v1";
   const TIMEOUT = "__timeout__";      // keep in sync with kreml_web.TIMEOUT_TOKEN
 
   const $ = (id) => document.getElementById(id);
@@ -17,9 +18,15 @@
   const choicesEl = $("choices"), lineEl = $("line"), formEl = $("answer");
   const statusEl = $("status"), bootnote = $("bootnote"), startBtn = $("start");
   const resumeBtn = $("resume"), restartBtn = $("restart"), termTitle = $("termtitle");
+  const tutorialBtn = $("tutorial"), soundBtn = $("sound");
+  const hintEl = $("hint");
+  const isTouch = () => window.matchMedia("(pointer: coarse)").matches;
+  const isCompact = () => window.innerWidth <= 768;
 
   let call = null;            // Python _call()
   let busy = false, finished = false;
+  let soundOn = true;
+  let audio = null;
   let clockTimer = null, clockEnd = 0, clockTick = null;
   let plain = "";             // recent output without ANSI, for parsing menus
   let record = null;          // the run in this tab (answers + config)
@@ -121,12 +128,16 @@
 
   function drawChoices() {
     choicesEl.textContent = "";
+    const choose = (value) => {
+      if (isTouch()) lineEl.blur();   // tap the board, not the mobile keyboard
+      submitLine(value);
+    };
     const add = (label, value, hint) => {
       const b = document.createElement("button");
       b.type = "button";
       b.innerHTML = hint ? `<span class="n">${esc(label)}</span><span class="d">${esc(hint)}</span>`
                          : esc(label);
-      b.addEventListener("click", () => submitLine(value));
+      b.addEventListener("click", () => choose(value));
       choicesEl.appendChild(b);
     };
     if (finished) return;
@@ -146,7 +157,7 @@
       const b = document.createElement("button");
       b.type = "button";
       b.innerHTML = `<span class="n">${n}</span>${esc(short)}`;
-      b.addEventListener("click", () => submitLine(String(n)));
+      b.addEventListener("click", () => choose(String(n)));
       choicesEl.appendChild(b);
     }
   }
@@ -161,6 +172,50 @@
   /* ─────────────────────────── talking to Python ───────────────────── */
 
   const paint = () => new Promise((r) => requestAnimationFrame(() => setTimeout(r, 0)));
+
+  /* ─────────────────────────── event sound ─────────────────────────── */
+
+  function ensureAudio() {
+    if (audio) return audio;
+    const AC = window.AudioContext || window.webkitAudioContext;
+    if (!AC) return null;
+    audio = new AC();
+    return audio;
+  }
+
+  function cue(kind) {
+    if (!soundOn) return;
+    const ctx = ensureAudio();
+    if (!ctx) return;
+    if (ctx.state === "suspended") ctx.resume();
+    const notes = {
+      event: [[392, 0.06], [523, 0.08]],
+      good: [[523, 0.06], [659, 0.06]],
+      bad: [[220, 0.08], [185, 0.10]],
+      ending: [[392, 0.10], [330, 0.10], [262, 0.18]],
+    }[kind] || [[392, 0.06]];
+    const now = ctx.currentTime;
+    notes.forEach(([freq, duration], i) => {
+      const start = now + i * 0.11;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.value = freq;
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(0.055, start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + duration + 0.02);
+    });
+  }
+
+  function syncSoundButton() {
+    if (!soundBtn) return;
+    soundBtn.textContent = soundOn ? "Sound on" : "Sound muted";
+    soundBtn.setAttribute("aria-pressed", String(soundOn));
+  }
 
   function lock(on) {
     busy = on;
@@ -210,6 +265,13 @@
 
   function applyResult(res) {
     append(res.text || "", !!res.reset);
+    const fresh = res.text || "";
+    if (!res.reset) {
+      if (/COLLAPSE|REMOVED|RED MILLENNIUM|Legacy score/.test(fresh)) cue("ending");
+      else if (/Agenda met/.test(fresh)) cue("good");
+      else if (/Agenda missed/.test(fresh)) cue("bad");
+      else if (/INCIDENT|THE REPUBLICS|ORIENTATION/.test(fresh)) cue("event");
+    }
     finished = !!res.done;
     drawChoices();
     statusFromTranscript();
@@ -221,8 +283,10 @@
       try { localStorage.removeItem(STORE_KEY); } catch (_) {}
     } else {
       lineEl.disabled = false;
-      lineEl.placeholder = "Type your answer, then Enter";
-      lineEl.focus();
+      lineEl.placeholder = (isTouch() || isCompact())
+        ? "Type an answer"
+        : "Type your answer, then Enter";
+      if (!isTouch()) lineEl.focus();   // do not pop the Android keyboard every turn
     }
     if (finished) clearClock(); else armClock();
     remember();
@@ -246,7 +310,7 @@
 
   /* ─────────────────────────── setup screen ────────────────────────── */
 
-  const pick = { mode: "medium", timeline: "rails" };
+  const pick = { mode: "medium", timeline: "rails", tutorial: false };
 
   function chips(container, items, key, note) {
     container.textContent = "";
@@ -275,16 +339,19 @@
     game.hidden = false;
     startBtn.disabled = true;
     resumeBtn.disabled = false;
+    requestAnimationFrame(() => game.scrollIntoView({ block: "start", behavior: "auto" }));
   }
 
   async function startRun() {
     clearClock();
+    ensureAudio();
     showGame();
     append("", true);
     record = null;
     resumeBtn.hidden = true;
     try { localStorage.removeItem(STORE_KEY); } catch (_) {}
-    applyResult(await invoke("start", { mode: pick.mode, timeline: pick.timeline }));
+    applyResult(await invoke("start", { mode: pick.mode, timeline: pick.timeline,
+                                        tutorial: pick.tutorial }));
   }
 
   async function resumeRun() {
@@ -321,7 +388,8 @@ def _call(kind="snapshot", payload="{}"):
     if kind == "meta":
         return _meta()
     if kind == "start":
-        out = _session.start(p.get("mode"), p.get("timeline"), p.get("seed"))
+        out = _session.start(p.get("mode"), p.get("timeline"), p.get("seed"),
+                             p.get("tutorial", False))
     elif kind == "answer":
         out = _session.answer(p.get("text", ""))
     elif kind == "restore":
@@ -378,7 +446,13 @@ def _call(kind="snapshot", payload="{}"):
       bootnote.textContent = "Python ready.";
       startBtn.disabled = false;
       lock(false);
-      if (!game.hidden) lineEl.focus();
+      if (hintEl && (isTouch() || isCompact())) {
+        hintEl.textContent = "Tap a numbered option; the field is for names and shortcuts";
+      }
+      if ((isTouch() || isCompact()) && !game.hidden) {
+        lineEl.placeholder = "Type an answer";
+      }
+      if (!game.hidden && !isTouch()) lineEl.focus();
     } catch (err) {
       bootnote.textContent = "";
       startBtn.disabled = true;
@@ -407,6 +481,22 @@ def _call(kind="snapshot", payload="{}"):
     }));
   startBtn.addEventListener("click", startRun);
   resumeBtn.addEventListener("click", resumeRun);
+  if (tutorialBtn) {
+    tutorialBtn.addEventListener("click", () => {
+      pick.tutorial = !pick.tutorial;
+      tutorialBtn.setAttribute("aria-pressed", String(pick.tutorial));
+    });
+  }
+  if (soundBtn) {
+    try { soundOn = localStorage.getItem(SOUND_KEY) !== "off"; } catch (_) {}
+    syncSoundButton();
+    soundBtn.addEventListener("click", () => {
+      soundOn = !soundOn;
+      try { localStorage.setItem(SOUND_KEY, soundOn ? "on" : "off"); } catch (_) {}
+      syncSoundButton();
+      if (soundOn) cue("good");
+    });
+  }
   restartBtn.addEventListener("click", () => {
     clearClock();
     finished = false;

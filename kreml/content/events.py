@@ -132,6 +132,7 @@ SCRIPTED: dict[int, tuple[str, ...]] = {1968: ('prague_spring',),
  1993: ('union_charter',),
  1997: ('asian_flu_1997',),
  1999: ('nato_east_1999',),
- 2000: ('millennium_message',)}
+ 2000: ('millennium_message',),
+ 2001: ('red_millennium_2001',)}
 
 FORKS = FORKS

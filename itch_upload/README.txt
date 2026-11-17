@@ -8,7 +8,7 @@ WHAT TO UPLOAD
   The paste-ready form answers, cover, screenshots and description are in:
   ../itch_page/README.md
   ../itch_page/cover.png            (630 x 500)
-  ../itch_page/screenshots/         (four v7 stills)
+  ../itch_page/screenshots/         (five stills)
   ../itch_page/description.html     (paste into Description)
 
 WHERE TO CLICK
@@ -24,7 +24,7 @@ PAGE
   URL:         kreml-1991
   Published:   https://mahakam-moonlight-studio.itch.io/kreml-1991
   Short:       27 years, five gauges, one signature. A text-based Soviet
-               alternate-history game, 1964–1991.
+               alternate-history game, 1964–1991, with an optional tutorial.
   Genre:       Strategy
   Tags:        soviet, alternate-history, text-based, political-sim,
                cold-war, terminal, python, singleplayer, historical, bleak
@@ -39,8 +39,8 @@ DONATIONS (already in the description and on the website)
 
 SUGGESTED DESCRIPTION
   Use ../itch_page/description.html. It covers the loop, the six difficulties,
-  the four timelines, browser/terminal requirements, content notes and the
-  donation links. Paste it as HTML.
+  the four timelines, the First-Year Orientation, Republic Unrest, browser and
+  terminal requirements, content notes and the donation links. Paste it as HTML.
 
 AFTER PUBLISHING
   The page is live at

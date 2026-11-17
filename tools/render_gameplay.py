@@ -219,7 +219,7 @@ class Act:
         return None
 
 
-def capture_run(seed: int, clean_after: bool = False) -> tuple:
+def capture_run(seed: int, clean_after: bool = False, tutorial: bool = False) -> tuple:
     """Replay one playthrough. Returns (acts, outcome)."""
     EVENTS.clear()
     for f in (persistence.SAVE_FILE,
@@ -231,7 +231,7 @@ def capture_run(seed: int, clean_after: bool = False) -> tuple:
     _hook_stdlib()
     buf = io.StringIO()
     with redirect_stdout(buf):
-        RG.run_bot(seed)
+        RG.run_bot(seed, tutorial=tutorial)
     outcome = ("SURVIVED" if RG.OUTCOME["survived"]
                else "COLLAPSED" if RG.OUTCOME["collapsed"] else "ended")
     acts, pending = [], ""

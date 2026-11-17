@@ -64,6 +64,7 @@ class Session:
         self.seed = seed
         self.mode = None
         self.timeline = None
+        self.tutorial = False
         self.answers: list[str] = []
         self.transcript = ""
         self.done = False
@@ -72,10 +73,11 @@ class Session:
     # public API
     # ------------------------------------------------------------------
     def start(self, mode: str | None = None, timeline: str | None = None,
-              seed: int | None = None) -> dict:
+              seed: int | None = None, tutorial: bool = False) -> dict:
         """Begin a new run; returns the first batch of output."""
         self.mode = mode
         self.timeline = timeline
+        self.tutorial = bool(tutorial)
         if seed is not None:
             self.seed = seed
         elif self.seed is None:
@@ -101,11 +103,13 @@ class Session:
     def snapshot(self) -> dict:
         """Everything needed to replay this run later (page: localStorage)."""
         return {"seed": self.seed, "mode": self.mode,
-                "timeline": self.timeline, "answers": list(self.answers)}
+                "timeline": self.timeline, "tutorial": bool(self.tutorial),
+                "answers": list(self.answers)}
 
     def restore(self, data: dict) -> dict:
         self.mode = data.get("mode")
         self.timeline = data.get("timeline")
+        self.tutorial = bool(data.get("tutorial", False))
         self.seed = data.get("seed")
         self.answers = [str(a) for a in data.get("answers") or []]
         self.transcript = ""
@@ -144,7 +148,8 @@ class Session:
         try:
             with contextlib.redirect_stdout(buf):
                 with _stdin(answers):
-                    engine.run(self.seed, mode=self.mode, timeline=self.timeline)
+                    engine.run(self.seed, mode=self.mode, timeline=self.timeline,
+                               tutorial=self.tutorial)
             done = True
         except NeedInput:
             done = False

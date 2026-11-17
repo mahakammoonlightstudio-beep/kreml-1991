@@ -220,6 +220,48 @@ EVENTS_FIXED["millennium_message"] = ev(
     once=True,
 )
 
+EVENTS_FIXED["republic_crisis"] = ev(
+    "republic_crisis", "The Republics Test the Centre",
+    "A first secretary has stopped taking your calls. The local party has stopped taking his. In the street, the flags are already the wrong colour.",
+    [
+    opt('Send the Internal Troops', {'stats': {'ORDER': 5, 'FAITH': -5, 'PRESTIGE': -3},
+        'unrest': {'baltic': 6, 'ukraine': 4, 'caucasus': 6, 'central_asia': 4},
+        'flag_add': 'republic_crackdown', 'court': {'old_guard': 4, 'reformers': -5}},
+        'The square empties. The grievance files itself under another name.'),
+    opt('Negotiate a federal compact', {'stats': {'FAITH': 4, 'ORDER': -3, 'PRESTIGE': 2},
+        'hc': -6, 'unrest': {'baltic': -12, 'ukraine': -12, 'caucasus': -12, 'central_asia': -12},
+        'flag_add': 'republic_compact', 'court': {'reformers': 5, 'old_guard': -4}},
+        'A signature, a subsidy and a language clause. The centre loses an argument and keeps a country.'),
+    opt('Let the republics run their own experiment', {'stats': {'ECONOMY': 2, 'ORDER': -5, 'FAITH': 2},
+        'unrest': {'baltic': -6, 'ukraine': -6, 'caucasus': -6, 'central_asia': -6},
+        'flag_add': 'republic_autonomy'},
+        'Nine laboratories, one customs union, and a great deal of constitutional handwriting.'),
+    ],
+    once=True,
+)
+
+EVENTS_FIXED["red_millennium_2001"] = ev(
+    "red_millennium_2001", "THE RED MILLENNIUM",
+    "January 1, 2001. The flag is still red, the century is new, and the Politburo has prepared three drafts of the first sentence. For once, the room is waiting for you to choose the century, not survive it.",
+    [
+    opt('Open the century as a federation of equals', {'stats': {'FAITH': 5, 'PRESTIGE': 4, 'ORDER': -2},
+        'influence': 5, 'flag_add': 'red_millennium_federal'},
+        'The red flag stays; the centre learns to ask before it signs.'),
+    opt('Keep the Party at the centre', {'stats': {'ORDER': 5, 'MILITARY': 2, 'FAITH': -3},
+        'flag_add': 'red_millennium_party', 'court': {'old_guard': 4, 'military': 2}},
+        'The century is stable, legible, and watched from a single window.'),
+    opt('Retire the bomb by 2010', {'stats': {'PRESTIGE': 8, 'MILITARY': -4, 'FAITH': 3},
+        'flag_add': 'red_millennium_disarm'},
+        'The missile fields become the first great construction site of the new century.'),
+    ],
+    era="NEW", once=True, alt=True,
+    requires={"min_year": 2001, "stats": {"ECONOMY": 45, "MILITARY": 45,
+                                            "ORDER": 45, "FAITH": 45, "PRESTIGE": 45},
+              "hc": 45,
+              "any_flags": ["treaty_signed", "charter_signed", "red_net",
+                             "red_net_live", "tech_leap", "union_market"]},
+)
+
 EVENTS_FIXED["millennium_congress"] = ev(
     "millennium_congress", '☰ THE 1996 RED MILLENNIUM CONGRESS', "Survival settled, the Central Committee debates the coming decade's mission. Four motions, one future.",
     [

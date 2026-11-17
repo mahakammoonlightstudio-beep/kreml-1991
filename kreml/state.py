@@ -5,6 +5,7 @@ import random
 
 from .content.modes import MODES, normalize
 from .content.timelines import get as get_timeline
+from .content.republics import DEFAULT_UNREST, TIMELINE_UNREST
 
 STATS = ("ECONOMY", "MILITARY", "ORDER", "FAITH", "PRESTIGE")
 
@@ -66,6 +67,11 @@ class Kremlin:
         self.focus_uses: dict[str, int] = {}       # habits go stale too
         self.path: str | None = None               # divergence line from a fork
         self.history: list[dict] = []              # end-of-year snapshots (charts)
+        # ── v7-5 systems ────────────────────────────────────────────
+        self.republic_unrest: dict[str, int] = dict(DEFAULT_UNREST)
+        self.republic_unrest.update(TIMELINE_UNREST.get(self.timeline, {}))
+        self.tutorial = False                       # first-year guided notes
+        self.tutorial_year = 0
         # ── v6 systems ─────────────────────────────────────────────
         self.influence = int(MODES[self.mode].get("influence", 8))
         self.order: str | None = None              # standing order (doctrine)

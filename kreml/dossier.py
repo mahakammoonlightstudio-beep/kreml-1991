@@ -99,6 +99,22 @@ def show_roadmap(g: Kremlin) -> None:
         print(W("   ⚠ A velvet meeting is on this year's docket. Personally.", ui.C.BM))
     print()
 
+    # ── 0a. v7-5: the four regional fault lines ──────────────────
+    from .content import republics as REP
+    unrest = getattr(g, "republic_unrest", {}) or {}
+    print(W("  ── THE REPUBLICS (unrest, not loyalty) ──", ui.C.Y))
+    bits = []
+    for republic in REP.REPUBLICS:
+        value = int(unrest.get(republic, 0))
+        mark = W("⚠", ui.C.BM) if value >= REP.CRISIS_THRESHOLD else W("●", ui.C.G)
+        bits.append(f"{mark} {REP.LABELS[republic]} {value}")
+    print("   " + "  |  ".join(bits))
+    if max(unrest.values(), default=0) >= REP.CRISIS_THRESHOLD:
+        print(W("   ⚠ A republic has reached the crisis line. A docket is coming.", ui.C.BM))
+    print(W("   Levers: tour the republics, send subsidies, sign a federal compact or treaty.",
+            ui.C.DIM))
+    print()
+
     # ── 0b. v6: capital, doctrine and the agenda ─────────────────
     order = ORDERS.get(getattr(g, "order", None))
     print(W("  ── CAPITAL, DOCTRINE & THE AGENDA ──", ui.C.Y))

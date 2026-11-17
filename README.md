@@ -14,15 +14,14 @@ portraits, which is history's way of saying "we'll call you."
 
 **Pure Python. No installs, no dependencies, no graphics card. Just `python main.py`.**
 
-[![release](https://img.shields.io/badge/release-BETA%20v7-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)
+[![release](https://img.shields.io/badge/release-BETA%20v7--5-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)
 [![python](https://img.shields.io/badge/python-3.8%2B-3776ab?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![dependencies](https://img.shields.io/badge/dependencies-none-success?style=flat-square)](#quick-start)
 [![license](https://img.shields.io/badge/license-MIT-3da639?style=flat-square)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Windows%20%C2%B7%20Linux%20%C2%B7%20macOS-lightgrey?style=flat-square)](#quick-start)
 [![web](https://img.shields.io/badge/web-live%20page-c8102e?style=flat-square&logo=githubpages&logoColor=white)](https://mahakammoonlightstudio-beep.github.io/kreml-1991/)
 
-[**Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·
-[**Download BETA v7**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
+[**Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·   [**Download BETA v7-5**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
 [**Landing page**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/) ·
 [**Report a bug**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/issues)
 
@@ -48,9 +47,10 @@ decade throws at you: Prague, the 1974 oil boom, Afghanistan, Chernobyl, the coa
 the Wall. Then the arithmetic happens, the plan goes stale, and the calendar advances
 whether you are ready or not.
 
-There are **121 events**, **36 directives**, **six difficulty presets**, **four starting
-timelines**, **three divergence forks**, and **five chain reactions** that remember what
-you did a decade ago. The whole thing is standard-library Python. No pip, no build step,
+There are **123 events**, **37 directives**, **six difficulty presets**, **four starting
+timelines**, **three divergence forks**, **five chain reactions** that remember what you
+did a decade ago, and now an optional **first-year orientation** for new General
+Secretaries. The whole thing is standard-library Python. No pip, no build step,
 no telemetry, no network calls after the clone.
 
 > State joke No. 1: *Under capitalism, man exploits man. Under socialism, it is the other
@@ -89,13 +89,15 @@ cd kreml-1991
 python main.py
 ```
 
-Prefer a zip? Grab the [BETA v7 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases),
+Prefer a zip? Grab the [BETA v7-5 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases),
 unzip it, and run `python main.py` from the folder. On Windows, if `python` opens the
 Microsoft Store, use `py main.py`. The Store is not a dependency either.
 
 **No terminal?** [Play the browser build](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/).
 It is the same Python compiled to WebAssembly. The first visit pulls about 12 MB of
 Pyodide from a CDN; after that it runs offline and keeps your run in the browser.
+The play page is mobile-aware: Android Chrome gets a one-column board, 44px touch
+targets and a console that does not force the keyboard open after every turn.
 
 ```text
 python main.py                          # title screen: difficulty + timeline
@@ -105,6 +107,7 @@ python main.py --seed 42                # reproducible run
 python main.py --no-anim                # plain text: no bars, sparklines or animation
 python main.py --drama                  # slow typewriter printing
 python main.py --timed                  # put a real clock on decisions
+python main.py --tutorial               # first-year orientation for new players
 ```
 
 Controls: `Enter` proceed, `s` save, `l` load, `d` dossier, `i` political capital,
@@ -166,18 +169,22 @@ collapse screen. There is no "just one more year" unless you planned for it.
 | **Chain reactions** | Five stories remember your choices: Kabul, Chernobyl, Kosygin's pilot, the gold vault and the Union Treaty. Each stage queues a different follow-up. The bill arrives years later, as bills do. |
 | **The Dossier** | Press `d`. You get the decision ledger, every conditional road (done, open, locked, and why), open forks, delayed consequences, TREND charts, and history's timetable next to yours. It is free. Read it. |
 | **Plan fatigue** | Repeating the same directive or habit shrinks the gain: 100%, 85%, 70%, eventually 35%. Costs stay whole. Spam one lever and it goes stale. |
+| **The first-year orientation (v7-5)** | `--tutorial` or the web button. Five cynical staff memos explain the board, `d` Dossier, `i` capital, `o` standing orders, plan fatigue, the 1991 gate and the valas warning. The first year then gets one-line margin notes; no resources are spent and the difficulty is unchanged. |
+| **Republic Unrest (v7-5)** | Four regional fault lines: Baltic, Ukraine, Caucasus, Central Asia. Low Order, open politics and the 1986-1991 shocks raise them; tours, subsidies, a federal compact or the Union Treaty lower them. A hot republic costs Order and Faith, and at 75 it books a crisis. The Millennium gate now includes the regional map. |
+| **Event cues (v7-5)** | Short terminal tones on incidents, agenda results and endings; the browser uses Web Audio and has a sound toggle. Pipes, tests and recorders stay silent. |
 | **The wall clock (v6)** | `--timed` puts a real countdown on decisions: native in Windows consoles, cbreak on Linux/macOS, visible above the browser input. Freeze and the crisis decides for you; your standing order answers, and the ledger records the hesitation. |
 | **Political capital (v6)** | A second currency. Earn influence from the agenda, doctrines and a few choices. Spend it at `i` on dinners, institutes, the vault, a crisis team or an emergency package. One favour a year; repeated favours cost more. You cannot simply buy the court back. |
 | **The Politburo agenda (v6)** | Every year the strongest faction tables a demand. Meet it and the Kremlin owes you. Miss it and that faction remembers. A faction with nothing left withdraws instead of plotting. |
 | **Standing orders (v6)** | `o` sets the doctrine: party discipline, reform, the mailed fist, patience. It nudges drift, colours the court, and becomes your instinct when the clock runs out. |
 | **Saves** | `s` writes the whole state, RNG included, to `kreml_save.json`. The title screen offers to resume. Old saves are refused politely instead of crashing, which is more than the Politburo ever did. |
 
-### The v7 board
+### The v7-5 board
 
 The interface is drawn, not typed. v7 sets the title in ANSI-Shadow lettering, stencils
 the sections, brackets every gauge, and prints the year as a stamped docket line
 (`╞═ ☭ 1967 ═══`). Events arrive as wrapped incident sheets instead of a paragraph that
-ran into the prompt.
+ran into the prompt. v7-5 adds the four-republic unrest strip, short terminal event
+cues and a first-year orientation that explains the controls in character.
 
 Everything is plain UTF-8 with no dependency. It switches itself off when stdout is not
 a terminal, so tests, pipes and the video recorder stay byte-for-byte deterministic.
@@ -223,9 +230,10 @@ Each timeline has its own opening gauges, court, reserve and epilogue.
 - **The August Coup is graded.** The gate is printed on the option: `MILITARY + ORDER ≥ 110`
   holds the Union; `95–109` survives scarred (Order, Faith, Prestige and every faction
   take the hit); below `95` the coup wins.
-- **The Red Millennium** needs gauges ≥ 25, **valas ≥ 30**, and either the Union Treaty or
-  Faith ≥ 55 at the 1991 border. Then you play to 2001 for **THE RED MILLENNIUM: THE UNION
-  NEVER LEFT** and the *Author of the Red Millennium* legacy.
+- **The Red Millennium** needs gauges ≥ 25, **valas ≥ 30**, no republic above 70 unrest,
+  and either the Union Treaty or Faith ≥ 55 at the 1991 border. Then you play to 2001 for
+  **THE RED MILLENNIUM: THE UNION NEVER LEFT**, the *Author of the Red Millennium* legacy,
+  and a final capstone event that only strong runs can reach.
 - **HISTORICAL RAILS** charges nothing for the first detour, then −5 score each, capped at
   40, and tags the run `HISTORICAL` or `DIVERGED`.
 - Any gauge at **0** means collapse and half score. A lost palace coup means **deposed**,
@@ -272,6 +280,8 @@ makes you history. Both are legitimate strategies; one scores better.*
 | `--drama` | Slow typewriter printing. |
 | `--timed` | v6 clock: decisions run on a wall clock, in the terminal and the browser. |
 | `--no-timed` | Force the clock off. This is the default; the test suite always plays untimed. |
+| `--tutorial` | v7-5 first-year orientation: memos, Dossier/capital/orders, fatigue, 1991 and unrest. |
+| `--sound` / `--no-sound` | Event cues on/off. They are on for a real terminal, silent for pipes and tests. |
 | `--help` | The manual, without the jokes. |
 
 ---
@@ -336,10 +346,12 @@ kreml/
   ui.py                 rendering and input: title art, docket plates, gauges, incident
                         sheets, sparklines, menus, the wall clock
   engine.py             turn orchestration: menus -> ops -> drift -> systems -> endings
-  persistence.py        save/load: state + RNG + timeline + fatigue (schema v5)
+  persistence.py        save/load: state + RNG + timeline + fatigue + unrest (schema v6)
   dossier.py            ledger, branch roadmap, pipeline, TREND charts
+  tutorial.py           v7-5 first-year orientation and in-year margin notes
   content/              PURE DATA, no logic:
     builders.py         constructors shared by every content module
+    republics.py        the four regional fault lines and their pressure table
     events.py           the index: pools, scripted years, great congresses
     events_early.py     1964-1975          events_middle.py  1976-1984
     events_late.py      1985-1991          events_new.py     1992-2001
@@ -359,10 +371,10 @@ kreml/
     history.py          yearly flavour and REAL LIFE notes
     endings.py          endings, scoring, divergence penalty, hall of fame
 tests/
-  test_mechanics.py     53 mechanic-level checks
+  test_mechanics.py     56 mechanic-level checks
   test_io_flow.py       scripted save / dossier / load / resume flow
   test_web_build.py     the browser bundle matches the sources
-  test_web_driver.py    the browser replay contract (9 checks)
+  test_web_driver.py    the browser replay contract (10 checks)
   run_smoke.py          headless full-game runs across modes and timelines
 tools/
   build_web.py          packs the game into docs/play/game_bundle.js
@@ -392,46 +404,50 @@ alternate-history layer is declarative. You can add a road without touching the 
 Run these before trusting a change:
 
 ```bash
-python tests/test_mechanics.py    # 53 mechanic checks
+python tests/test_mechanics.py    # 56 mechanic checks
 python tests/test_io_flow.py      # save, dossier, load, resume
 python tests/test_web_build.py    # bundle is in sync (4 checks)
-python tests/test_web_driver.py   # browser replay contract (9 checks)
+python tests/test_web_driver.py   # browser replay contract (10 checks)
 python tests/run_smoke.py         # headless full games, all modes
 python tools/balance.py           # survival rates per mode
 ```
 
-`tools/balance.py` plays the market-path autopilot headlessly, 12 seeds per mode, clock
-off. Two runs bracket the design.
+`tools/balance.py` plays the market-path autopilot headlessly, 5 seeds per mode, clock
+off. Two runs bracket the design. v7-5 adds Republic Unrest, so these numbers are not
+comparable to the old 12-seed v7 table: hard and extreme now punish a bot that ignores
+the regional map.
 
 **Floor** — the bot ignores the political layer (`--no-capital --no-doctrine`):
 
 | mode | survived | avg score |
 |---|---|---|
-| easy | 12/12 | 372 |
-| medium | 12/12 | 346 |
-| hard | 10/12 | 249 |
-| extreme | 8/12 | 201 |
-| flash | 11/12 | 258 |
-| historical | 12/12 | 301 |
+| easy | 5/5 | 371 |
+| medium | 5/5 | 347 |
+| hard | 3/5 | 202 |
+| extreme | 2/5 | 162 |
+| flash | 5/5 | 254 |
+| historical | 5/5 | 295 |
 
 **Ceiling** — the same bot spends influence and adopts a doctrine:
 
 | mode | survived | avg score |
 |---|---|---|
-| easy | 12/12 | 377 |
-| medium | 12/12 | 354 |
-| hard | 12/12 | 277 |
-| extreme | 12/12 | 241 |
-| flash | 12/12 | 270 |
-| historical | 12/12 | 306 |
+| easy | 5/5 | 373 |
+| medium | 5/5 | 348 |
+| hard | 3/5 | 209 |
+| extreme | 3/5 | 183 |
+| flash | 4/5 | 232 |
+| historical | 5/5 | 303 |
 
-Read it this way: ignoring the court is how you die. `hard` and `extreme` lose runs that
-the political layer saves. Mastering it buys survival, not comfort; the score still falls
-from 377 on easy to 241 on extreme. Both tables come from one greedy bot with no foresight,
-so a player who spends capital badly can do worse than the floor.
+Read it this way: ignoring the court and the republics is how you die. `hard` and
+`extreme` lose runs that the political layer can still save. Mastering it buys survival,
+not comfort; the score still falls from 373 on easy to 183 on extreme. Both tables come
+from one greedy bot with no foresight, so a player who spends capital badly can do worse
+than the floor.
 
-v7 changed the paint, the landing page and the packaging. It did not touch the arithmetic,
-so these numbers still stand.
+The v7-5 arithmetic adds regional pressure and a crisis at high unrest. The five national
+gauges, court, oil market and fatigue rules are otherwise unchanged; the old v7 table's
+12/12 hard and extreme results are no longer the correct comparison.
 
 The video renderer is a developer tool, not a dependency:
 
@@ -476,8 +492,9 @@ No loop changes required. This is the entire point of the architecture, and also
 reason the content files are bigger than the engine.
 
 **Why is it still called beta?**
-Because v6 shipped, v7 shipped, and the version number is the one plan we consistently
-fulfil. There is a save schema (v5) that will refuse old saves rather than corrupt them.
+Because v6 shipped, v7 shipped, v7-5 is the orientation patch, and the version number is
+the one plan we consistently fulfil. There is a save schema that will refuse old saves
+rather than corrupt them.
 
 **Where are the old versions?**
 `v1_kreml.py` keeps the original single-file build. Saves from v3/v4 are refused with a

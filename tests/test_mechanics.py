@@ -1072,6 +1072,78 @@ def t_posix_clock_reader():
     assert "\u23f1" in buf.getvalue(), "the POSIX reader must draw a countdown"
 
 
+def t_v75_republic_unrest():
+    from kreml.content import republics as REP
+    g = Kremlin(0)
+    assert set(g.republic_unrest) == set(REP.REPUBLICS)
+    before = g.republic_unrest["baltic"]
+    ops.apply_ops(g, {"unrest": {"baltic": -3}})
+    assert g.republic_unrest["baltic"] == before - 3
+    ops.apply_ops(g, {"unrest": {"caucasus": 500}})
+    assert g.republic_unrest["caucasus"] == 100
+    ok, _ = ops.check_requires(g, {"unrest_max": {"caucasus": 100}})
+    assert ok
+    ok, _ = ops.check_requires(g, {"unrest_min": {"caucasus": 101}})
+    assert not ok
+    g.republic_unrest["caucasus"] = 74
+    g.year = 1988
+    engine.apply_republics(g)
+    assert any(eid == "republic_crisis" for _, eid in g.pending), g.pending
+
+
+def t_v75_new_content():
+    from kreml.content import events as EV
+    from kreml.content import directives as DR
+    from kreml.content import capital as CAP
+    assert "republic_crisis" in EV.EVENTS
+    assert EV.SCRIPTED[2001] == ("red_millennium_2001",)
+    g = Kremlin(0, timeline="millennium")
+    g.year = 2001
+    g.stats = {s: 60 for s in STATS}
+    g.hard_currency = 60
+    g.flags.add("treaty_signed")
+    ids = [e.id for e in engine.collect_events(g)]
+    assert "red_millennium_2001" in ids, ids
+    weak = Kremlin(0, timeline="millennium")
+    weak.year = 2001
+    weak.stats = {s: 20 for s in STATS}
+    weak.hard_currency = 20
+    assert not engine._eligible(weak, EV.EVENTS["red_millennium_2001"])
+    later = Kremlin(0)
+    later.year = 1988
+    ids = {d.id for _, ds in DR.available_directives(later) for d in ds}
+    assert "federal_compact" in ids
+    funded = Kremlin(0)
+    funded.influence = 40
+    assert "republic_subsidies" in {m["id"] for m in CAP.available(funded)}
+
+
+def t_v75_first_year_orientation():
+    import builtins
+    import io
+    from contextlib import redirect_stdout
+    from kreml import tutorial, ui
+    g = Kremlin(0)
+    real_input = builtins.input
+    builtins.input = lambda prompt="": "6"
+    buf = io.StringIO()
+    try:
+        with redirect_stdout(buf):
+            tutorial.orientation(g)
+    finally:
+        builtins.input = real_input
+    assert "NEW GENERAL SECRETARY ORIENTATION" in buf.getvalue()
+    assert g.tutorial and g.tutorial_year == 1964
+    note = io.StringIO()
+    with redirect_stdout(note):
+        tutorial.coach(g, "focus")
+    assert "ORIENTATION" in note.getvalue()
+    with redirect_stdout(io.StringIO()):
+        tutorial.finish(g)
+    assert not g.tutorial
+    assert ui.VERSION_TAG == "BETA v7-5"
+
+
 def main() -> int:
     check("queued delayed event fires next year", t_queued_event)
     check("dacha rest halves next event damage", t_rested_softening)
@@ -1129,6 +1201,10 @@ def main() -> int:
     check("posix clock: cbreak countdown reader", t_posix_clock_reader)
     check("capital: favours inflate when repeated", t_capital_inflation)
     check("posix clock: termios branch (faked OS)", t_posix_termios_branch)
+    # ── v7-5 ──
+    check("republic unrest ops, requirements & crisis", t_v75_republic_unrest)
+    check("v7-5 content: republics & red capstone", t_v75_new_content)
+    check("first-year orientation & version", t_v75_first_year_orientation)
     failed = [r for r in results if not r[1]]
     for name, ok, err in results:
         print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" — {err}" if err else ""))

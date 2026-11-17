@@ -19,12 +19,14 @@ from .content import directives as DR
 from .content import actions as AC
 from .content import history as HIST
 from .content import press as PR
+from .content import republics as REP
 from .content import endings as END
 from .content import agenda as AGENDA
 from .content import capital as CAP
 from .content import orders as ORDERS
 from .content.timelines import TIMELINES, TIMELINE_ORDER
 from .content.forks import FORKS, PATH_DRIFT
+from . import tutorial as TUT
 
 # ---------------------------------------------------------------
 # Introduction
@@ -288,12 +290,14 @@ def run_action(g: Kremlin) -> bool:
     uses = g.focus_uses.get(act.id, 0)
     mult = ops.fatigue_multiplier(uses)
     before, flags0 = dict(g.stats), set(g.flags)
+    unrest0 = dict(getattr(g, "republic_unrest", {}))
     _influence_notes(ops.apply_ops(g, ops.scale_ops(act.ops, mult)))
     g.focus_uses[act.id] = uses + 1
     if act.once:
         g.used_focus.add(act.id)
     g.ledger.append((g.year, "focus: " + act.label))
-    ui.show_changes(before, g.stats, flags0, g.flags)
+    ui.show_changes(before, g.stats, flags0, g.flags, unrest0,
+                    getattr(g, "republic_unrest", None))
     return True
 
 
@@ -321,13 +325,15 @@ def run_directive(g: Kremlin) -> bool:
     uses = g.directive_uses.get(d.id, 0)
     mult = ops.fatigue_multiplier(uses)
     before, flags0 = dict(g.stats), set(g.flags)
+    unrest0 = dict(getattr(g, "republic_unrest", {}))
     _influence_notes(ops.apply_ops(g, ops.scale_ops(d.ops, mult)))
     g.directive_uses[d.id] = uses + 1
     if d.once:
         g.used_directives.add(d.id)
     # Small Gosplan wobble on heavy plans (unpredictable weather & mood)
     g.stats["ECONOMY"] = clamp(g.stats["ECONOMY"] + g.rng.randint(-1, 1))
-    ui.show_changes(before, g.stats, flags0, g.flags)
+    ui.show_changes(before, g.stats, flags0, g.flags, unrest0,
+                    getattr(g, "republic_unrest", None))
     g.ledger.append((g.year, "directive: " + d.label))
     if mult < 1.0:
         ui.slow(ui.paint(f"  ▸ Directive issued: {d.label}", ui.C.G))
@@ -365,6 +371,7 @@ def run_event(g: Kremlin, ev) -> str:
             avail.append(o)
     if not avail:
         avail = [ev.options[0]]
+    ui.cue("event")
     ui.event_header(ev.title, ev.text)
     hints = REQUIREMENT_HINTS.get(ev.id, {})
     rows = []
@@ -382,6 +389,7 @@ def run_event(g: Kremlin, ev) -> str:
     if pick == 0:
         return "quit"
     before, flags0 = dict(g.stats), set(g.flags)
+    unrest0 = dict(getattr(g, "republic_unrest", {}))
     chosen = avail[pick - 1]
     chosen_ops, rested = ops.consume_rest(g, chosen.ops)
     notes = ops.apply_ops(g, chosen_ops)
@@ -389,7 +397,8 @@ def run_event(g: Kremlin, ev) -> str:
     g.ledger.append((g.year, f"event: {ev.title} → {chosen.label}"))
     if rested:
         print(ui.paint("   (your dacha rest softened the impact)", ui.C.DIM))
-    ui.show_changes(before, g.stats, flags0, g.flags)
+    ui.show_changes(before, g.stats, flags0, g.flags, unrest0,
+                    getattr(g, "republic_unrest", None))
     return "ok"
 
 
@@ -440,6 +449,7 @@ def _settle_agenda(g: Kremlin) -> None:
     if result["met"]:
         g.influence = min(100, getattr(g, "influence", 0) + result["reward"])
         g.agenda_log.append(f"{g.year}: met — {label}")
+        ui.cue("good")
         print(ui.paint(f"  ✔ Agenda met: {label}. Political capital "
                        f"+{result['reward']}.", ui.C.G))
     else:
@@ -453,6 +463,7 @@ def _settle_agenda(g: Kremlin) -> None:
         else:
             g.court[faction] = max(0, g.court[faction] + result["fail_court"])
             g.stats["FAITH"] = clamp(g.stats["FAITH"] + result["fail_faith"])
+            ui.cue("bad")
             print(ui.paint(f"  ✖ Agenda missed: {label}. "
                            f"{faction.replace('_', ' ').title()} lose "
                            f"{abs(result['fail_court'])} patience.", ui.C.BM))
@@ -487,9 +498,11 @@ def run_capital(g: Kremlin) -> None:
     g.capital_year = g.year
     CAP.note_use(g, move["id"])
     before, flags0 = dict(g.stats), set(g.flags)
+    unrest0 = dict(getattr(g, "republic_unrest", {}))
     ops.apply_ops(g, move["ops"])
     g.ledger.append((g.year, "capital: " + move["label"]))
-    ui.show_changes(before, g.stats, flags0, g.flags)
+    ui.show_changes(before, g.stats, flags0, g.flags, unrest0,
+                    getattr(g, "republic_unrest", None))
     print(ui.paint(f"  ▸ {move['cost']} ❖ spent, {g.influence} left.", ui.C.Y))
 
 
@@ -623,6 +636,67 @@ def apply_systems(g: Kremlin) -> None:
 
 
 # ---------------------------------------------------------------
+# v7-5: the republics answer back
+# ---------------------------------------------------------------
+def apply_republics(g: Kremlin) -> None:
+    """Yearly pressure on the four regional fault lines.
+
+    Low Order and open politics raise the temperature; a treaty and a heavy
+    hand lower it. A hot republic costs Order and Faith, and at the crisis
+    line it books a dedicated event for next year. The mechanic is deliberately
+    readable: the player can see the four bars and the levers that move them.
+    """
+    unrest = getattr(g, "republic_unrest", None)
+    if not unrest:
+        unrest = dict(REP.DEFAULT_UNREST)
+        g.republic_unrest = unrest
+
+    scale = REP.MODE_SCALE.get(g.mode, 1.0)
+    pressure = REP.YEARLY_PRESSURE.get(g.era, 1.0) * scale
+    if g.stats["ORDER"] < 45:
+        pressure += 0.6 * scale
+    if g.stats["FAITH"] < 45:
+        pressure += 0.4 * scale
+    if "treaty_signed" in g.flags:
+        pressure -= 0.8 * scale
+    if "charter_signed" in g.flags:
+        pressure -= 0.4 * scale
+    if "path_glasnost" in g.flags or "perestroika" in g.flags:
+        pressure += 0.4 * scale
+    if "path_iron" in g.flags or "old_guard" in g.flags:
+        pressure -= 0.3 * scale
+
+    shock = REP.SHOCK_YEARS.get(g.year, {})
+    for republic in REP.REPUBLICS:
+        delta = pressure + shock.get(republic, 0) + g.rng.uniform(-0.35, 0.35)
+        unrest[republic] = max(0, min(100, int(round(unrest[republic] + delta))))
+
+    hottest = max(unrest.values(), default=0)
+    if hottest >= 85:
+        g.stats["ORDER"] = clamp(g.stats["ORDER"] - 2)
+        g.stats["FAITH"] = clamp(g.stats["FAITH"] - 1)
+        print(ui.paint("  ⚠ The republics are no longer a footnote. Order and Faith pay for it.",
+                       ui.C.BM))
+    elif hottest >= 70:
+        g.stats["ORDER"] = clamp(g.stats["ORDER"] - 1)
+        g.stats["FAITH"] = clamp(g.stats["FAITH"] - 1)
+        print(ui.paint("  ⚠ The regional files are now a national problem.", ui.C.BM))
+    elif hottest >= 55:
+        g.stats["ORDER"] = clamp(g.stats["ORDER"] - 1)
+        print(ui.paint("  (the regional files grow thicker than the national ones)",
+                       ui.C.DIM))
+    elif hottest <= REP.QUIET_THRESHOLD:
+        g.stats["FAITH"] = clamp(g.stats["FAITH"] + 1)
+
+    if hottest >= REP.CRISIS_THRESHOLD:
+        already = any(eid == "republic_crisis" for _, eid in g.pending)
+        if not already and "republic_crisis" not in g.used_events:
+            g.pending.append((g.year + 1, "republic_crisis"))
+            print(ui.paint("  ⚠ A republic has stopped sending memoranda. A crisis is docketed.",
+                           ui.C.BM))
+
+
+# ---------------------------------------------------------------
 # A single year
 # ---------------------------------------------------------------
 def year_step(g: Kremlin) -> str:
@@ -640,22 +714,29 @@ def year_step(g: Kremlin) -> str:
                    timeline=g.timeline_def.label, history=g.history,
                    influence=getattr(g, "influence", 0),
                    order=(ORDERS.get(getattr(g, "order", None)) or {}).get("label", ""),
-                   agenda=AGENDA.describe(getattr(g, "agenda", None)))
+                   agenda=AGENDA.describe(getattr(g, "agenda", None)),
+                   unrest=getattr(g, "republic_unrest", None))
+    TUT.coach(g, "focus")
     if not run_action(g):
         return "quit"
+    TUT.coach(g, "directive")
     if not run_directive(g):
         return "quit"
     for ev in collect_events(g):
+        TUT.coach(g, "event")
         if run_event(g, ev) == "quit":
             return "quit"
     apply_drift(g)
     apply_systems(g)
+    apply_republics(g)
     _settle_agenda(g)
+    TUT.coach(g, "year_end")
     # v5 visuals: keep a small end-of-year series for the sparklines
     g.history.append({"year": g.year, "stats": dict(g.stats),
                       "hc": g.hard_currency, "oil": WORLD.oil_price(g.year)})
     if len(g.history) > 40:
         g.history = g.history[-40:]
+    TUT.finish(g)
     ui.pause(0.12)
     return "ok"
 
@@ -670,6 +751,7 @@ def qualifies_for_new_era(g: Kremlin) -> bool:
     finally makes hoarding from 1985 a real decision.
     """
     return (min(g.stats.values()) >= 25 and g.hard_currency >= 30
+            and max((getattr(g, "republic_unrest", {}) or {}).values(), default=0) <= 70
             and ("treaty_signed" in g.flags or g.stats["FAITH"] >= 55))
 
 
@@ -690,7 +772,7 @@ def offer_new_era(g: Kremlin) -> bool:
 # Main loop
 # ---------------------------------------------------------------
 def run(seed: int | None = None, mode: str | None = None,
-        timeline: str | None = None) -> None:
+        timeline: str | None = None, tutorial: bool = False) -> None:
     g = Kremlin(seed, mode=mode, timeline=timeline)
     resumed = False
     existing = persistence.load_game()
@@ -712,6 +794,8 @@ def run(seed: int | None = None, mode: str | None = None,
         g.name = setup["name"]
         if setup["mandate"]:
             ops.apply_ops(g, MANDATES[setup["mandate"] - 1][2])
+        if tutorial:
+            TUT.orientation(g)
     while g.year <= g.end_year:
         if g.dead_stat() or g.deposed:
             END.ending_collapse(g)

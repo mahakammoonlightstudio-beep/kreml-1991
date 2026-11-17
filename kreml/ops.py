@@ -9,6 +9,7 @@ Ops vocabulary (dict keys):
   "queue"     : [(delay_years, event_id)]
   "hc"        : +10 | (min, max)            (hard currency / valas reserve)
   "court"     : {"old_guard": +5, ...}      (faction moods, clamped 0-100)
+  "unrest"    : {"baltic": +5, ...}          (republic unrest, clamped 0-100)
   "special"   : "handler_name" | ["a", "b"] (custom logic, via SPECIALS registry)
   "path"      : "path_reform"             (divergence line; replaces any previous)
 
@@ -22,6 +23,8 @@ Requirements vocabulary (dict keys):
   "hc_max"    : 35                          (valas reserve must be <= value)
   "court_min" : {"old_guard": 60}           (each faction must be >= value)
   "court_max" : {"old_guard": 15}           (each faction must be <= value)
+  "unrest_min": {"baltic": 30}              (republic unrest must be >= value)
+  "unrest_max": {"baltic": 40}              (republic unrest must be <= value)
 
 Anything new in the game = new content data + maybe one new op key here.
 """
@@ -30,6 +33,7 @@ from __future__ import annotations
 from typing import Callable
 
 from .state import Kremlin, STATS, clamp, FACTIONS
+from .content.republics import REPUBLICS
 from . import ui
 
 SPECIALS: dict[str, Callable[[Kremlin], None]] = {}
@@ -130,6 +134,13 @@ def check_requires(g: Kremlin, req: dict | None) -> tuple[bool, str]:
     for f, maximum in (req.get("court_max") or {}).items():
         if g.court.get(f, 50) > maximum:
             return False, f"needs {f.replace('_', ' ')} enraged"
+    unrest = getattr(g, "republic_unrest", {}) or {}
+    for r, minimum in (req.get("unrest_min") or {}).items():
+        if unrest.get(r, 0) < minimum:
+            return False, f"needs {r.replace('_', ' ')} unrest ≥ {minimum}"
+    for r, maximum in (req.get("unrest_max") or {}).items():
+        if unrest.get(r, 0) > maximum:
+            return False, f"needs {r.replace('_', ' ')} unrest ≤ {maximum}"
     return True, ""
 
 
@@ -167,6 +178,17 @@ def apply_ops(g: Kremlin, ops: dict | None) -> list[str]:
             raise ValueError(f"content bug: unknown faction '{f}'")
         g.court[f] = max(0, min(100, g.court[f] + int(val)))
         changes.append(f"COURT {f} {int(val):+d}")
+    unrest_ops = ops.get("unrest") or {}
+    for republic, val in unrest_ops.items():
+        if republic not in REPUBLICS:
+            raise ValueError(f"content bug: unknown republic '{republic}'")
+        if isinstance(val, tuple):
+            val = g.rng.randint(val[0], val[1])
+        if not hasattr(g, "republic_unrest"):
+            g.republic_unrest = {r: 0 for r in REPUBLICS}
+        before_unrest = g.republic_unrest.get(republic, 0)
+        g.republic_unrest[republic] = max(0, min(100, before_unrest + int(val)))
+        changes.append(f"UNREST {republic} {int(val):+d}")
     path = ops.get("path")
     if path:
         from .content.forks import PATH_FLAGS

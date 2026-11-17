@@ -7,6 +7,7 @@ import time
 import random
 
 from .state import STAT_LABEL, FACTIONS, FACTION_LABEL
+from .content.republics import REPUBLICS, SHORT as REPUBLIC_SHORT
 
 FACTION_ITEMS = tuple((f, FACTION_LABEL[f]) for f in FACTIONS)
 
@@ -23,10 +24,40 @@ ANIM = bool(getattr(sys.stdout, "isatty", lambda: False)()) if sys.stdout else F
 TIMED = False
 CLOCK_DEFAULT = 10.0
 
+# v7-5: short terminal cues. Off automatically when stdout is a pipe/recorder,
+# so tests and video captures stay silent; `--no-sound` turns a real terminal off.
+SOUND = bool(ANIM)
+
 
 def pause(seconds: float) -> None:
     if ANIM and seconds > 0:
         time.sleep(seconds)
+
+
+def cue(kind: str = "event") -> None:
+    """A tiny event cue, no assets and no dependency.
+
+    Windows gets two short winsound tones; everything else gets the terminal
+    bell. The browser build uses Web Audio in app.js and leaves this path off.
+    """
+    if not SOUND:
+        return
+    try:
+        if os.name == "nt":
+            import winsound
+            tones = {
+                "event": ((392, 55), (523, 70)),
+                "good": ((523, 55), (659, 55)),
+                "bad": ((220, 70), (185, 90)),
+                "ending": ((392, 90), (330, 90), (262, 160)),
+            }.get(kind, ((392, 55),))
+            for freq, duration in tones:
+                winsound.Beep(freq, duration)
+        else:
+            sys.stdout.write("\a")
+            sys.stdout.flush()
+    except Exception:
+        pass
 
 # Force UTF-8 + enable ANSI on Windows so ☭ never dies in cp1252.
 if sys.stdout and hasattr(sys.stdout, "reconfigure"):
@@ -51,8 +82,8 @@ STAT_COLOUR = {
     "FAITH": C.G, "PRESTIGE": C.CY,
 }
 
-VERSION = "7"
-VERSION_TAG = "BETA v7"
+VERSION = "7-5"
+VERSION_TAG = "BETA v7-5"
 
 # v7: the title screen is drawn, not typed. ANSI Shadow lettering, a docket
 # frame and one red line of classification — the visual grammar the rest of
@@ -173,7 +204,8 @@ def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = 
                 reserves_cap: int = 3, hc: int = 50, court: dict | None = None,
                 world: str = "", timeline: str = "",
                 history: list | None = None, influence: int = 0,
-                order: str = "", agenda: str = "") -> None:
+                order: str = "", agenda: str = "",
+                unrest: dict | None = None) -> None:
     hist = history or []
     print()
     left = f"☭ КРЕМЛЬ 1991 / {VERSION_TAG}"
@@ -212,6 +244,14 @@ def stats_panel(get_stats, year: int, lifelines: int, era: str, mode_tag: str = 
             warn = paint(" ⚠PLOT", C.BM) if m <= 22 else ""
             bits.append(paint(f"{label} [{bar(m, 6)}] {m:>3}", col) + warn)
         print("   Politburo " + "  ".join(bits))
+    if unrest:
+        bits = []
+        for republic in REPUBLICS:
+            value = int(unrest.get(republic, 0))
+            col = C.BM if value >= 70 else (C.Y if value >= 45 else C.G)
+            warn = paint(" ⚠", C.BM) if value >= 75 else ""
+            bits.append(paint(f"{REPUBLIC_SHORT[republic]} [{bar(value, 5)}] {value:>2}", col) + warn)
+        print("   Republics " + "  ".join(bits))
     bar_inf = "❖" * min(10, influence // 10) + "·" * max(0, 10 - influence // 10)
     print(paint(f"   {'Political capital':<21} {bar_inf} {influence:>3}"
                 f"{paint('  / ' + order, C.DIM) if order else ''}", C.Y))
@@ -511,10 +551,16 @@ def ask_command(rng: random.Random) -> str:
         print(paint("  ✗ That stamp is not recognised. Try Enter, s, l, d, i, o or q.", C.R))
 
 
-def show_changes(before, after, flags_before, flags_after) -> None:
+def show_changes(before, after, flags_before, flags_after,
+                 unrest_before=None, unrest_after=None) -> None:
     """Compact line showing what actually changed; printed dim."""
     parts = [f"{s} {arrow(after[s] - before[s])}{abs(after[s] - before[s])}"
              for s in before if after[s] != before[s]]
+    if unrest_before is not None and unrest_after is not None:
+        for republic in REPUBLICS:
+            old, new = unrest_before.get(republic, 0), unrest_after.get(republic, 0)
+            if old != new:
+                parts.append(f"{REPUBLIC_SHORT[republic]} {arrow(new - old)}{abs(new - old)}")
     new_flags = [f"⚑{f}" for f in flags_after - flags_before]
     lost_flags = [f"⚑-{f}" for f in flags_before - flags_after]
     if parts:

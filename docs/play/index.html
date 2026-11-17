@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
 <title>Play КРЕМЛЬ 1991 in your browser, the real Python game</title>
-<meta name="description" content="Play КРЕМЛЬ 1991 free in your browser, no install: run the Soviet Union as General Secretary from 1964 to 1991, and into the Red Millennium of 2001. The real Python game, compiled to WebAssembly.">
+<meta name="description" content="Play КРЕМЛЬ 1991 free in your browser, no install: run the Soviet Union as General Secretary from 1964 to 1991, into the Red Millennium of 2001, with an optional first-year tutorial. The real Python game, compiled to WebAssembly.">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Play КРЕМЛЬ 1991 — Soviet Union alternate-history game in your browser">
-<meta property="og:description" content="The real game, in your browser. Five gauges, three suspicious factions, an oil market and twenty-seven years of history.">
+<meta property="og:description" content="The real game, in your browser. Five gauges, three suspicious factions, an oil market, an optional first-year tutorial and twenty-seven years of history.">
 <meta property="og:url" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/">
 <meta property="og:image" content="https://mahakammoonlightstudio-beep.github.io/kreml-1991/assets/social-card-1200x630.png">
 <meta property="og:image:width" content="1200">
@@ -86,9 +86,9 @@ main { padding-block: var(--space-xl) var(--space-2xl); }
 /* console */
 .term { margin-block-start: var(--space-xl); }
 .bar { display: flex; align-items: center; gap: var(--space-md); background: var(--color-console-2); color: var(--color-console-ink); border: var(--rule-heavy) solid var(--color-ink); padding: var(--space-xs) var(--space-md); }
-.bar .title { font-size: var(--text-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bar .title { min-width: 0; font-size: var(--text-xs); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .bar .status { margin-inline-start: auto; color: var(--color-console-warn); font-size: var(--text-xs); font-variant-numeric: tabular-nums; white-space: nowrap; }
-#screen { margin: 0; background: var(--color-console-deep); border: var(--rule-heavy) solid var(--color-ink); padding: var(--space-md) var(--space-lg); height: min(58vh, 560px); overflow: auto; white-space: pre-wrap; overflow-wrap: break-word; font-family: var(--font-body); font-stretch: 75%; font-size: var(--text-sm); line-height: 1.55; color: var(--color-console-ink); }
+#screen { margin: 0; background: var(--color-console-deep); border: var(--rule-heavy) solid var(--color-ink); padding: var(--space-md) var(--space-lg); height: min(58vh, 560px); height: min(58svh, 560px); overflow: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; white-space: pre-wrap; overflow-wrap: break-word; font-family: var(--font-body); font-stretch: 75%; font-size: var(--text-sm); line-height: 1.55; color: var(--color-console-ink); }
 #screen .r { color: var(--color-console-alarm); }
 #screen .g { color: var(--color-console-ink); }
 #screen .y { color: var(--color-console-warn); }
@@ -102,7 +102,7 @@ main { padding-block: var(--space-xl) var(--space-2xl); }
 
 .choices { display: flex; flex-wrap: wrap; gap: var(--space-xs); margin-block-start: var(--space-sm); }
 .choices:empty { display: none; }
-.choices button { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule-2); color: var(--color-ink); padding: var(--space-2xs) var(--space-sm); font: 400 var(--text-sm)/1.35 var(--font-body); font-stretch: var(--stretch-body); max-width: 100%; text-align: left; cursor: pointer; transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
+.choices button { background: var(--color-paper); border: var(--rule-hair) solid var(--color-rule-2); color: var(--color-ink); padding: var(--space-2xs) var(--space-sm); font: 400 var(--text-sm)/1.35 var(--font-body); font-stretch: var(--stretch-body); max-width: 100%; text-align: left; cursor: pointer; touch-action: manipulation; transition: background-color var(--dur-short) var(--ease-out), border-color var(--dur-short) var(--ease-out); }
 .choices button:hover { background: var(--color-accent); border-color: var(--color-accent); color: var(--color-accent-ink); }
 .choices button:active { transform: translateY(1px); }
 .choices button .n { color: var(--color-accent); font-weight: 700; margin-inline-end: var(--space-xs); }
@@ -133,7 +133,53 @@ form#answer button:active { transform: translateY(1px); }
 .sitefoot .supportline a { color: var(--color-ink); text-decoration-color: var(--color-rule); }
 
 @media (min-width: 60rem) { .row { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
-@media (max-width: 40rem) { .panel { padding: var(--space-md); } .sitehead .wrap { gap: var(--space-xs); } .sitehead nav { gap: var(--space-md); } #screen { padding: var(--space-sm); font-size: var(--text-xs); } }
+@media (max-width: 48rem) {
+  .sitehead { padding-top: env(safe-area-inset-top); }
+  .sitehead .wrap { min-height: 52px; gap: var(--space-xs); padding-block: 8px; }
+  .brand { gap: 8px; font-size: var(--text-sm); line-height: 1.2; }
+  .brand img { width: 28px; height: 28px; }
+  .brand .edition { display: none; }
+  .sitehead nav { width: 100%; gap: 4px 12px; }
+  .sitehead nav a { font-size: 0.6875rem; }
+  main { padding-block: var(--space-md) var(--space-xl); }
+  .panel { padding: var(--space-md); box-shadow: 4px 4px 0 var(--color-rule-2); }
+  .panel h1 { font-size: clamp(1.75rem, 9vw, 2.6rem); max-width: none; }
+  .lede { font-size: var(--text-sm); line-height: 1.6; }
+  .row { gap: var(--space-md); margin-block-start: var(--space-md); }
+  .group h2 { margin-bottom: 6px; }
+  .chips { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .chip { min-height: 48px; padding: 8px 10px; font-size: 0.8125rem; }
+  .chip small { margin-top: 2px; font-size: 0.6875rem; }
+  .actions { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; margin-block-start: var(--space-md); }
+  .actions .btn, .actions .chip { width: 100%; }
+  .actions .textbtn { justify-self: start; }
+  #bootnote { display: block; }
+  .term { margin-block-start: var(--space-md); }
+  .bar { gap: 8px; padding: 8px 10px; }
+  .bar .title, .bar .status { font-size: 0.6875rem; }
+  #screen {
+    padding: 10px 12px;
+    height: 54vh;
+    height: clamp(220px, 54dvh, 520px);
+    font-size: 0.8125rem;
+    line-height: 1.5;
+  }
+  .choices { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .choices button { width: 100%; min-height: 46px; padding: 10px 12px; font-size: 0.8125rem; }
+  form#answer { gap: 8px; padding: 4px 8px; }
+  #line { font-size: 16px; }
+  form#answer button { min-height: 44px; padding-inline: 14px; }
+  .toolbar { gap: 8px; }
+  .toolbar .btn { min-height: 44px; flex: 1 1 auto; }
+  .toolbar .textbtn { display: inline-flex; align-items: center; min-height: 44px; }
+  #hint { flex-basis: 100%; text-align: left; }
+  .sitefoot { padding-block: 16px calc(16px + env(safe-area-inset-bottom)); }
+}
+@media (pointer: coarse) {
+  .chip, .btn, .choices button, form#answer button, .textbtn { min-height: 44px; }
+  .chip, .btn, .choices button { touch-action: manipulation; }
+}
+@media (max-width: 22rem) { .chips { grid-template-columns: minmax(0, 1fr); } }
 @media (prefers-reduced-motion: reduce) { .btn, .chip, .choices button { transition: none; } .btn:active, .chip:active, .choices button:active { transform: none; } }
 </style>
 </head>
@@ -143,7 +189,7 @@ form#answer button:active { transform: translateY(1px); }
 
 <header class="sitehead">
   <div class="wrap">
-    <a class="brand" href="../index.html"><img src="../assets/emblem.svg" alt="" width="34" height="34"> КРЕМЛЬ 1991 <span class="edition">web edition, v7</span></a>
+    <a class="brand" href="../index.html"><img src="../assets/emblem.svg" alt="" width="34" height="34"> КРЕМЛЬ 1991 <span class="edition">web edition, v7-5</span></a>
     <nav aria-label="Site">
       <a href="../index.html">Landing</a>
       <a href="../index.html#support">Support</a>
@@ -160,8 +206,9 @@ form#answer button:active { transform: translateY(1px); }
       <p class="kick">Политбюро, постановление № 211</p>
       <h1>The Politburo awaits your signature.</h1>
       <p class="lede">This is the real game: the same Python that runs in a terminal, compiled to WebAssembly in this tab.
-      Choose how harsh history should be and which decade you inherit, then answer below the console. The v7 board is a stamped printout;
-      <b>i</b> spends political capital, <b>o</b> sets a standing order, and when a decision is timed the clock answers for you.</p>
+      Choose how harsh history should be and which decade you inherit, then answer below the console. The v7-5 board is a stamped printout;
+      <b>d</b> opens the Dossier, <b>i</b> spends political capital, <b>o</b> sets a standing order, and when a decision is timed the clock answers for you.
+      New to the chair? Turn on the <b>First-Year Orientation</b> for a guided 1964 briefing and margin notes.</p>
 
       <div class="row">
         <div class="group">
@@ -175,11 +222,12 @@ form#answer button:active { transform: translateY(1px); }
       </div>
 
       <div class="actions">
+        <button class="chip" id="tutorial" type="button" aria-pressed="false">First-Year Orientation<small>guided 1964 briefing · optional</small></button>
         <button class="btn" id="start">Take the appointment</button>
         <button class="textbtn" id="resume" hidden>Continue last run</button>
         <span class="muted" id="bootnote">Loading Python…</span>
       </div>
-      <p class="note"><b>First load pulls about 12 MB</b> of Python (Pyodide) from a CDN, once per browser; after that the game runs entirely offline in the tab. Deep runs work best on a desktop.</p>
+      <p class="note"><b>First load pulls about 12 MB</b> of Python (Pyodide) from a CDN, once per browser; after that the game runs entirely offline in the tab. On a phone, tap the numbered buttons below the console; the text field is for names and shortcuts.</p>
     </div>
   </section>
 
@@ -192,11 +240,12 @@ form#answer button:active { transform: translateY(1px); }
     <div class="choices" id="choices"></div>
     <form id="answer" autocomplete="off">
       <span class="caret" aria-hidden="true">❯</span>
-      <input id="line" type="text" placeholder="Type your answer, then Enter" aria-label="Your answer">
+      <input id="line" type="text" placeholder="Type your answer, then Enter" aria-label="Your answer" inputmode="text" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" enterkeyhint="send">
       <button type="submit">Enter</button>
     </form>
     <div class="toolbar">
       <button class="btn ghost" id="restart">New appointment</button>
+      <button class="textbtn" id="sound" aria-pressed="true">Sound on</button>
       <span class="spacer"></span>
       <span class="muted" id="hint">Enter submits, or press a numbered button under the console</span>
     </div>
@@ -209,7 +258,7 @@ form#answer button:active { transform: translateY(1px); }
   <div class="wrap">
     <p>A Mahakam Moonlight Studio production, by
       <a href="https://github.com/mahakammoonlightstudio-beep">mahakammoonlightstudio-beep</a>
-      and <b>Mr. Fozan</b>. MIT licence. BETA v7.</p>
+      and <b>Mr. Fozan</b>. MIT licence. BETA v7-5.</p>
     <p class="supportline">The game is free. If it kept you in the chair, fund the next five-year plan:
       <a href="https://www.paypal.com/paypalme/mrfozan">PayPal</a> ·
       <a href="https://sociabuzz.com/mahakam_moonlight_studio/tribe">Sociabuzz</a> ·

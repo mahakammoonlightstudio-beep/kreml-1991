@@ -200,6 +200,19 @@ def t_timed_flash_decision() -> None:
         assert out["done"] is False, "a hesitation must not end the run"
 
 
+def t_tutorial_is_optional() -> None:
+    with sandbox():
+        s = session()
+        out = s.start("medium", "rails", tutorial=True)
+        assert "Your name for the history books" in out["text"]
+        s.answer("Tester")
+        out = s.answer("2")                 # mandate
+        assert "NEW GENERAL SECRETARY ORIENTATION" in out["text"]
+        out = s.answer("6")                 # begin the guided year
+        assert "first year will be guided" in out["text"]
+        assert "[Enter] proceed" in s.transcript
+
+
 def t_snapshot_restores_the_same_run() -> None:
     with sandbox():
         s = session(11)
@@ -226,6 +239,7 @@ def main() -> int:
     check("web: colours do not leak into other runs", t_colours_do_not_leak_out)
     check("web: timed flash decision & hesitation", t_timed_flash_decision)
     check("web: snapshot/restore round-trip", t_snapshot_restores_the_same_run)
+    check("web: tutorial is optional and replayable", t_tutorial_is_optional)
     print()
     if FAIL:
         print(f"{len(FAIL)} failed, {len(PASS)} passed")

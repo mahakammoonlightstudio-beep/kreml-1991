@@ -221,6 +221,10 @@ def _avail_options(g, ev) -> list:
 
 def bot_input(prompt: str = "") -> str:
     p = prompt
+    if "Orientation:" in p:
+        step = CUR_G.get("orientation_step", 0)
+        CUR_G["orientation_step"] = step + 1
+        return "5" if step == 0 else "6"   # show memo 05, then begin
     if "name for the history books" in p:
         return BOT_NAME
     if "How harsh" in p:
@@ -284,11 +288,12 @@ def bot_input(prompt: str = "") -> str:
     return ""
 
 
-def run_bot(seed: int, dry: bool = False) -> str:
+def run_bot(seed: int, dry: bool = False, tutorial: bool = False) -> str:
     """Runs one full playthrough. Returns the captured log (ANSI colours ON)."""
     for k in OUTCOME:
         OUTCOME[k] = False
     CUR_G.clear()
+    CUR_G["orientation_step"] = 0
     EVENT_QUEUE.clear()
 
     ui._use_colour = True          # keep ANSI codes in the captured log
@@ -301,7 +306,7 @@ def run_bot(seed: int, dry: bool = False) -> str:
     from contextlib import redirect_stdout
     try:
         with redirect_stdout(log):
-            engine.run(seed)
+            engine.run(seed, tutorial=tutorial)
     finally:
         ui.ANIM = old_anim
 
