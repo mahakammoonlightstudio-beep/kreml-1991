@@ -12,8 +12,8 @@ the bundle is present):
 
     python tools/build_itch.py
 
-Upload the zip at https://itch.io/game/new (project kind: HTML), then set the
-page URL in ``docs/index.html`` where the ITCH.IO comment says to. The paste-ready
+Upload the zip at https://itch.io/game/new (project kind: HTML). The public page
+URL is set in ``docs/index.html`` and ``docs/play/index.html``; the paste-ready
 form copy, cover and screenshots live in ``itch_page/``.
 """
 from __future__ import annotations

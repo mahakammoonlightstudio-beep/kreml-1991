@@ -284,6 +284,7 @@ page is the same Python under Pyodide.
 
 - Landing: <https://mahakammoonlightstudio-beep.github.io/kreml-1991/>
 - Play: <https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/>
+- itch.io: <https://mahakam-moonlight-studio.itch.io/kreml-1991>
 - Source of truth: `docs/index.html`, `docs/play/`, `docs/assets/`
 
 The itch.io package is generated, not hand-maintained. The paste-ready page copy,
@@ -298,9 +299,9 @@ python tools/build_itch.py
 Upload the zip as an **HTML** project. The package is deliberately small because Pyodide
 is fetched from a CDN on first load, like grain from a country with better weather.
 
-**One manual step:** the itch page URL in `docs/index.html` is a placeholder until you
-publish the page. Both occurrences are marked `ITCH.IO`. Replace them with your published
-URL; the build script does not touch that link.
+The itch page is live at <https://mahakam-moonlight-studio.itch.io/kreml-1991>. The
+landing page, play page and footer all point there. The build script does not rewrite
+external links.
 
 After changing anything under `kreml/`, rebuild the browser copy:
 

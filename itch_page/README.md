@@ -22,7 +22,7 @@ Assets here:
 | Field | Value |
 |---|---|
 | **Title** | `КРЕМЛЬ 1991 — General Secretary` |
-| **Project URL** | `kreml-1991` |
+| **Project URL** | `kreml-1991` — <https://mahakam-moonlight-studio.itch.io/kreml-1991> |
 | **Short description** | `27 years, five gauges, one signature. A text-based Soviet alternate-history game, 1964–1991.` |
 | **Classification** | `Games` |
 | **Kind of project** | `HTML` |
@@ -31,9 +31,9 @@ Assets here:
 
 Notes:
 
-- **Project URL.** If `kreml-1991` is already taken, use `kreml-1991-game` and
-  tell the landing page the final URL (the two `ITCH.IO` comments in
-  `docs/index.html`).
+- **Project URL.** The page is live at
+  <https://mahakam-moonlight-studio.itch.io/kreml-1991>. If the URL ever changes,
+  update the landing page and play page links, then rebuild the ZIP.
 - **Kind of project.** Choose **HTML**, not Downloadable. The ZIP contains an
   `index.html` at its root and runs in the itch iframe. The terminal build is
   available from GitHub, not as a separate itch download.
@@ -121,18 +121,16 @@ thinks there is a paid tier.
 
 ---
 
-## 5. After publishing
+## 5. Published URL
 
-1. Publish the page (or switch visibility to **Public**).
-2. Copy the published URL, usually `https://NAME.itch.io/kreml-1991`.
-3. Replace both `ITCH.IO` links in `docs/index.html` (hero and “Where to play”).
-4. Replace the itch link in `docs/play/index.html` and the footer “Elsewhere” list.
-5. Rebuild the ZIP only if you changed page files: `python tools/build_itch.py`.
-6. Commit and push; GitHub Pages serves `docs/`.
+The page is live at <https://mahakam-moonlight-studio.itch.io/kreml-1991>. The
+landing page, play page and footer point there. If the URL ever changes, update
+`docs/index.html` (JSON-LD, hero, “Where to play” and “Elsewhere”) and
+`docs/play/index.html`, then rebuild the ZIP and push `docs/`.
 
-Until step 3 is done, the landing page still points at the placeholder URL
-`https://mahakammoonlightstudio-beep.itch.io/kreml-1991`. That is the one manual
-link the build cannot guess.
+```bash
+python tools/build_itch.py
+```
 
 ---
 

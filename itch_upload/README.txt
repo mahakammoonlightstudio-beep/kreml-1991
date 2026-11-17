@@ -22,6 +22,7 @@ WHERE TO CLICK
 PAGE
   Title:       КРЕМЛЬ 1991 — General Secretary
   URL:         kreml-1991
+  Published:   https://mahakam-moonlight-studio.itch.io/kreml-1991
   Short:       27 years, five gauges, one signature. A text-based Soviet
                alternate-history game, 1964–1991.
   Genre:       Strategy
@@ -42,11 +43,10 @@ SUGGESTED DESCRIPTION
   donation links. Paste it as HTML.
 
 AFTER PUBLISHING
-  1. Copy the published URL (looks like https://NAME.itch.io/kreml-1991).
-  2. In docs/index.html, replace both ITCH.IO links marked with
-     <!-- ITCH.IO: replace this URL ... -->.
-  3. Replace the itch link in docs/play/index.html too.
-  4. Commit and push; GitHub Pages serves docs/.
+  The page is live at
+  https://mahakam-moonlight-studio.itch.io/kreml-1991
+  docs/index.html and docs/play/index.html already point there.
+  If the URL changes, update both files, rebuild the ZIP and push docs/.
 
 REBUILD
   python tools/build_brand.py   # cover, social card, favicon set (needs Chrome)
