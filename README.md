@@ -14,14 +14,14 @@ portraits, which is history's way of saying "we'll call you."
 
 **Pure Python. No installs, no dependencies, no graphics card. Just `python main.py`.**
 
-[![release](https://img.shields.io/badge/release-BETA%20v7--5-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases)
+[![release](https://img.shields.io/badge/release-BETA%20v7--5-c8102e?labelColor=6a0000&style=flat-square)](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases/tag/v7-5-beta)
 [![python](https://img.shields.io/badge/python-3.8%2B-3776ab?style=flat-square&logo=python&logoColor=white)](https://www.python.org/)
 [![dependencies](https://img.shields.io/badge/dependencies-none-success?style=flat-square)](#quick-start)
 [![license](https://img.shields.io/badge/license-MIT-3da639?style=flat-square)](LICENSE)
 [![platform](https://img.shields.io/badge/platform-Windows%20%C2%B7%20Linux%20%C2%B7%20macOS-lightgrey?style=flat-square)](#quick-start)
 [![web](https://img.shields.io/badge/web-live%20page-c8102e?style=flat-square&logo=githubpages&logoColor=white)](https://mahakammoonlightstudio-beep.github.io/kreml-1991/)
 
-[**Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·   [**Download BETA v7-5**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases) ·
+[**Play in your browser**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/) ·   [**Download BETA v7-5**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases/tag/v7-5-beta) ·
 [**Landing page**](https://mahakammoonlightstudio-beep.github.io/kreml-1991/) ·
 [**Report a bug**](https://github.com/mahakammoonlightstudio-beep/kreml-1991/issues)
 
@@ -52,6 +52,8 @@ timelines**, **three divergence forks**, **five chain reactions** that remember 
 did a decade ago, and now an optional **first-year orientation** for new General
 Secretaries. The whole thing is standard-library Python. No pip, no build step,
 no telemetry, no network calls after the clone.
+
+**Current release:** [BETA v7-5](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases/tag/v7-5-beta) · [release notes](RELEASE_NOTES_v7-5.md).
 
 > State joke No. 1: *Under capitalism, man exploits man. Under socialism, it is the other
 > way around.*
@@ -89,7 +91,7 @@ cd kreml-1991
 python main.py
 ```
 
-Prefer a zip? Grab the [BETA v7-5 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases),
+Prefer a zip? Grab the [BETA v7-5 release](https://github.com/mahakammoonlightstudio-beep/kreml-1991/releases/tag/v7-5-beta),
 unzip it, and run `python main.py` from the folder. On Windows, if `python` opens the
 Microsoft Store, use `py main.py`. The Store is not a dependency either.
 
