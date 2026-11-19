@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Render the five itch.io screenshots from a real v8 playthrough.
+"""Render terminal plates from a real v8 playthrough.
 
-The old JPGs in docs/media were captured in v4 and show the wrong interface.
-This tool replays the deterministic autopilot run with seed 7, picks the title,
-board, directive and ending screens, plus a second tutorial run for the
-First-Year Orientation memo, and writes 1600×900 stills into
-``itch_page/screenshots/``.
+The itch page now shows the browser situation room, captured by
+``tools/capture_room.py``; this tool still renders the terminal docket, and it
+writes into the same ``itch_page/screenshots/`` folder, so run it only when you
+want terminal plates (it will overwrite the room captures).
 
     python tools/capture_stills.py
 

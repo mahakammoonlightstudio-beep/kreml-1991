@@ -421,7 +421,8 @@ tools/
   build_web.py          packs the game into docs/play/game_bundle.js
   build_itch.py         builds the itch.io folder and zip
   build_brand.py        renders cover, social card and favicon set (Chrome)
-  capture_stills.py     renders the itch.io screenshot set from a real run
+  capture_room.py       captures the itch screenshots from the itch build (Chromium)
+  capture_stills.py     renders terminal plates from a real run
   balance.py            measured survival rates per mode (autopilot)
   render_gameplay.py    60 fps gameplay renderer (Pillow + ffmpeg, dev only)
 docs/

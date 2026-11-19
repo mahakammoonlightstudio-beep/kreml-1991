@@ -13,11 +13,11 @@ Assets here:
 | File | Use |
 |---|---|
 | `cover.png` | Cover image, exactly **630 × 500** (required) |
-| `screenshots/01-board.png` | Screenshot: the board |
+| `screenshots/01-board.png` | Screenshot: the situation room |
 | `screenshots/02-directive.png` | Screenshot: a yearly directive |
-| `screenshots/03-ending.png` | Screenshot: the 1991 report and challenge card |
+| `screenshots/03-ending.png` | Screenshot: the challenge card |
 | `screenshots/04-title.png` | Screenshot: the appointment screen |
-| `screenshots/05-tutorial.png` | Screenshot: the First-Year Orientation memo |
+| `screenshots/05-tutorial.png` | Screenshot: the guided first year |
 | `description.html` | Paste into **Description** (itch accepts HTML) |
 
 ---
@@ -105,15 +105,25 @@ A truthful explanation if itch offers a free-text box:
 
 ### Screenshot captions
 
-1. **01-board.png** — The board: five gauges, the valas reserve, the court, Republic Unrest and the year's agenda.
-2. **02-directive.png** — The yearly directive: one public campaign, chosen from the groups on the table.
-3. **03-ending.png** — The divergence report and the v8 challenge card: seed, verdict, score and a dare.
-4. **04-title.png** — The appointment: difficulty, timeline and the name for the history books.
-5. **05-tutorial.png** — The optional First-Year Orientation: Chief of Staff Volkov's fifth memo on fatigue, the court and Republic Unrest.
+1. **01-board.png** — The situation room, 1975: five gauges, valas, the court, political capital, Republic Unrest, and the transcript underneath.
+2. **02-directive.png** — The yearly directive: fourteen campaigns on the table for 1964, each one a single order.
+3. **03-ending.png** — The challenge card: seed 7, THE UNION SURVIVES, score 361 and the replay link.
+4. **04-title.png** — The appointment: difficulty, timeline, optional guidance, and a seeded run waiting to be taken.
+5. **05-tutorial.png** — The guided first year: the margin note, ORIENTATION COMPLETE, and the 1964 board it told you to read.
 
-The stills are rendered from a real seed-7 run by `python tools/capture_stills.py`.
-They show the terminal docket. The itch build frames that same transcript in the
-v8 situation room.
+All five are captures of **this itch build**, not of the terminal and not of the
+GitHub play page. `python tools/capture_room.py` replays the seed-7 autopilot
+through the browser driver, drives the exported page in headless Chromium and
+writes them at native size. Re-run it after changing `docs/play/` or the build:
+
+```bash
+python tools/build_web.py
+python tools/build_itch.py
+python tools/capture_room.py
+```
+
+`tools/capture_stills.py` still renders terminal plates, but it writes into this
+same folder — do not run it after capturing the room.
 
 ### Content notes
 

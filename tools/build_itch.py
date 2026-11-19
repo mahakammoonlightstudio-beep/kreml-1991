@@ -48,7 +48,9 @@ def page_html() -> str:
     html = html.replace('href="../index.html#support"', f'href="{WEB}#support"')
     html = html.replace('href="../index.html"', f'href="{WEB}"')
     # The itch edition is the game alone: no landing, support or source chrome.
-    if "itch-build" not in html:
+    # Test the body tag, not the document: the page's own stylesheet already
+    # mentions `.itch-build`, which used to make this guard a no-op.
+    if not re.search(r'<body\b[^>]*\bitch-build\b', html):
         html = re.sub(r'<body class="([^"]*)"',
                       lambda m: f'<body class="{m.group(1)} itch-build"',
                       html, count=1)

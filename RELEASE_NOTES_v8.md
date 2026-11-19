@@ -96,6 +96,9 @@ Union.
   local assets
 - Pure-play itch ZIP rebuilt at **0.7 MB**, `index.html` at the root, fonts and
   photograph local
+- Itch ZIP now carries `body.itch-build`; the guard that was meant to add it
+  tested the whole document (where the class name already appears in the CSS)
+  and never ran, so the landing chrome had been leaking into the iframe build
 
 ## Balance
 
@@ -121,7 +124,7 @@ extreme. The full table and the reading notes live in `README.md`; re-run
 
 - The first browser visit still pulls about 12 MB of Pyodide from a CDN.
 - The browser build is installable to a phone home screen, not a native APK.
-- Itch screenshots are real v8 terminal stills, not captures of the browser
-  situation room; the live itch build itself uses the situation room.
+- Itch screenshots are captures of the exported itch build itself, made by
+  `tools/capture_room.py`; they are PNGs at page width, not 16:9 plates.
 - Generated AI output was used for code, copy and art assistance; everything was
   reviewed, edited and integrated by the developers.
