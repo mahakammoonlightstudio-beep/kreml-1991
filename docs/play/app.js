@@ -1,9 +1,12 @@
-/* КРЕМЛЬ 1991 — browser build.
+/* КРЕМЛЬ 1991 — BETA v8 browser build.
  *
  * The real game (docs/play/game_bundle.js) runs under Pyodide. The Python
- * driver (kreml_web.py) replays the run from 1964 with every answer so far and
- * stops at the next question, so this file only has to: render the text, take
- * one line, repeat.
+ * driver (kreml_web.py) replays the run from its opening with every answer so
+ * far and stops at the next question, so this file only has to: render the
+ * transcript, read the room, take one line, repeat.
+ *
+ * v8 adds the situation room (a live HUD parsed from the printed board), the
+ * seed challenge card, URL-seeded runs, and audio that is off by default.
  */
 (() => {
   "use strict";
@@ -14,22 +17,27 @@
   const TIMEOUT = "__timeout__";      // keep in sync with kreml_web.TIMEOUT_TOKEN
 
   const $ = (id) => document.getElementById(id);
-  const setup = $("setup"), game = $("game"), screenEl = $("screen");
-  const choicesEl = $("choices"), lineEl = $("line"), formEl = $("answer");
-  const statusEl = $("status"), bootnote = $("bootnote"), startBtn = $("start");
-  const resumeBtn = $("resume"), restartBtn = $("restart"), termTitle = $("termtitle");
-  const tutorialBtn = $("tutorial"), soundBtn = $("sound");
-  const hintEl = $("hint");
+  const setup = $("setup"), game = $("game"), challenge = $("challenge");
+  const screenEl = $("screen"), choicesEl = $("choices"), lineEl = $("line");
+  const formEl = $("answer"), statusEl = $("status"), bootnote = $("bootnote");
+  const startBtn = $("start"), resumeBtn = $("resume"), restartBtn = $("restart");
+  const termTitle = $("termtitle"), tutorialBtn = $("tutorial"), soundBtn = $("sound");
+  const hintEl = $("hint"), seedNote = $("seednote");
   const isTouch = () => window.matchMedia("(pointer: coarse)").matches;
   const isCompact = () => window.innerWidth <= 768;
 
   let call = null;            // Python _call()
   let busy = false, finished = false;
-  let soundOn = true;
+  let soundOn = false;
   let audio = null;
   let clockTimer = null, clockEnd = 0, clockTick = null;
-  let plain = "";             // recent output without ANSI, for parsing menus
+  let plain = "";             // recent output without ANSI, for menus and HUD
   let record = null;          // the run in this tab (answers + config)
+  let finalRecord = null;     // the finished run, for the challenge card
+  let meta = null;
+  let challengeText = "";
+
+  const pick = { mode: "medium", timeline: "rails", tutorial: false, seed: null };
 
   /* ─────────────────────────── ANSI → HTML ─────────────────────────── */
 
@@ -43,7 +51,8 @@
   };
   let style = { fg: null, bold: false, dim: false };
 
-  const esc = (s) => s.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+  const esc = (s) => String(s).replace(/[&<>"]/g,
+    (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 
   function cssClass() {
     const out = [];
@@ -92,8 +101,83 @@
       style = { fg: null, bold: false, dim: false };
     }
     screenEl.insertAdjacentHTML("beforeend", toHtml(text));
-    plain = (plain + stripAnsi(text)).slice(-12000);
+    plain = (plain + stripAnsi(text)).slice(-16000);
     screenEl.scrollTop = screenEl.scrollHeight;
+    updateHud();
+  }
+
+  /* ─────────────────────────── the room ───────────────────────────── */
+
+  function lastMatches(re, text) {
+    const flags = re.flags.includes("g") ? re.flags : re.flags + "g";
+    const g = new RegExp(re.source, flags);
+    let m, last = null;
+    while ((m = g.exec(text)) !== null) {
+      last = m;
+      if (m.index === g.lastIndex) g.lastIndex++;
+    }
+    return last;
+  }
+
+  function setMeter(id, value) {
+    const el = document.querySelector(`[data-gauge="${id}"]`);
+    if (!el) return;
+    const fill = el.querySelector(".meter__bar i");
+    const label = el.querySelector(".meter__val");
+    if (value === null || Number.isNaN(value)) {
+      el.dataset.level = "empty";
+      label.textContent = "—";
+      fill.style.width = "0%";
+      return;
+    }
+    const v = Math.max(0, Math.min(100, value));
+    el.dataset.level = v < 25 ? "critical" : (v < 45 ? "low" : "ok");
+    label.textContent = String(v);
+    fill.style.width = v + "%";
+  }
+
+  function updateHud() {
+    const ym = lastMatches(
+      /YEAR (\d{4})\s{2,}([^\n]+?)\s{2,}\[([^\]]+)\]/, plain);
+    $("hud-year").textContent = ym ? ym[1] : "——";
+    $("hud-meta").textContent = ym
+      ? `${ym[2]} · ${ym[3]}` : "Waiting for the appointment";
+
+    for (const [id, word] of [
+      ["ECONOMY", "Economy"], ["MILITARY", "Military"], ["ORDER", "Order"],
+      ["FAITH", "People"], ["PRESTIGE", "Prestige"],
+    ]) {
+      const m = lastMatches(
+        new RegExp(`${word}\\s+\\([^)]*\\)\\s+\\[[^\\]]*\\]\\s+(\\d{1,3})`), plain);
+      setMeter(id, m ? Number(m[1]) : null);
+    }
+
+    const hc = lastMatches(
+      /Valas\s+\(gold &\s*\$\)\s+\[[^\]]*\]\s+(\d{1,3})/, plain);
+    $("hud-hc").textContent = hc ? hc[1] : "—";
+
+    const court = lastMatches(
+      /Politburo Old Guard \[[^\]]*\]\s+(\d{1,3})\s+Reformers \[[^\]]*\]\s+(\d{1,3})\s+Army \[[^\]]*\]\s+(\d{1,3})/,
+      plain);
+    $("hud-court").textContent = court
+      ? `${court[1]}/${court[2]}/${court[3]}` : "—";
+
+    const inf = lastMatches(
+      /Political capital[^\n]*?(\d{1,3})(?=\s*(?:\/|$))/m, plain);
+    $("hud-inf").textContent = inf ? `${inf[1]} ❖` : "—";
+
+    const repLine = (plain.match(/^\s*Republics[^\n]*$/gm) || []).pop();
+    const reps = repLine ? (repLine.match(/\b\d{1,3}\b/g) || []).slice(0, 4) : [];
+    $("hud-rep").textContent = reps.length === 4
+      ? `B${reps[0]} U${reps[1]} C${reps[2]} A${reps[3]}` : "—";
+
+    const agenda = lastMatches(/^\s*Agenda\s{2,}([^\n]+)$/m, plain);
+    $("hud-agenda").textContent = agenda ? agenda[1].trim() : "No demand tabled.";
+
+    if (ym) termTitle.textContent = `kreml_1991 — ${ym[1]}`;
+    if (!clockTimer) {
+      statusEl.textContent = finished ? "run over" : (ym ? `year ${ym[1]}` : "ready");
+    }
   }
 
   /* ─────────────────────────── menus & buttons ─────────────────────── */
@@ -132,41 +216,24 @@
       if (isTouch()) lineEl.blur();   // tap the board, not the mobile keyboard
       submitLine(value);
     };
-    const add = (label, value, hint) => {
-      const b = document.createElement("button");
-      b.type = "button";
-      b.innerHTML = hint ? `<span class="n">${esc(label)}</span><span class="d">${esc(hint)}</span>`
-                         : esc(label);
-      b.addEventListener("click", () => choose(value));
-      choicesEl.appendChild(b);
-    };
     if (finished) return;
 
     if (lastLine().includes("[Enter] proceed")) {
-      add("Continue", "");
-      add("d", "dossier");
-      add("i", "capital");
-      add("o", "orders");
-      add("s", "save");
-      add("l", "load");
-      add("q", "resign");
+      const row = document.createElement("button");
+      row.type = "button";
+      row.innerHTML = `<span class="n">↵</span>Proceed · dossier · capital · orders`;
+      row.addEventListener("click", () => choose(""));
+      choicesEl.appendChild(row);
       return;
     }
     for (const [n, label] of parseNumbers()) {
-      const short = label.length > 92 ? label.slice(0, 89) + "…" : label;
+      const short = label.length > 96 ? label.slice(0, 93) + "…" : label;
       const b = document.createElement("button");
       b.type = "button";
       b.innerHTML = `<span class="n">${n}</span>${esc(short)}`;
       b.addEventListener("click", () => choose(String(n)));
       choicesEl.appendChild(b);
     }
-  }
-
-  function statusFromTranscript() {
-    const m = plain.match(/YEAR (\d{4})/g);
-    const year = m ? m[m.length - 1].replace("YEAR ", "") : "";
-    statusEl.textContent = finished ? "run over" : (year ? `year ${year}` : "ready");
-    if (year) termTitle.textContent = `kreml_1991 — ${year}`;
   }
 
   /* ─────────────────────────── talking to Python ───────────────────── */
@@ -189,38 +256,38 @@
     if (!ctx) return;
     if (ctx.state === "suspended") ctx.resume();
     const notes = {
-      event: [[392, 0.06], [523, 0.08]],
-      good: [[523, 0.06], [659, 0.06]],
-      bad: [[220, 0.08], [185, 0.10]],
-      ending: [[392, 0.10], [330, 0.10], [262, 0.18]],
-    }[kind] || [[392, 0.06]];
+      event: [[196, 0.22], [294, 0.26]],
+      good: [[262, 0.18], [392, 0.22]],
+      bad: [[147, 0.24], [110, 0.30]],
+      ending: [[196, 0.30], [147, 0.30], [98, 0.46]],
+    }[kind] || [[196, 0.20]];
     const now = ctx.currentTime;
     notes.forEach(([freq, duration], i) => {
-      const start = now + i * 0.11;
+      const start = now + i * 0.13;
       const osc = ctx.createOscillator();
       const gain = ctx.createGain();
-      osc.type = "triangle";
+      osc.type = "sine";
       osc.frequency.value = freq;
       gain.gain.setValueAtTime(0.0001, start);
-      gain.gain.exponentialRampToValueAtTime(0.055, start + 0.012);
+      gain.gain.exponentialRampToValueAtTime(0.035, start + 0.04);
       gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
       osc.connect(gain);
       gain.connect(ctx.destination);
       osc.start(start);
-      osc.stop(start + duration + 0.02);
+      osc.stop(start + duration + 0.04);
     });
   }
 
   function syncSoundButton() {
     if (!soundBtn) return;
-    soundBtn.textContent = soundOn ? "Sound on" : "Sound muted";
+    soundBtn.textContent = soundOn ? "Sound on" : "Sound off";
     soundBtn.setAttribute("aria-pressed", String(soundOn));
   }
 
   function lock(on) {
     busy = on;
     lineEl.disabled = on || finished;
-    startBtn.disabled = on;
+    startBtn.disabled = on || !call;
     resumeBtn.disabled = on;
   }
 
@@ -234,7 +301,7 @@
     }
   }
 
-  /* ─────────────────────────── the v6 clock ────────────────────────── */
+  /* ─────────────────────────── the clock ───────────────────────────── */
 
   function clearClock() {
     if (clockTimer !== null) {
@@ -242,12 +309,13 @@
       clockTimer = null;
     }
     clockTick = null;
+    if (!finished) updateHud();
   }
 
   function armClock() {
     clearClock();
     if (finished || busy || !call) return;
-    const m = plain.slice(-400).match(/\u23f1 (\d+)s\)\s*$/);
+    const m = plain.slice(-500).match(/\u23f1 (\d+)s\)\s*$/);
     if (!m) return;
     clockEnd = Date.now() + Number(m[1]) * 1000;
     const tick = () => {
@@ -263,6 +331,78 @@
     clockTimer = setInterval(tick, 200);
   }
 
+  /* ─────────────────────────── challenge card ─────────────────────── */
+
+  function cleanFate(line) {
+    return line.replace(/█+/g, "").replace(/\s+/g, " ").trim();
+  }
+
+  function showChallenge(snap) {
+    const seed = snap && snap.seed != null ? snap.seed : (pick.seed != null ? pick.seed : "—");
+    const scoreM = lastMatches(/Legacy score:\s*(\d+)/, plain);
+    const titleM = lastMatches(/Legacy score:\s*\d+\s*—\s*([^\n]+)/, plain);
+    const governedM = lastMatches(/Governed years:\s*(\d+)/, plain);
+    const fateM = lastMatches(
+      /(THE RED MILLENNIUM[^\n]*|THE UNION SURVIVES[^\n]*|REMOVED, \d+|COLLAPSE, \d+|You resigned[^\n]*)/,
+      plain);
+    const fate = fateM ? cleanFate(fateM[1]) : "THE RUN IS OVER";
+    const modeId = snap && snap.mode ? snap.mode : pick.mode;
+    const tlId = snap && snap.timeline ? snap.timeline : pick.timeline;
+    const modeLabel = meta && meta.modes.find((m) => m.id === modeId)
+      ? meta.modes.find((m) => m.id === modeId).label : modeId.toUpperCase();
+    const tlLabel = meta && meta.timelines.find((t) => t.id === tlId)
+      ? meta.timelines.find((t) => t.id === tlId).label : tlId.toUpperCase();
+    const score = scoreM ? scoreM[1] : "—";
+    const title = titleM ? titleM[1].trim() : "";
+    const years = governedM ? governedM[1] : "—";
+    const url = `${location.origin}${location.pathname}?seed=${seed}&mode=${modeId}&timeline=${tlId}`;
+
+    $("card-seed").textContent = `SEED ${seed}`;
+    $("card-fate").textContent = fate;
+    $("card-score").textContent = score === "—"
+      ? "SCORE —" : `SCORE ${score}${title ? " · " + title : ""}`;
+    $("card-meta").textContent = `${years} years · ${modeLabel} · ${tlLabel}`;
+    $("card-url").textContent = url.replace(/^https?:\/\//, "");
+    $("copy-status").textContent = "";
+
+    challengeText = [
+      "КРЕМЛЬ 1991 — BETA v8",
+      `SEED ${seed} · ${modeLabel} · ${tlLabel}`,
+      `${fate} · SCORE ${score}`,
+      title ? `${years} years · ${title}` : `${years} years governed`,
+      "Can you keep the red flag?",
+      url,
+    ].join("\n");
+
+    challenge.hidden = false;
+    requestAnimationFrame(() => challenge.scrollIntoView({ block: "start", behavior: "smooth" }));
+  }
+
+  async function copyCard() {
+    const note = $("copy-status");
+    try {
+      await navigator.clipboard.writeText(challengeText);
+      note.textContent = "Copied. Hand it to a friend.";
+      return;
+    } catch (_) { /* fall through to the old method */ }
+    try {
+      const ta = document.createElement("textarea");
+      ta.value = challengeText;
+      ta.setAttribute("readonly", "");
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand("copy");
+      document.body.removeChild(ta);
+      note.textContent = "Copied. Hand it to a friend.";
+    } catch (_) {
+      note.textContent = "The clipboard refused. Select the card text and copy it.";
+    }
+  }
+
+  /* ─────────────────────────── results ─────────────────────────────── */
+
   function applyResult(res) {
     append(res.text || "", !!res.reset);
     const fresh = res.text || "";
@@ -274,22 +414,26 @@
     }
     finished = !!res.done;
     drawChoices();
-    statusFromTranscript();
+    updateHud();
     if (finished) {
-      lineEl.disabled = true;
-      lineEl.placeholder = "This run is over — start a new appointment.";
+      finalRecord = null;
+      try { finalRecord = JSON.parse(call("snapshot", "{}")); } catch (_) {}
       record = null;
+      lineEl.disabled = true;
+      lineEl.placeholder = "This run is over — take a new appointment.";
       resumeBtn.hidden = true;
       try { localStorage.removeItem(STORE_KEY); } catch (_) {}
+      clearClock();
+      showChallenge(finalRecord);
     } else {
       lineEl.disabled = false;
       lineEl.placeholder = (isTouch() || isCompact())
         ? "Type an answer"
         : "Type your answer, then Enter";
       if (!isTouch()) lineEl.focus();   // do not pop the Android keyboard every turn
+      armClock();
+      remember();
     }
-    if (finished) clearClock(); else armClock();
-    remember();
   }
 
   function remember() {
@@ -308,9 +452,34 @@
     applyResult(await invoke("answer", { text: value }));
   }
 
-  /* ─────────────────────────── setup screen ────────────────────────── */
+  /* ─────────────────────────── setup ───────────────────────────────── */
 
-  const pick = { mode: "medium", timeline: "rails", tutorial: false };
+  function readParams() {
+    try {
+      const p = new URLSearchParams(location.search);
+      const s = parseInt(p.get("seed") || "", 10);
+      if (Number.isFinite(s) && s > 0) pick.seed = s;
+      if (p.get("mode")) pick.mode = p.get("mode");
+      if (p.get("timeline")) pick.timeline = p.get("timeline");
+      pick.tutorial = p.get("tutorial") === "1" || p.get("tutorial") === "true";
+    } catch (_) { /* old browser, no URLSearchParams */ }
+  }
+
+  function syncSeedNote() {
+    if (!seedNote) return;
+    if (pick.seed == null) {
+      seedNote.hidden = true;
+      seedNote.textContent = "";
+      return;
+    }
+    const mode = meta && meta.modes.find((m) => m.id === pick.mode)
+      ? meta.modes.find((m) => m.id === pick.mode).label : pick.mode;
+    const tl = meta && meta.timelines.find((t) => t.id === pick.timeline)
+      ? meta.timelines.find((t) => t.id === pick.timeline).label : pick.timeline;
+    seedNote.hidden = false;
+    seedNote.innerHTML = `<b>Challenge seed ${pick.seed}</b> · ${esc(mode)} · ${esc(tl)}. ` +
+      "The seed keeps the history; your answers are the variable.";
+  }
 
   function chips(container, items, key, note) {
     container.textContent = "";
@@ -319,47 +488,73 @@
       b.type = "button";
       b.className = "chip";
       b.setAttribute("aria-pressed", String(pick[key] === item.id));
-      b.innerHTML = `${esc(item.label)}<small>${esc(note(item))}</small>`;
+      b.innerHTML = `<span class="chip__label">${esc(item.label)}</span>` +
+        `<small>${esc(note(item))}</small>`;
       b.addEventListener("click", () => {
         pick[key] = item.id;
         for (const other of container.children) other.setAttribute("aria-pressed", "false");
         b.setAttribute("aria-pressed", "true");
+        syncSeedNote();
       });
       container.appendChild(b);
     }
   }
 
+  function syncSetup() {
+    if (tutorialBtn) {
+      tutorialBtn.setAttribute("aria-pressed", String(pick.tutorial));
+    }
+    syncSeedNote();
+  }
+
   function showSetup() {
     setup.hidden = false;
     game.hidden = true;
+    challenge.hidden = true;
   }
 
   function showGame() {
     setup.hidden = true;
     game.hidden = false;
-    startBtn.disabled = true;
-    resumeBtn.disabled = false;
+    challenge.hidden = true;
     requestAnimationFrame(() => game.scrollIntoView({ block: "start", behavior: "auto" }));
   }
 
   async function startRun() {
     clearClock();
     ensureAudio();
+    finished = false;
+    finalRecord = null;
     showGame();
     append("", true);
     record = null;
     resumeBtn.hidden = true;
     try { localStorage.removeItem(STORE_KEY); } catch (_) {}
-    applyResult(await invoke("start", { mode: pick.mode, timeline: pick.timeline,
-                                        tutorial: pick.tutorial }));
+    const payload = { mode: pick.mode, timeline: pick.timeline, tutorial: pick.tutorial };
+    if (pick.seed != null) payload.seed = pick.seed;
+    applyResult(await invoke("start", payload));
   }
 
   async function resumeRun() {
     if (!record) return;
     clearClock();
+    finished = false;
     showGame();
     append("", true);
     applyResult(await invoke("restore", record));
+  }
+
+  function newAppointment() {
+    clearClock();
+    finished = false;
+    finalRecord = null;
+    record = null;
+    pick.seed = null;
+    challenge.hidden = true;
+    challengeText = "";
+    showSetup();
+    syncSetup();
+    updateHud();
   }
 
   /* ─────────────────────────── boot ────────────────────────────────── */
@@ -428,9 +623,13 @@ def _call(kind="snapshot", payload="{}"):
       py.runPython(BOOTSTRAP);
       call = py.globals.get("_call");
 
-      const meta = JSON.parse(call("meta", "{}"));
+      meta = JSON.parse(call("meta", "{}"));
+      readParams();
+      if (!meta.modes.some((m) => m.id === pick.mode)) pick.mode = "medium";
+      if (!meta.timelines.some((t) => t.id === pick.timeline)) pick.timeline = "rails";
       chips($("modes"), meta.modes, "mode", (m) => m.note);
       chips($("timelines"), meta.timelines, "timeline", (t) => t.note);
+      syncSetup();
 
       try {
         const saved = JSON.parse(localStorage.getItem(STORE_KEY) || "null");
@@ -443,11 +642,11 @@ def _call(kind="snapshot", payload="{}"):
         }
       } catch (_) {}
 
-      bootnote.textContent = "Python ready.";
+      bootnote.textContent = "Python ready. The room is waiting.";
       startBtn.disabled = false;
       lock(false);
       if (hintEl && (isTouch() || isCompact())) {
-        hintEl.textContent = "Tap a numbered option; the field is for names and shortcuts";
+        hintEl.textContent = "Tap a numbered order; the field is for names and shortcuts";
       }
       if ((isTouch() || isCompact()) && !game.hidden) {
         lineEl.placeholder = "Type an answer";
@@ -461,7 +660,8 @@ def _call(kind="snapshot", payload="{}"):
       note.innerHTML = "The Python runtime could not be loaded (offline, or a blocked CDN). " +
         "The game itself is fine — <a href=\"https://github.com/mahakammoonlightstudio-beep/kreml-1991\">" +
         "clone the repo</a> and run <b>python main.py</b>.";
-      setup.querySelector(".panel").appendChild(note);
+      const form = setup.querySelector(".briefing__form");
+      if (form) form.appendChild(note);
       console.error(err);
     }
   }
@@ -479,8 +679,23 @@ def _call(kind="snapshot", payload="{}"):
     document.addEventListener(evt, () => {
       if (!document.hidden && clockTick) clockTick();
     }));
+
   startBtn.addEventListener("click", startRun);
   resumeBtn.addEventListener("click", resumeRun);
+  restartBtn.addEventListener("click", newAppointment);
+  $("newrun").addEventListener("click", newAppointment);
+  $("copy").addEventListener("click", copyCard);
+  $("replay").addEventListener("click", () => {
+    const snap = finalRecord;
+    if (snap) {
+      pick.mode = snap.mode || pick.mode;
+      pick.timeline = snap.timeline || pick.timeline;
+      pick.seed = snap.seed != null ? snap.seed : pick.seed;
+      syncSetup();
+    }
+    startRun();
+  });
+
   if (tutorialBtn) {
     tutorialBtn.addEventListener("click", () => {
       pick.tutorial = !pick.tutorial;
@@ -488,7 +703,7 @@ def _call(kind="snapshot", payload="{}"):
     });
   }
   if (soundBtn) {
-    try { soundOn = localStorage.getItem(SOUND_KEY) !== "off"; } catch (_) {}
+    try { soundOn = localStorage.getItem(SOUND_KEY) === "on"; } catch (_) {}
     syncSoundButton();
     soundBtn.addEventListener("click", () => {
       soundOn = !soundOn;
@@ -497,17 +712,9 @@ def _call(kind="snapshot", payload="{}"):
       if (soundOn) cue("good");
     });
   }
-  restartBtn.addEventListener("click", () => {
-    clearClock();
-    finished = false;
-    record = null;
-    resumeBtn.hidden = true;
-    showSetup();
-    statusEl.textContent = "";
-    termTitle.textContent = "kreml_1991 — python in the browser";
-  });
 
   lock(true);
   showSetup();
+  updateHud();
   boot();
 })();

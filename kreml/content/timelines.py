@@ -1,4 +1,4 @@
-"""Timelines: the four starting scenarios of v5.
+"""Timelines: the five starting scenarios of v8.
 
 Each entry hands the player a different Union, a different first year and a
 different ending year. The engine applies the opening state before year one;
@@ -7,6 +7,7 @@ the content layer then reacts to the flags a timeline plants.
   rails        1964 — the standard run ("the rails of history")
   reform      1964 — Kosygin's memo won in 1965; the reformers are already in
   flashpoint  1980 — Afghanistan is bleeding, the oil peak has arrived
+  succession  1982 — three funerals, nine years, and a system that cannot mourn
   millennium  1992 — the Union survived 1991; now the last decade is yours
 """
 from __future__ import annotations
@@ -48,6 +49,20 @@ TIMELINES: dict[str, Timeline] = {
         hc=55,
         mandate=False,
     ),
+    "succession": Timeline(
+        id="succession",
+        label="THE THREE FUNERALS",
+        desc="November 1982: Brezhnev is dead, Andropov has the files, and the "
+             "Union has nine winters left on the official calendar. Inherit the "
+             "stagnation at its warmest and decide what the funerals mean.",
+        year=1982,
+        end_year=1991,
+        stats={"ECONOMY": 38, "MILITARY": 76, "ORDER": 70, "FAITH": 40, "PRESTIGE": 46},
+        flags=("at_war", "old_guard", "stagnation"),
+        court={"old_guard": 60, "reformers": 24, "military": 62},
+        hc=36,
+        mandate=False,
+    ),
     "millennium": Timeline(
         id="millennium",
         label="THE RED MILLENNIUM",
@@ -63,7 +78,8 @@ TIMELINES: dict[str, Timeline] = {
     ),
 }
 
-TIMELINE_ORDER: tuple[str, ...] = ("rails", "reform", "flashpoint", "millennium")
+TIMELINE_ORDER: tuple[str, ...] = ("rails", "reform", "flashpoint",
+                                   "succession", "millennium")
 
 
 def get(timeline_id: str | None) -> Timeline:

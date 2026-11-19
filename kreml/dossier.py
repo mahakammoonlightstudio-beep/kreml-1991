@@ -133,6 +133,23 @@ def show_roadmap(g: Kremlin) -> None:
         print(f"   {W('· ' + line, ui.C.DIM)}")
     print()
 
+    # ── 0b. v8: the room ─────────────────────────────────────────
+    from .content import cast as CAST_MOD
+    print(W("  ── THE ROOM (loyalty, not mood) ──", ui.C.Y))
+    moods = CAST_MOD.loyalty_map(g)
+    for member in CAST_MOD.CAST:
+        value = int(moods.get(member.id, 50))
+        col = ui.C.BM if value <= 20 else (ui.C.Y if value < 45 else ui.C.G)
+        mark = W("⚠", ui.C.BM) if value <= 20 else W("●", ui.C.G)
+        print(f"   {mark} {W(member.name, ui.C.W)} "
+              f"{W('· ' + member.role, ui.C.DIM)} "
+              f"{W(f'[{ui.bar(value, 12)}] {value:>3}', col)} "
+              f"{W(CAST_MOD.loyalty_status(value), ui.C.DIM)}")
+    heir, heir_value, _ = CAST_MOD.successor(g)
+    print(W(f"   Succession file: {heir.name} leads at {heir_value}. A trusted "
+            f"member returns +1 {heir.stat}/yr.", ui.C.DIM))
+    print()
+
     # ── 1. Decision ledger ────────────────────────────────────────
     print(W("  ── DECISION LEDGER (what you did) ──", ui.C.Y))
     if not g.ledger:

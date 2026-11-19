@@ -24,7 +24,8 @@ PAGE
   URL:         kreml-1991
   Published:   https://mahakam-moonlight-studio.itch.io/kreml-1991
   Short:       27 years, five gauges, one signature. A text-based Soviet
-               alternate-history game, 1964–1991, with an optional tutorial.
+               alternate-history game, 1964–1991, with BETA v8's cast,
+               challenge card and The Three Funerals 1982.
   Genre:       Strategy
   Tags:        soviet, alternate-history, text-based, political-sim,
                cold-war, terminal, python, singleplayer, historical, bleak
@@ -39,8 +40,14 @@ DONATIONS (already in the description and on the website)
 
 SUGGESTED DESCRIPTION
   Use ../itch_page/description.html. It covers the loop, the six difficulties,
-  the four timelines, the First-Year Orientation, Republic Unrest, browser and
-  terminal requirements, content notes and the donation links. Paste it as HTML.
+  the five timelines, the Politburo cast, the challenge card, the First-Year
+  Orientation, Republic Unrest, browser and terminal requirements, content
+  notes and the donation links. Paste it as HTML.
+
+PURE PLAY
+  This itch build is the game only. docs/index.html is the GitHub landing page;
+  the ZIP strips the site chrome via body.itch-build. Keep marketing copy on the
+  itch project page, not inside the build.
 
 AFTER PUBLISHING
   The page is live at

@@ -2,31 +2,41 @@
 
 <p>No map. No tanks. You have a desk, a telephone, five gauges, three factions who smile too much, and one yearly directive that has to solve everything at once.</p>
 
+<p><strong>BETA v8 — “The room has faces.”</strong> Three named Politburo figures now remember how you treated them, and every ending ends with a seed you can hand to someone else.</p>
+
 <p><a href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/"><strong>Play in your browser</strong></a> · <a href="https://github.com/mahakammoonlightstudio-beep/kreml-1991">Source on GitHub</a> · <a href="https://mahakammoonlightstudio-beep.github.io/kreml-1991/">Landing page</a></p>
 
 <h3>Twenty-seven years, five gauges, one signature</h3>
 
 <p>You are the General Secretary. Every year you choose a personal focus, a public directive, and an answer to whatever the decade throws at you: Prague, the oil boom, Afghanistan, Chernobyl, the coal miners, the Wall. Then the arithmetic happens, the plan goes stale, and the calendar advances without asking.</p>
 
-<p>Keep Economy, Military, Order, Faith and Prestige alive. Watch the hard-currency vault and the three court factions. The Politburo tables a demand every January; meet it, or find out what patience costs.</p>
+<p>Keep Economy, Military, Order, Faith and Prestige alive. Watch the hard-currency vault, the three court factions, and the four republics already reading the exits. The Politburo tables a demand every January; meet it, or find out what patience costs.</p>
+
+<h3>What is new in v8</h3>
+
+<ul>
+  <li><strong>The room has faces.</strong> Viktor Volkov (Chief of Staff), Lidia Sorokina (Gosplan) and Marshal Arkady Balashov (General Staff) send personal memos, ask for favours and remember betrayal. The most trusted member returns <strong>+1 of their own gauge</strong> every year; anyone abandoned below 20 costs one. The Dossier shows the room, and the ending names the successor.</li>
+  <li><strong>A seed is a dare.</strong> Every ending prints a <strong>challenge card</strong> with verdict, score, title, years, difficulty, timeline and seed. Copy it, send it, and let someone else try to keep your Union. The play page replays the same history from <code>?seed=42&amp;mode=hard&amp;timeline=succession</code>.</li>
+  <li><strong>The Three Funerals (1982).</strong> A fifth opening: Brezhnev dead, Andropov holding the files, the Afghan war still bleeding, nine winters left. The stagnation is warm. The clock is not.</li>
+  <li><strong>The situation room.</strong> The browser transcript now sits inside a live HUD parsed from the real board: year, five gauges, valas, court, political capital, republics and the year's agenda. On phones it folds into a compact strip. No CRT costume, no typewriter ticking; sound is off by default.</li>
+  <li><strong>New art and type.</strong> Dark editorial design, licensed Kremlin photographs, and Bodoni Moda, Playfair, Inter and JetBrains Mono.</li>
+</ul>
 
 <h3>Features</h3>
 
 <ul>
-  <li><strong>123 events</strong>, <strong>37 directives</strong>, five chain reactions and three divergence forks that remember what you did a decade ago.</li>
+  <li><strong>129 events</strong>, <strong>37 directives</strong>, five chain reactions and three divergence forks that remember what you did a decade ago.</li>
+  <li><strong>Five timelines</strong> — the historical rails, the Reformers' Window, Cold War Flashpoint 1980, <strong>The Three Funerals 1982</strong>, and the Red Millennium 1992.</li>
+  <li><strong>Six difficulties</strong> — from Sweeping Reforms to Flash Crisis, where decisions run on a real clock.</li>
   <li><strong>First-Year Orientation</strong>: an optional guided 1964 briefing with cynical staff memos, Dossier/capital/orders practice, fatigue arithmetic and a coached first year.</li>
   <li><strong>Republic Unrest</strong>: Baltic, Ukraine, Caucasus and Central Asia can pull the late Union apart. Tour them, subsidise them, negotiate a compact — or watch Order and Faith pay for the centre's neglect.</li>
-  <li><strong>Event cues</strong>: short terminal and browser tones give incidents, agenda results and endings a little more weight. Sound can be muted.</li>
-  <li><strong>Six difficulties</strong> — from Sweeping Reforms to Flash Crisis, where decisions run on a real clock.</li>
-  <li><strong>Four timelines</strong> — the historical rails, the Reformers' Window, Cold War Flashpoint 1980, and the Red Millennium 1992.</li>
-  <li><strong>The Dossier</strong>: your decision ledger, every conditional road, delayed consequences and the historical timetable next to yours.</li>
-  <li><strong>The v7-5 board</strong>: a stamped Soviet docket, bracket gauges, incident sheets, a four-republic unrest strip and a small terminal that fits the game.</li>
+  <li><strong>The Dossier</strong>: your decision ledger, every conditional road, delayed consequences, cast loyalty and the historical timetable next to yours.</li>
   <li><strong>The Red Millennium</strong>: survive 1991 with the Union intact and history offers you ten more years — and a rare capstone event for runs strong enough to reach it.</li>
 </ul>
 
 <h3>Two ways to play</h3>
 
-<p><strong>In the browser:</strong> the same Python game compiled to WebAssembly with Pyodide. The first load pulls about 12 MB from a CDN; after that it runs offline and saves in your browser. Modern desktop browsers and Android Chrome are supported; the page adapts to one-column mobile play with 44px touch targets. Long runs are still most comfortable with a keyboard.</p>
+<p><strong>In the browser (recommended):</strong> the same Python game compiled to WebAssembly with Pyodide, framed as a live situation room. The first load pulls about 12 MB from a CDN; after that it runs offline and saves in your browser. Desktop and mobile layouts are supported, with 44px touch targets and no forced keyboard after every turn. Long runs are still most comfortable with a keyboard.</p>
 
 <p><strong>In a terminal:</strong> clone the repository and run <code>python main.py</code>. Python 3.8 or newer, standard library only, no pip installs, no build step. Saves live in <code>kreml_save.json</code>.</p>
 
@@ -49,6 +59,7 @@
   <li><strong>Browser:</strong> WebAssembly + Pyodide, about 12 MB on first load; saves in local storage.</li>
   <li><strong>Terminal:</strong> Python 3.8+, no dependencies, Windows / Linux / macOS.</li>
   <li><strong>Accessibility:</strong> keyboard- and touch-friendly; the site respects reduced-motion settings; the terminal build is plain text.</li>
+  <li><strong>Saves:</strong> schema v7. Saves from v6 and earlier are refused cleanly rather than half-loaded.</li>
 </ul>
 
 <p><em>Contains historical political violence, death and state collapse. No graphic imagery.</em></p>

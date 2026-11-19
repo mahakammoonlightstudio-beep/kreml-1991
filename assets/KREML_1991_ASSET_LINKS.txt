@@ -1,0 +1,374 @@
+KREML 1991 — CURATED FREE / OPEN ASSET SOURCES
+Dikurasi: 19 November 2026
+Target: https://github.com/mahakammoonlightstudio-beep/kreml-1991
+        https://mahakam-moonlight-studio.itch.io/kreml-1991
+
+======================================================================
+0. KONTEKS GAME DAN ARAH ASET
+======================================================================
+
+KREML 1991 adalah political survival / alternate-history game berbasis teks,
+berlatar pemerintahan Uni Soviet 1964–1991 dengan jalur alternatif sampai
+2001. Nuansa yang paling cocok: kantor Sekretaris Jenderal, Politbiro,
+Gosplan, dokumen rahasia, arsip negara, telepon meja, foto tokoh, gedung
+pemerintahan, poster era Soviet, kota-kota Soviet, dan rekaman sejarah.
+
+Catatan desain: halaman game menyebutkan bahwa antarmuka utamanya adalah
+board/docket, directive, dan crisis (bukan peta). Jadi foto bisa paling
+berguna untuk event dossiers, halaman landing, layar briefing, profil tokoh,
+atau ilustrasi arsip — tidak harus memenuhi seluruh layar permainan.
+
+======================================================================
+1. BENDERA, LAMBANG, DAN SIMBOL UNI SOVIET
+======================================================================
+
+[FLAG] Flag of the Soviet Union (1955–1991) — SVG
+https://commons.wikimedia.org/wiki/File:Flag_of_the_Soviet_Union_(1955%E2%80%931991).svg
+Format: SVG; cocok untuk header, emblem, poster, atau UI.
+Lisensi di halaman file: menampilkan CC BY-SA 4.0 dan penandaan public-domain
+berdasarkan aturan simbol negara Rusia. Periksa seluruh bagian Licensing
+sebelum memakai atau mengubah file; simpan catatan lisensi yang dipilih.
+
+[STATE EMBLEM] Coat of arms of the Soviet Union (1956–1991) — SVG
+https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_the_Soviet_Union_(1956%E2%80%931991).svg
+Format: SVG; cocok untuk stempel dokumen, kop surat, dan layar Politbiro.
+Halaman Commons menandainya sebagai public domain sebagai simbol negara.
+
+[ALTERNATIVE EMBLEM] Soviet coat of arms — PNG
+https://commons.wikimedia.org/wiki/File:Soviet_coat_of_arms.png
+Format: PNG; versi bitmap jika tidak ingin memakai SVG.
+Halaman file menampilkan penandaan public domain untuk simbol negara.
+
+======================================================================
+2. POTRET PEMIMPIN DAN TOKOH POLITIK
+======================================================================
+
+[BREZHNEV] Leonid Brezhnev Portrait (1) — 1967
+https://commons.wikimedia.org/wiki/File:Leonid_Brezhnev_Portrait_(1).jpg
+Sumber foto: Bundesarchiv; fotografer Ulrich Kohls.
+Lisensi: CC BY-SA 3.0 Germany. Berikan atribusi dan tautan lisensi;
+untuk karya turunan, perhatikan syarat ShareAlike.
+
+[BREZHNEV] Leonid Brežněv (Bundesarchiv)
+https://commons.wikimedia.org/wiki/File:Leonid_Bre%C5%BEn%C4%9Bv_(Bundesarchiv).jpg
+Sumber arsip: German Federal Archive (Bundesarchiv), foto 17 April 1967.
+Lisensi: CC BY-SA 3.0. Cocok untuk potret masa awal periode game.
+
+[ANDROPOV] Yuri Andropov — portrait
+https://commons.wikimedia.org/wiki/File:Yuri_Andropov.jpg
+Potret tahun 1982. Halaman file menampilkan CC BY 4.0.
+Atribusi wajib; cantumkan nama pencipta/sumber dan tautan lisensi.
+
+[CHERNENKO] Konstantin Chernenko official portrait
+https://commons.wikimedia.org/wiki/File:Konstantin_Chernenko_official_portrait.jpg
+Potret resmi bertanggal 1983. Commons menandainya public domain berdasarkan
+ketentuan publikasi di Amerika Serikat tanpa copyright notice. Status ini
+memiliki batasan yurisdiksi; jangan anggap otomatis public domain di semua
+negara. Periksa keterangan halaman file sebelum publikasi internasional.
+
+[GORBACHEV] Mikhail Gorbachev
+https://commons.wikimedia.org/wiki/File:Mikhail_Gorbachev.jpg
+Foto karya Veni Markovski. Lisensi yang ditampilkan: CC BY 3.0 Unported.
+Atribusi wajib dan perubahan pada gambar perlu disebutkan.
+
+[YELTSIN] Boris-Yeltsin.jpg
+https://commons.wikimedia.org/wiki/File:Boris-Yeltsin.jpg
+Foto dari Kremlin.ru / ITAR-TASS. Halaman file menampilkan CC BY 3.0 dan
+CC BY 4.0; ikuti ketentuan lisensi yang berlaku pada versi yang diunduh.
+Atribusi yang dicantumkan: Kremlin.ru.
+
+[PORTRAIT COLLECTION] Heads of state of the Soviet Union
+https://commons.wikimedia.org/wiki/Category:Heads_of_state_of_the_Soviet_Union
+Koleksi kategori berisi subkategori tokoh seperti Brezhnev, Andropov,
+Chernenko, Gorbachev, dan lainnya. Ini halaman pencarian, BUKAN lisensi
+untuk semua gambar. Buka halaman masing-masing foto dan periksa lisensinya.
+
+[PORTRAIT COLLECTION] Portraits of Leonid Brezhnev
+https://commons.wikimedia.org/wiki/Category:Portraits_of_Leonid_Brezhnev
+Kumpulan foto potret Brezhnev. Periksa lisensi setiap file secara terpisah.
+
+[POLITICAL FIGURES] Politicians of the Soviet Union in 1991
+https://commons.wikimedia.org/wiki/Category:Politicians_of_the_Soviet_Union_in_1991
+Foto tokoh dan pejabat tahun 1991; cocok untuk event akhir periode game.
+Kategori ini hanya untuk menemukan kandidat. Cek halaman file satu per satu.
+
+======================================================================
+3. FOTO KREMLIN, MOSKOW, GEDUNG, DAN TEMPAT NYATA
+======================================================================
+
+[KREMLIN 1991] The Kremlin, Moscow1991.jpg
+https://commons.wikimedia.org/wiki/File:The_Kremlin,_Moscow1991.jpg
+Foto Kremlin, 16 Juni 1991. Lisensi: CC BY 2.0 Generic.
+Atribusi wajib; sebutkan perubahan jika foto dipotong atau diedit.
+
+[KREMLIN] Moscow Kremlin — Wikimedia Commons category
+https://commons.wikimedia.org/wiki/Category:Moscow_Kremlin
+Kumpulan foto bangunan, menara, tembok, halaman, dan area Kremlin.
+Setiap foto memiliki lisensi sendiri; jangan menganggap seluruh kategori
+memiliki satu lisensi yang sama.
+
+[KREMLIN / MOSCOW] The Kremlin, Moscow — Library of Congress
+https://www.loc.gov/item/2021641595/
+Foto stereografis tahun 1906. Rights Advisory: “No known restrictions on
+publication”. Ini sumber arsitektur historis, bukan foto era 1960–1991.
+Periksa catatan item dan hak pihak ketiga sebelum publikasi.
+
+[GOVERNMENT BUILDINGS] Government buildings built in the Soviet Union
+https://commons.wikimedia.org/wiki/Category:Government_buildings_built_in_the_Soviet_Union
+Kumpulan gedung administrasi/pemerintahan dan bangunan Soviet.
+Periksa lisensi pada masing-masing halaman gambar.
+
+[SOVIET ARCHITECTURE] Architecture of the Soviet Union
+https://commons.wikimedia.org/wiki/Category:Architecture_of_the_Soviet_Union
+Untuk foto arsitektur Soviet, modernisme, konstruktivisme, dan bangunan
+publik. Banyak foto dibuat setelah era Soviet; periksa tanggal dan lisensi.
+
+[RED SQUARE 1977] Moscow 1977-11-07-30.jpg
+https://commons.wikimedia.org/wiki/File:Moscow_1977-11-07-30.jpg
+Foto demonstrasi resmi di Red Square pada 7 November 1977.
+Fotografer melepas karya ini ke public domain worldwide.
+
+[RED SQUARE 1977] Red Square 1977-11-07-7.jpg
+https://commons.wikimedia.org/wiki/File:Red_Square_1977-11-07-7.jpg
+Foto demonstrasi resmi di Red Square pada 7 November 1977.
+Halaman file menyatakan public domain worldwide.
+
+[AUGUST COUP 1991] 1991 coup d'état attempt in the Soviet Union
+https://commons.wikimedia.org/wiki/Category:1991_coup_d%27%C3%A9tat_attempt_in_the_Soviet_Union
+Kumpulan foto peristiwa Agustus 1991, termasuk Yeltsin dan lokasi di Moskow.
+PERIKSA LISENSI TIAP FOTO; beberapa sumber foto mungkin memiliki syarat khusus.
+
+[AUGUST 1991] Moscow photographs taken on 1991-08-22
+https://commons.wikimedia.org/wiki/Category:Moscow_photographs_taken_on_1991-08-22
+Foto-foto Moskow tanggal 22 Agustus 1991. Berguna untuk ilustrasi event,
+krisis politik, dan transisi akhir Uni Soviet. Lisensi tiap file berbeda.
+
+[1991 MOSCOW] 1991 photographs of Moscow
+https://commons.wikimedia.org/wiki/Category:1991_photographs_of_Moscow
+Koleksi foto Moskow sepanjang 1991. Periksa lisensi tiap file.
+
+======================================================================
+4. FOTO LINGKUNGAN, REPUBLIK, DAN PERISTIWA HISTORIS
+======================================================================
+
+[CRIMEA / SUDAK] Sudak, Crimea, 1984 — foto yang sudah dipakai di landing page
+https://commons.wikimedia.org/wiki/File:%D0%A1%D0%A1%D0%A1%D0%A0%2C_1984%2C_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%A1%D0%BE%D1%8E%D0%B7%2C_%D0%9A%D1%80%D1%8B%D0%BC%2C_%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%A1%D1%83%D0%B4%D0%B0%D0%BA%2C_%D0%BF%D0%B0%D0%BD%D0%BE%D1%80%D0%B0%D0%BC%D0%B0%2C_Soviet_Union.jpg
+Fotografer: Vyacheslav Argenberg. Lisensi: CC BY 4.0.
+Atribusi wajib: Vyacheslav Argenberg; sertakan tautan lisensi dan nyatakan edit.
+
+[SOVIET BARRACK] Советский барак.jpg — foto yang sudah dipakai di landing page
+https://commons.wikimedia.org/wiki/File:%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%B1%D0%B0%D1%80%D0%B0%D0%BA.jpg
+Fotografer: Higimo. Lisensi: CC BY-SA 3.0 Unported.
+Atribusi wajib; karya turunan harus mengikuti lisensi ShareAlike yang kompatibel.
+
+[CHERNOBYL] Reactor 4 at Chernobyl Nuclear Power Plant — foto yang sudah dipakai
+https://commons.wikimedia.org/wiki/File:Chernobyl_-_power_plant_-_reactor_4_02.jpg
+Fotografer: Paweł “pbm” Szubert. Halaman file mencantumkan beberapa lisensi
+ShareAlike / GFDL. Baca bagian Licensing dan pilih jalur lisensi yang sesuai;
+jangan hanya menyalin foto tanpa catatan atribusi dan lisensi.
+
+[LOC RIGHTS-FREE HUB] Library of Congress — Free to Use and Reuse
+https://www.loc.gov/free-to-use/
+Koleksi terkurasi yang dinyatakan bebas digunakan/digunakan ulang oleh LOC.
+Tidak semua koleksi LOC otomatis bebas; cek Rights Advisory pada item spesifik.
+
+[TRUMAN LIBRARY] Soviet Armed Forces Parading in Moscow Red Square
+https://www.trumanlibrary.gov/print/pdf/node/135557
+Halaman item menyatakan Public Domain dan mengingatkan pengguna untuk
+menyimpan catatan sumber/nomor accession. Gunakan sebagai arsip sejarah;
+periksa halaman sumber sebelum memasukkan file ke build final.
+
+======================================================================
+5. POSTER, PROPAGANDA, DOKUMEN, DAN ARSIP VISUAL
+======================================================================
+
+[SOVIET PROPAGANDA POSTERS]
+https://commons.wikimedia.org/wiki/Category:Propaganda_posters_of_the_Soviet_Union
+Kumpulan poster propaganda Soviet. Cocok untuk event, latar dossier,
+atau ilustrasi era. Hak cipta poster bisa berbeda menurut pencipta, tanggal,
+dan negara; setiap halaman file wajib diperiksa.
+
+[GENERAL SOVIET PROPAGANDA]
+https://commons.wikimedia.org/wiki/Category:Propaganda_of_the_Soviet_Union
+Koleksi visual propaganda Soviet. Periksa lisensi dan tanggal tiap item.
+
+[OKNA TASS POSTERS]
+https://commons.wikimedia.org/wiki/Category:Okna_TASS
+Poster/ilustrasi seri Okna TASS. Cocok sebagai referensi visual historis;
+status hak cipta tiap poster tetap harus diperiksa.
+
+======================================================================
+6. MUSIK — ANTHEM SOVIET DAN ALTERNATIF BGM
+======================================================================
+
+[RECOMMENDED CANDIDATE] Soviet Anthem Instrumental 1955.ogg
+https://commons.wikimedia.org/wiki/File:Soviet_Anthem_Instrumental_1955.ogg
+Durasi sekitar 1:21. Halaman Commons menyatakan performa dan komposisi
+public domain; juga menyebut karya bebas dari known copyright restrictions,
+termasuk related/neighbouring rights. Komposer Alexander Alexandrov wafat
+pada 1946. Meski demikian, periksa aturan hak cipta negara tempat game akan
+didistribusikan dan simpan salinan halaman lisensi sebagai dokumentasi.
+
+[ALTERNATIVE RECORDING] Anthem of USSR - 1943.ogg
+https://commons.wikimedia.org/wiki/File:Anthem_of_USSR_-_1943.ogg
+Halaman file menampilkan CC BY-SA 4.0. Ini BUKAN CC0: berikan kredit,
+sertakan tautan lisensi, nyatakan perubahan, dan perhatikan ShareAlike jika
+membuat/adaptasi karya turunan. Periksa juga status komposisi/rekaman.
+
+[ANTHEM COLLECTION] Historical recordings of the Soviet Anthem
+https://commons.wikimedia.org/wiki/Category:Historical_recordings_of_the_Soviet_Anthem
+Kumpulan rekaman historis. Setiap rekaman punya halaman dan lisensi sendiri.
+Jangan memakai audio hanya karena muncul di kategori ini.
+
+[ANTHEM COLLECTION] National anthems of Russia and the Soviet Union
+https://commons.wikimedia.org/wiki/Category:National_anthems_of_Russia_and_the_Soviet_Union
+Kategori pencarian untuk rekaman, notasi, dan materi anthem.
+Lisensi per file tetap harus diperiksa.
+
+[GAME BGM / SFX LIBRARY] Sonniss — Free Game Audio GDC Archive
+https://sonniss.com/gameaudiogdc/
+Koleksi sound effects gratis untuk media production, termasuk game dan proyek
+interaktif. Halaman Sonniss menyebut penggunaan komersial dan tanpa atribusi.
+Ikuti EULA bundle yang berlaku; jangan menjual ulang file audio sebagai aset
+terpisah. Koleksi ini lebih cocok untuk ambience/foley daripada lagu Soviet.
+
+[CURRENT FREE BUNDLE] Sonniss GDC 2026 Game Audio Bundle
+https://gdc.sonniss.com/
+Bundle SFX gratis; halaman menyebut royalty-free, commercial use, dan no
+attribution. Baca dan simpan perjanjian lisensi sebelum mengunduh/memakai.
+
+======================================================================
+7. SOUND EFFECTS UNTUK UI DAN SUASANA KANTOR
+======================================================================
+
+[CC0 UI SOUNDS] Kenney — Interface Sounds (OpenGameArt)
+https://opengameart.org/content/interface-sounds
+Paket 100 file OGG untuk klik tombol, konfirmasi, switch, dan interaksi UI.
+Lisensi: CC0. Atribusi tidak wajib menurut halaman aset; kredit Kenney tetap
+boleh dicantumkan sebagai etika.
+
+[SEARCH: TYPEWRITER] Freesound
+https://freesound.org/search/?q=typewriter
+Untuk suara mesin tik. Periksa lisensi masing-masing file; prioritaskan CC0
+atau CC BY yang jelas. Hindari file berlisensi NonCommercial / NoDerivatives
+untuk game komersial atau aset yang akan diedit.
+
+[SEARCH: ROTARY TELEPHONE] Freesound
+https://freesound.org/search/?q=rotary%20telephone
+Untuk dering/putaran telepon meja era lama. Periksa lisensi setiap file.
+
+[SEARCH: PAPER / DOCUMENTS] Freesound
+https://freesound.org/search/?q=paper%20handling
+Untuk suara kertas, map arsip, halaman dokumen, dan berkas.
+Periksa lisensi setiap file sebelum mengunduh dan memasukkannya ke game.
+
+[SEARCH: STAMP] Freesound
+https://freesound.org/search/?q=rubber%20stamp
+Untuk efek stempel dokumen. Periksa lisensi masing-masing file.
+
+======================================================================
+8. FONT UNTUK TERMINAL, DOKUMEN, DAN HEADER
+======================================================================
+
+[MONOSPACED / TERMINAL] IBM Plex Mono — Google Fonts
+https://fonts.google.com/specimen/IBM+Plex+Mono
+Cocok untuk angka, status, label, dossier, dan teks terminal.
+Repositori font resmi:
+https://github.com/google/fonts/tree/main/ofl/ibmplexmono
+
+[DISPLAY / INDUSTRIAL] Russo One — Google Fonts
+https://fonts.google.com/specimen/Russo+One
+Cocok untuk judul layar, heading event, atau logo bergaya industrial.
+Repositori font resmi:
+https://github.com/google/fonts/tree/main/ofl/russoone
+
+[MONOSPACED / TYPEWRITER-LIKE] PT Mono — Google Fonts
+https://fonts.google.com/specimen/PT+Mono
+Alternatif font monospace untuk dokumen, terminal, dan catatan birokrasi.
+Repositori font resmi:
+https://github.com/google/fonts/tree/main/ofl/ptmono
+
+Simpan file OFL.txt / lisensi font dari folder repositori font yang dipakai.
+Jangan menghapus atau mengabaikan file lisensi saat memasukkan font ke build.
+
+======================================================================
+9. PANDUAN LISENSI DAN ATRIBUSI
+======================================================================
+
+[WIKIMEDIA COMMONS — LICENSING]
+https://commons.wikimedia.org/wiki/Commons:Licensing
+Baca sebelum memakai gambar/audio dari Wikimedia Commons.
+PENTING: Commons adalah tempat penyimpanan file dengan bermacam lisensi,
+bukan berarti semua file di dalamnya public domain.
+
+[LIBRARY OF CONGRESS — COPYRIGHT BASICS]
+https://www.loc.gov/legal/security-copyright-and-privacy/understanding-copyright/
+Panduan memahami public domain, no-known-restrictions, dan hak cipta item.
+“No known restrictions” tidak otomatis berarti jaminan public domain di semua
+negara atau untuk semua penggunaan.
+
+[CREATIVE COMMONS — LICENSES]
+https://creativecommons.org/share-your-work/cclicenses/
+Ringkasan lisensi CC BY, CC BY-SA, CC BY-NC, CC BY-ND, dan variasinya.
+Untuk game yang akan dirilis publik, hindari NC jika distribusi/monetisasi
+mungkin berubah; hindari ND jika aset akan diedit, dipotong, atau di-remix.
+
+[CC BY 4.0 — LEGAL CODE]
+https://creativecommons.org/licenses/by/4.0/legalcode
+
+[CC BY-SA 4.0 — LEGAL CODE]
+https://creativecommons.org/licenses/by-sa/4.0/legalcode
+
+[CC0 1.0 — LEGAL CODE]
+https://creativecommons.org/publicdomain/zero/1.0/legalcode
+
+======================================================================
+10. FORMAT CATATAN KREDIT YANG DISARANKAN
+======================================================================
+
+Untuk SETIAP aset yang benar-benar dimasukkan ke game, catat:
+
+Asset title:
+Creator / photographer:
+Source page URL:
+Direct download URL (optional):
+License name and version:
+License URL:
+Changes made (cropped / recolored / edited / none):
+Where used in KREML 1991:
+Date downloaded:
+
+Contoh format kredit di game / credits.txt:
+"Leonid Brezhnev Portrait (1)" — Ulrich Kohls / Bundesarchiv,
+source: [URL], licensed under CC BY-SA 3.0 Germany [license URL].
+Changes: cropped and resized.
+
+Jangan hanya menulis “Source: Wikimedia Commons”. Catat pencipta dan lisensi
+file spesifik. Simpan salinan halaman sumber/lisensi saat aset diunduh karena
+metadata atau status file bisa berubah.
+
+======================================================================
+11. CATATAN LISENSI PENTING
+======================================================================
+
+1. Tautan kategori (Commons categories) adalah tempat mencari kandidat, BUKAN
+   izin penggunaan untuk semua file di kategori itu.
+2. Selalu buka halaman file individual, cek bagian Licensing / Rights Advisory,
+   nama pencipta, sumber asli, tanggal, dan ketentuan atribusi.
+3. Public domain, CC0, CC BY, dan CC BY-SA memiliki arti berbeda. CC BY wajib
+   diberi kredit; CC BY-SA memiliki ketentuan ShareAlike; CC0 paling sederhana.
+4. Foto tokoh terkenal tidak otomatis bebas hak cipta. Hak foto dipegang oleh
+   fotografer, agensi, atau arsip, bukan oleh tokoh yang difoto.
+5. Untuk musik, komposisi dan rekaman suara adalah dua lapis hak yang berbeda.
+   Gunakan halaman lisensi untuk rekaman spesifik, bukan hanya status lagu.
+6. “No known restrictions” dari arsip bukan selalu sama dengan public domain.
+   Pastikan kecocokannya dengan distribusi internasional game.
+7. Hindari memakai gambar/audio dari hasil Google Images, blog, Pinterest,
+   media berita, atau akun sosial tanpa menemukan sumber dan lisensi aslinya.
+8. File sumber ini adalah shortlist riset, bukan nasihat hukum. Untuk aset yang
+   menjadi bagian utama game komersial, simpan bukti lisensi dan minta review
+   hukum bila ada keraguan.
+
+======================================================================
+END OF FILE
+======================================================================

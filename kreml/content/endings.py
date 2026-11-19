@@ -7,12 +7,14 @@ from __future__ import annotations
 
 import os
 import datetime
+import textwrap
 
 from .. import ui
 from ..state import Kremlin, STATS
 from .modes import MODES
 from .forks import PATH_EPILOGUE
 from .timelines import get as get_timeline
+from . import cast as CAST_MOD
 
 ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", ".."))
 HALL_FILE = os.path.join(ROOT, "hall_of_fame.txt")
@@ -144,12 +146,37 @@ TIMELINE_EPILOGUE: dict[tuple[str, str], str] = {
     ("flashpoint", "millennium"): "The generation that inherited a war inherited a century.",
     ("millennium", "millennium"): "Ten years that were never supposed to exist, used well.",
     ("millennium", "survived"): "A decade of argument, which is how unions live.",
+    ("succession", "survived"): "The three funerals bought nine winters. You spent them.",
+    ("succession", "millennium"): "The obituaries were early; the century was not.",
+    ("succession", "collapse"): "The last funeral was the Union's own.",
 }
+
+PLAY_URL = "https://mahakammoonlightstudio-beep.github.io/kreml-1991/play/"
 
 
 # ---------------------------------------------------------------
 # Divergence report
 # ---------------------------------------------------------------
+def challenge_card(g: Kremlin, score: int, verdict: str) -> None:
+    """v8: one compact card a player can copy, post, or dare a friend with."""
+    seed = int(getattr(g, "seed", 0) or 0)
+    tl = get_timeline(g.timeline)
+    mode = MODES.get(g.mode, MODES["medium"])
+    years = max(0, g.year - tl.year)
+    url = f"{PLAY_URL}?seed={seed}&mode={g.mode}&timeline={g.timeline}"
+    print()
+    print(ui.paint("  ┌─ CHALLENGE CARD · ТАЛОН НА ИСТОРИЮ ───────────────────────┐",
+                   ui.C.Y))
+    print(ui.paint(f"  │ КРЕМЛЬ 1991 · {ui.VERSION_TAG} · SEED {seed}", ui.C.W))
+    print(ui.paint(f"  │ {verdict} · SCORE {score}", ui.C.BB))
+    print(ui.paint(f"  │ {years} years · {mode['label']} · {tl.label}", ui.C.W))
+    print(ui.paint("  │ Send the seed. History is a dare, not a museum.", ui.C.DIM))
+    for line in textwrap.wrap(url, 58):
+        print(ui.paint("  │ " + line, ui.C.DIM))
+    print(ui.paint("  └────────────────────────────────────────────────────────────┘",
+                   ui.C.Y))
+
+
 def divergence_report(g: Kremlin) -> None:
     lines = [text for flag, text in DIVERGENCE_FLAGS.items() if flag in g.flags]
     print()
@@ -218,6 +245,7 @@ def ending_collapse(g: Kremlin) -> int:
     for _ln in _epilogue(g):
         print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
+    challenge_card(g, avg, tag)
     record_hall(g.name, avg, "Removed from the portraits", tag=tag, mode=g.mode, timeline=g.timeline)
     return avg
 
@@ -236,6 +264,7 @@ def ending_retire(g: Kremlin) -> int:
     for _ln in _epilogue(g):
         print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
+    challenge_card(g, score, "RETIRED")
     record_hall(g.name, score, legend, tag="RETIRED", mode=g.mode, timeline=g.timeline)
     return score
 
@@ -299,6 +328,8 @@ def _epilogue(g: Kremlin) -> list[str]:
         out.append(line)
     if g.path and g.path in PATH_EPILOGUE:
         out.append(PATH_EPILOGUE[g.path])
+    if getattr(g, "cast", None):
+        out.append(CAST_MOD.successor_line(g))
     return out
 
 
@@ -340,6 +371,7 @@ def ending_union_survives(g: Kremlin) -> int:
     for _ln in _epilogue(g):
         print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
+    challenge_card(g, score, tag)
     record_hall(g.name, score, legend, tag=tag, mode=g.mode, timeline=g.timeline)
     return score
 
@@ -391,5 +423,6 @@ def ending_red_millennium(g: Kremlin) -> int:
     for _ln in _epilogue(g):
         print(ui.paint("   " + _ln, ui.C.W))
     divergence_report(g)
+    challenge_card(g, score, tag)
     record_hall(g.name, score, legend, tag=tag, mode=g.mode, timeline=g.timeline)
     return score

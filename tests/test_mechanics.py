@@ -175,6 +175,7 @@ def t_save_load_roundtrip():
                 "text": "x", "met": None}
     g.agenda_log = ["1964: met — MILITARY ≥ 70 (military)"]
     g.hesitations = 2
+    g.cast = {"volkov": 71, "sorokina": 22, "balashov": 50}
     ops.apply_ops(g, {"stats": {"ECONOMY": (3, 3), "ORDER": 5}})
     snap = g.rng.getstate()                 # snapshot AFTER the random roll
     try:
@@ -195,6 +196,8 @@ def t_save_load_roundtrip():
         assert g2.directive_uses == {"heavy_industry": 3}
         assert g2.focus_uses == {"factory_visit": 2}
         assert g2.influence == 21 and g2.order == "order_force"
+        assert g2.seed == 7
+        assert g2.cast == {"volkov": 71, "sorokina": 22, "balashov": 50}
         assert g2.agenda == {"faction": "military", "stat": "MILITARY",
                              "target": 70, "text": "x", "met": None}
         assert g2.agenda_log == ["1964: met — MILITARY ≥ 70 (military)"]
@@ -501,7 +504,10 @@ def t_six_modes():
 
 def t_timeline_application():
     from kreml.content.timelines import TIMELINE_ORDER, TIMELINES
-    assert set(TIMELINE_ORDER) == set(TIMELINES) and len(TIMELINE_ORDER) == 4
+    assert set(TIMELINE_ORDER) == set(TIMELINES) and len(TIMELINE_ORDER) == 5
+    s = Kremlin(0, mode="medium", timeline="succession")
+    assert (s.year, s.end_year) == (1982, 1991) and s.era == "MIDDLE"
+    assert "at_war" in s.flags and s.court["reformers"] == 24
     f = Kremlin(0, mode="medium", timeline="flashpoint")
     assert (f.year, f.end_year) == (1980, 1991) and "at_war" in f.flags
     assert f.era == "MIDDLE" and f.stats["MILITARY"] == 76
@@ -1118,6 +1124,44 @@ def t_v75_new_content():
     assert "republic_subsidies" in {m["id"] for m in CAP.available(funded)}
 
 
+def t_v8_cast_and_challenge():
+    import io
+    from contextlib import redirect_stdout
+    from kreml.content import cast as CAST
+    from kreml.content import events as EV
+    from kreml.content import endings as END
+    g = Kremlin(0)
+    assert g.seed == 0 and set(g.cast) == set(CAST.CAST_IDS)
+    ops.apply_ops(g, {"loyalty": {"volkov": 900, "sorokina": -900}})
+    assert g.cast["volkov"] == 100 and g.cast["sorokina"] == 0
+    heir, value, _ = CAST.successor(g)
+    assert heir.id == "volkov" and value == 100
+    # the room pays its debts: the trusted return +1, the abandoned cost -1
+    room = Kremlin(0)
+    room.cast = {"volkov": 80, "sorokina": 50, "balashov": 10}
+    order, army = room.stats["ORDER"], room.stats["MILITARY"]
+    engine.apply_systems(room)
+    assert room.stats["ORDER"] == order + 1
+    assert room.stats["MILITARY"] == army - 1
+    # all six memos are real data and in rotation
+    for memo, era in (("memo_volkov_cadres", "EARLY"),
+                      ("memo_volkov_succession", "LATE"),
+                      ("memo_sorokina_pilot", "EARLY"),
+                      ("memo_sorokina_coops", "LATE"),
+                      ("memo_balashov_budget", "MIDDLE"),
+                      ("memo_balashov_troops", "LATE")):
+        assert memo in EV.EVENTS and memo in EV.RANDOM_POOLS[era], memo
+    # the challenge card carries the seed, the score and the replay URL
+    card = Kremlin(4242, mode="hard", timeline="succession")
+    card.year = 1991
+    buf = io.StringIO()
+    with redirect_stdout(buf):
+        END.challenge_card(card, 321, "SURVIVED")
+    out = buf.getvalue()
+    assert "SEED 4242" in out and "SCORE 321" in out
+    assert "THE THREE FUNERALS" in out and "seed=4242" in out
+
+
 def t_v75_first_year_orientation():
     import builtins
     import io
@@ -1141,7 +1185,7 @@ def t_v75_first_year_orientation():
     with redirect_stdout(io.StringIO()):
         tutorial.finish(g)
     assert not g.tutorial
-    assert ui.VERSION_TAG == "BETA v7-5"
+    assert ui.VERSION_TAG == "BETA v8"
 
 
 def main() -> int:
@@ -1205,6 +1249,8 @@ def main() -> int:
     check("republic unrest ops, requirements & crisis", t_v75_republic_unrest)
     check("v7-5 content: republics & red capstone", t_v75_new_content)
     check("first-year orientation & version", t_v75_first_year_orientation)
+    # ── v8 ──
+    check("v8: cast loyalty, memos & challenge card", t_v8_cast_and_challenge)
     failed = [r for r in results if not r[1]]
     for name, ok, err in results:
         print(f"[{'PASS' if ok else 'FAIL'}] {name}" + (f" — {err}" if err else ""))

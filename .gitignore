@@ -12,6 +12,7 @@ edit video/
 
 # Render / autowrite artifacts
 *.tmp
+trailer/cache/
 docs/media/teaser.mp4
 docs/.hallmark/
 docs/play/.hallmark/

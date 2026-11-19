@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Render the four itch.io screenshots from a real v7 playthrough.
+"""Render the five itch.io screenshots from a real v8 playthrough.
 
 The old JPGs in docs/media were captured in v4 and show the wrong interface.
 This tool replays the deterministic autopilot run with seed 7, picks the title,
@@ -85,7 +85,7 @@ def main() -> int:
         still(title, "04-title.png")
         still(board, "01-board.png", top=0, rows=R.ROWS)
         still(directive, "02-directive.png")
-        still(ending, "03-ending.png")
+        still(ending, "03-ending.png", top=max(0, ending.n_rows - R.ROWS))
         still(tutorial, "05-tutorial.png", top=0, rows=R.ROWS)
     finally:
         try:

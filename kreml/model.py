@@ -55,6 +55,17 @@ class Action:
 
 
 @dataclass(frozen=True)
+class Character:
+    """v8: a named member of the room. Content is data; loyalty is state."""
+    id: str
+    name: str
+    role: str
+    faction: str
+    stat: str
+    line: str
+
+
+@dataclass(frozen=True)
 class Timeline:
     """A starting scenario: where history hands you the keys.
 

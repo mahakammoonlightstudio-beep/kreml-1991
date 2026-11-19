@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-kreml_1991 v7-5 — General Secretary: A Soviet Union alternate-history simulator.
+kreml_1991 v8 — General Secretary: A Soviet Union alternate-history simulator.
 
 Run:
     python main.py                        # normal game (asks difficulty + timeline)
@@ -11,7 +11,7 @@ Run:
     python main.py --timeline flashpoint  # rails | reform | flashpoint | millennium
     python main.py --no-anim              # plain text (no bars/animations)
     python main.py --timed                # v6: decisions run on a wall clock
-    python main.py --tutorial             # first-year orientation (v7-5)
+    python main.py --tutorial             # first-year orientation
 
 (The v1 single-file version is kept for reference in v1_kreml.py.)
 """
@@ -67,12 +67,12 @@ def parse_args(argv: list[str]) -> tuple[int | None, str | None, str | None, boo
     return seed, mode, timeline, tutorial
 
 
-HELP = """КРЕМЛЬ 1991 v7-5 — General Secretary
+HELP = """КРЕМЛЬ 1991 v8 — General Secretary
 
 Usage: python main.py [flags]
 
   --mode <easy|medium|hard|extreme|flash|historical>
-  --timeline <rails|reform|flashpoint|millennium>
+  --timeline <rails|reform|flashpoint|succession|millennium>
   --seed <int>     reproducible run
   --timed          decisions run on a wall clock (flash crises breathe)
   --no-timed       force the clock off (default)

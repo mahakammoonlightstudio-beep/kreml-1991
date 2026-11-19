@@ -4,8 +4,8 @@ Saves happen only at YEAR BOUNDARIES (via the command bar between years),
 which keeps the format trivial and halfway-applied turns impossible.
 The RNG state is serialised too, so a loaded run continues identically.
 
-v5 adds the chosen timeline and the fatigue counters; v4 files are refused
-politely (the state now carries scenarios and plan fatigue).
+v7 (BETA v8) adds the run seed and the Politburo cast's loyalty. Older files
+are refused politely rather than half-loaded into a different Union.
 """
 from __future__ import annotations
 
@@ -15,10 +15,11 @@ import os
 from .state import Kremlin, STATS, FACTIONS
 from .content.modes import normalize
 from .content.republics import DEFAULT_UNREST, REPUBLICS
+from .content.cast import DEFAULT_LOYALTY
 
 SAVE_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..",
                          "kreml_save.json")
-SAVE_VERSION = 6
+SAVE_VERSION = 7
 
 
 def _rng_pack(rng) -> dict:
@@ -51,6 +52,8 @@ def save_game(g: Kremlin, path: str | None = None) -> bool:
         "version": SAVE_VERSION,
         "mode": g.mode,
         "timeline": g.timeline,
+        "seed": int(getattr(g, "seed", 0) or 0),
+        "cast": dict(getattr(g, "cast", DEFAULT_LOYALTY)),
         "year": g.year,
         "end_year": g.end_year,
         "name": g.name,
@@ -103,6 +106,10 @@ def load_game(path: str | None = None) -> Kremlin | None:
         g = Kremlin.__new__(Kremlin)
         g.mode = normalize(data["mode"])
         g.timeline = data.get("timeline", "rails")
+        g.seed = int(data.get("seed", 0) or 0)
+        saved_cast = data.get("cast") or {}
+        g.cast = {member: int(saved_cast.get(member, DEFAULT_LOYALTY[member]))
+                  for member in DEFAULT_LOYALTY}
         g.year = int(data["year"])
         g.end_year = int(data["end_year"])
         g.name = data["name"]

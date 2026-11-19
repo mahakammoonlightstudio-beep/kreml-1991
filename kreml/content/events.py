@@ -17,6 +17,7 @@ This module only assembles them and declares WHEN they may appear:
 """
 from __future__ import annotations
 
+from .cast import CAST_EVENTS, CAST_POOL_ADDITIONS
 from .chains import CHAIN_EVENTS, EXTRA_EVENTS
 from .events_early import EVENTS_EARLY
 from .events_fixed import EVENTS_FIXED
@@ -29,7 +30,7 @@ from .forks import FORK_EVENTS, FORKS
 EVENTS: dict[str, object] = {}
 for _group in (EVENTS_EARLY, EVENTS_MIDDLE, EVENTS_LATE, EVENTS_NEW,
                EVENTS_FIXED, EXTRA_EVENTS, CHAIN_EVENTS, FORK_EVENTS,
-               V6_EVENTS):
+               V6_EVENTS, CAST_EVENTS):
     EVENTS.update(_group)
 
 RANDOM_POOLS: dict[str, tuple[str, ...]] = {'EARLY': ('vodka_shortage',
@@ -108,6 +109,10 @@ RANDOM_POOLS: dict[str, tuple[str, ...]] = {'EARLY': ('vodka_shortage',
 
 # v6 additions are appended, never rewritten, so the v5 draw probabilities hold.
 for _era, _ids in V6_POOL_ADDITIONS.items():
+    RANDOM_POOLS[_era] = RANDOM_POOLS[_era] + tuple(_ids)
+
+# v8: one memo per faction, in the eras where that person has something to ask.
+for _era, _ids in CAST_POOL_ADDITIONS.items():
     RANDOM_POOLS[_era] = RANDOM_POOLS[_era] + tuple(_ids)
 
 # Congress years: the congress event replaces the regular random event.

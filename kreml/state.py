@@ -6,6 +6,7 @@ import random
 from .content.modes import MODES, normalize
 from .content.timelines import get as get_timeline
 from .content.republics import DEFAULT_UNREST, TIMELINE_UNREST
+from .content.cast import DEFAULT_LOYALTY
 
 STATS = ("ECONOMY", "MILITARY", "ORDER", "FAITH", "PRESTIGE")
 
@@ -80,7 +81,12 @@ class Kremlin:
         self.capital_uses: dict[str, int] = {}     # favours inflate when repeated
         self.capital_year = 0                      # one favour per year, no more
         self.hesitations = 0                       # flash decisions that froze
-        self.rng = random.Random(seed)
+        # ── v8 systems ──────────────────────────────────────────────
+        if seed is None:
+            seed = random.SystemRandom().randrange(1, 2 ** 31)
+        self.seed = int(seed)                     # the challenge card needs it
+        self.cast = dict(DEFAULT_LOYALTY)          # v8: the room has faces
+        self.rng = random.Random(self.seed)
 
     @property
     def era(self) -> str:

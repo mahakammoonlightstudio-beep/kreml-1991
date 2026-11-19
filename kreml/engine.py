@@ -20,6 +20,7 @@ from .content import actions as AC
 from .content import history as HIST
 from .content import press as PR
 from .content import republics as REP
+from .content import cast as CAST_MOD
 from .content import endings as END
 from .content import agenda as AGENDA
 from .content import capital as CAP
@@ -116,7 +117,7 @@ def introduction(g: Kremlin, mode: str | None = None,
     ui.slow(ui.paint(f"  ☭ Welcome, {name}. The Union is yours. Try not to lose it.", ui.C.BG))
     print()
     ui.slow(ui.paint("  EVERY YEAR: a personal focus, a public directive, and the year's", ui.C.W))
-    ui.slow(ui.paint("  v7 prints the board as a stamped docket. The v6 clock still runs:", ui.C.W))
+    ui.slow(ui.paint("  v8 prints the board as a stamped docket; the room now has faces.", ui.C.W))
     ui.slow(ui.paint("  'i' spends political capital, 'o' sets the doctrine", ui.C.W))
     ui.slow(ui.paint("  that answers for you when a flash crisis freezes the room.", ui.C.W))
     ui.slow(ui.paint("  crisis event(s). The command bar between years: s = save game,", ui.C.W))
@@ -626,6 +627,17 @@ def apply_systems(g: Kremlin) -> None:
         g.pending.append((g.year + 1, "palace_coup"))
         print(ui.paint(f"  ⚠ The {_FACTION_TITLES[despairing[0]]} are booking "
                        f"your conference room. Whispers, Thursday.", ui.C.BM))
+
+    # ── v8: the room keeps its own accounts ───────────────────────
+    moods = getattr(g, "cast", None)
+    if moods:
+        trusted = max(CAST_MOD.CAST,
+                      key=lambda member: moods.get(member.id, 50))
+        if moods.get(trusted.id, 50) >= 70:
+            g.stats[trusted.stat] = clamp(g.stats[trusted.stat] + 1)
+        for member in CAST_MOD.CAST:
+            if moods.get(member.id, 50) <= 20:
+                g.stats[member.stat] = clamp(g.stats[member.stat] - 1)
 
     # ── v6: a quiet trickle of capital from the standing order ─────
     order = ORDERS.get(getattr(g, "order", None))

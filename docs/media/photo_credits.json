@@ -1,11 +1,39 @@
 [
   {
+    "file": "docs/media/kremlin_1991.jpg",
+    "title": "File:The Kremlin, Moscow1991.jpg",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "artist": "sussexbirder",
+    "page": "https://commons.wikimedia.org/wiki/File:The_Kremlin,_Moscow1991.jpg",
+    "changes": "Resized, cropped by CSS object-fit, desaturated on the page."
+  },
+  {
+    "file": "docs/media/brezhnev.jpg",
+    "title": "File:Leonid Brezhnev Portrait (1).jpg",
+    "license": "CC BY-SA 3.0 DE",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0/de/deed.en",
+    "artist": "Ulrich Kohls / Bundesarchiv",
+    "page": "https://commons.wikimedia.org/wiki/File:Leonid_Brezhnev_Portrait_(1).jpg",
+    "changes": "Resized, desaturated on the page."
+  },
+  {
+    "file": "docs/media/andropov.jpg",
+    "title": "File:Yuri Andropov.jpg",
+    "license": "Public domain",
+    "license_url": "",
+    "artist": "TASS",
+    "page": "https://commons.wikimedia.org/wiki/File:Yuri_Andropov.jpg",
+    "changes": "Resized, desaturated on the page."
+  },
+  {
     "file": "docs/media/photo_panelka.jpg",
     "title": "File:Советский барак.jpg",
     "license": "CC BY-SA 3.0",
     "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
     "artist": "Higimo",
-    "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%B1%D0%B0%D1%80%D0%B0%D0%BA.jpg"
+    "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%B1%D0%B0%D1%80%D0%B0%D0%BA.jpg",
+    "changes": "Resized, desaturated on the page."
   },
   {
     "file": "docs/media/photo_1984.jpg",
@@ -13,14 +41,52 @@
     "license": "CC BY 4.0",
     "license_url": "https://creativecommons.org/licenses/by/4.0",
     "artist": "Vyacheslav Argenberg",
-    "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%A1%D0%A1%D0%A0,_1984,_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%A1%D0%BE%D1%8E%D0%B7,_%D0%9A%D1%80%D1%8B%D0%BC,_%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%A1%D1%83%D0%B4%D0%B0%D0%BA,_%D0%BF%D0%B0%D0%BD%D0%BE%D1%80%D0%B0%D0%BC%D0%B0,_Soviet_Union.jpg"
+    "page": "https://commons.wikimedia.org/wiki/File:%D0%A1%D0%A1%D0%A1%D0%A0,_1984,_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%B9_%D0%A1%D0%BE%D1%8E%D0%B7,_%D0%9A%D1%80%D1%8B%D0%BC,_%D0%92%D0%B8%D0%B4_%D0%BD%D0%B0_%D0%A1%D1%83%D0%B4%D0%B0%D0%BA,_%D0%BF%D0%B0%D0%BD%D0%BE%D1%80%D0%B0%D0%BC%D0%B0,_Soviet_Union.jpg",
+    "changes": "Resized, desaturated on the page."
   },
   {
     "file": "docs/media/photo_chernobyl.jpg",
     "title": "File:Chernobyl - power plant - reactor 4 02.jpg",
     "license": "CC BY-SA 3.0",
     "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
-    "artist": "Paweł 'pbm' Szubert (talk)",
-    "page": "https://commons.wikimedia.org/wiki/File:Chernobyl_-_power_plant_-_reactor_4_02.jpg"
+    "artist": "Paweł 'pbm' Szubert",
+    "page": "https://commons.wikimedia.org/wiki/File:Chernobyl_-_power_plant_-_reactor_4_02.jpg",
+    "changes": "Resized, desaturated on the page."
+  },
+  {
+    "file": "docs/media/soviet_emblem.svg",
+    "title": "File:Coat of arms of the Soviet Union (1956–1991).svg",
+    "license": "Public domain (state symbol)",
+    "license_url": "",
+    "artist": "Vectorisation of a state emblem",
+    "page": "https://commons.wikimedia.org/wiki/File:Coat_of_arms_of_the_Soviet_Union_(1956%E2%80%931991).svg",
+    "changes": "Used at low opacity as a watermark; otherwise unmodified."
+  },
+  {
+    "file": "docs/media/red_square_1977.jpg",
+    "title": "File:Moscow 1977-11-07-30.jpg",
+    "license": "Public domain",
+    "license_url": "",
+    "artist": "Szilas",
+    "page": "https://commons.wikimedia.org/wiki/File:Moscow_1977-11-07-30.jpg",
+    "changes": "Resized, desaturated on the page."
+  },
+  {
+    "file": "docs/media/gorbachev.jpg",
+    "title": "File:Mikhail Gorbachev.jpg",
+    "license": "CC BY 3.0",
+    "license_url": "https://creativecommons.org/licenses/by/3.0",
+    "artist": "Veni Markovski (Вени Марковски)",
+    "page": "https://commons.wikimedia.org/wiki/File:Mikhail_Gorbachev.jpg",
+    "changes": "Resized, cropped by the page, desaturated."
+  },
+  {
+    "file": "docs/media/soviet_flag.svg",
+    "title": "File:Flag of the Soviet Union (1955–1991).svg",
+    "license": "Public domain (state symbol)",
+    "license_url": "",
+    "artist": "USSR",
+    "page": "https://commons.wikimedia.org/wiki/File:Flag_of_the_Soviet_Union_(1955%E2%80%931991).svg",
+    "changes": "Used unmodified as a decorative archive plate."
   }
 ]

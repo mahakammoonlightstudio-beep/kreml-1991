@@ -10,6 +10,7 @@ Ops vocabulary (dict keys):
   "hc"        : +10 | (min, max)            (hard currency / valas reserve)
   "court"     : {"old_guard": +5, ...}      (faction moods, clamped 0-100)
   "unrest"    : {"baltic": +5, ...}          (republic unrest, clamped 0-100)
+  "loyalty"   : {"volkov": +4, ...}          (v8 cast loyalty, clamped 0-100)
   "special"   : "handler_name" | ["a", "b"] (custom logic, via SPECIALS registry)
   "path"      : "path_reform"             (divergence line; replaces any previous)
 
@@ -34,6 +35,7 @@ from typing import Callable
 
 from .state import Kremlin, STATS, clamp, FACTIONS
 from .content.republics import REPUBLICS
+from .content.cast import CAST_IDS, DEFAULT_LOYALTY
 from . import ui
 
 SPECIALS: dict[str, Callable[[Kremlin], None]] = {}
@@ -178,6 +180,17 @@ def apply_ops(g: Kremlin, ops: dict | None) -> list[str]:
             raise ValueError(f"content bug: unknown faction '{f}'")
         g.court[f] = max(0, min(100, g.court[f] + int(val)))
         changes.append(f"COURT {f} {int(val):+d}")
+    loyalty_ops = ops.get("loyalty") or {}
+    if loyalty_ops:
+        if not getattr(g, "cast", None):
+            g.cast = dict(DEFAULT_LOYALTY)
+        for member_id, val in loyalty_ops.items():
+            if member_id not in CAST_IDS:
+                raise ValueError(f"content bug: unknown cast member '{member_id}'")
+            before_loyalty = g.cast.get(member_id, 50)
+            g.cast[member_id] = max(0, min(100, before_loyalty + int(val)))
+            changes.append(f"LOYALTY {member_id} "
+                           f"{g.cast[member_id] - before_loyalty:+d}")
     unrest_ops = ops.get("unrest") or {}
     for republic, val in unrest_ops.items():
         if republic not in REPUBLICS:

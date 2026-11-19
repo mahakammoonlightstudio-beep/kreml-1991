@@ -4,42 +4,41 @@
 <meta charset="UTF-8">
 <title>КРЕМЛЬ 1991 — cover</title>
 <link rel="stylesheet" href="../../docs/assets/fonts.css">
+<link rel="stylesheet" href="../../docs/assets/editorial.css">
 <style>
   * { box-sizing: border-box; }
-  html, body { margin: 0; padding: 0; width: 630px; height: 500px; overflow: hidden; background: #e5dfce; }
-  body { font-family: "Martian Mono", ui-monospace, monospace; color: #1a1714; font-stretch: 87.5%; -webkit-font-smoothing: antialiased; }
-  .cover { position: relative; width: 630px; height: 500px; background: #e5dfce; overflow: hidden; box-shadow: inset 0 0 0 3px #1a1714; }
+  html, body { margin: 0; padding: 0; width: 630px; height: 500px; overflow: hidden; background: #0a0908; }
+  body { font-family: "Inter", system-ui, sans-serif; color: #e9e1d2; font-weight: 600; -webkit-font-smoothing: antialiased; }
+  .cover { position: relative; width: 630px; height: 500px; background: #0a0908; overflow: hidden; border: 1px solid #3a342c; }
+  .cover::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 80% at 82% 12%, rgba(142,28,20,.24), transparent 70%); pointer-events: none; }
   .sym { font-family: "Segoe UI Symbol", "Martian Mono", sans-serif; }
+  .file { position: relative; height: 30px; display: flex; align-items: center; justify-content: space-between; padding: 0 22px; border-bottom: 1px solid rgba(233,225,210,.14); font-family: "JetBrains Mono", monospace; font-size: 7px; letter-spacing: .16em; text-transform: uppercase; color: #928674; }
+  .file b { color: #bd3a2c; font-weight: 400; }
 
-  .file { height: 32px; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 0 24px; border-bottom: 1px solid #8f8779; font-size: 8px; letter-spacing: .13em; text-transform: uppercase; color: #5a5248; }
-  .file b { color: #8c2a20; font-weight: 700; }
-
-  .main { height: 336px; display: grid; grid-template-columns: 1.58fr .92fr; gap: 20px; padding: 18px 24px 8px; }
+  .main { position: relative; height: 352px; display: grid; grid-template-columns: 1.32fr .68fr; gap: 16px; padding: 16px 22px 10px; }
   .copy { min-width: 0; display: flex; flex-direction: column; align-items: flex-start; }
-  .kick { font-size: 8.5px; font-weight: 700; letter-spacing: .15em; text-transform: uppercase; color: #8c2a20; }
-  h1 { margin: 7px 0 0; font-size: 82px; line-height: .84; letter-spacing: -.07em; font-weight: 700; font-stretch: 112.5%; }
-  h1 .year { display: block; color: #8c2a20; font-size: 108px; line-height: .82; letter-spacing: -.075em; }
-  .rule { width: 44px; height: 3px; background: #1a1714; margin: 9px 0 7px; }
-  .sub { font-size: 11.5px; font-weight: 700; letter-spacing: .075em; }
-  .line { margin-top: 5px; max-width: 35ch; font-size: 8.5px; line-height: 1.7; color: #4b443a; }
-  .badge { display: inline-block; margin-top: 8px; border: 2px solid #8c2a20; color: #8c2a20; padding: 3px 7px; font-size: 8px; font-weight: 700; letter-spacing: .1em; transform: rotate(-2deg); }
+  .kick { font-family: "JetBrains Mono", monospace; font-size: 7.5px; letter-spacing: .16em; text-transform: uppercase; color: #bd3a2c; }
+  h1 { margin: 6px 0 0; font-family: "Martian Mono", monospace; font-size: 50px; line-height: .86; letter-spacing: -.07em; font-weight: 700; font-stretch: 112.5%; color: #e9e1d2; }
+  h1 .yr { display: block; color: #bd3a2c; font-size: 72px; line-height: .8; letter-spacing: -.075em; }
+  .rule { width: 44px; height: 2px; background: #bd3a2c; margin: 10px 0 7px; }
+  h2 { margin: 0; font-family: "Playfair Display", serif; font-style: italic; font-weight: 400; font-size: 22px; line-height: 1.06; letter-spacing: -0.01em; color: #c6bba8; max-width: 16ch; }
+  .line { margin-top: 7px; font-family: "JetBrains Mono", monospace; font-size: 7px; line-height: 1.8; letter-spacing: .03em; color: #928674; max-width: 36ch; }
+  .badge { display: inline-block; margin-top: 10px; border: 1px solid #8e1c14; color: #e9e1d2; background: #8e1c14; padding: 3px 7px; font-family: "JetBrains Mono", monospace; font-size: 7px; letter-spacing: .13em; text-transform: uppercase; }
 
-  .docket { align-self: start; margin-top: 13px; border: 3px solid #1a1714; background: #efe8d7; box-shadow: 7px 7px 0 #1a1714; padding: 12px 10px 10px; text-align: center; transform: rotate(-2.2deg); }
-  .docket img { display: block; width: 138px; height: auto; margin: 0 auto 6px; transform: rotate(4deg); }
-  .docket .role { font-size: 8.5px; font-weight: 700; line-height: 1.35; letter-spacing: .03em; }
-  .docket .meta { margin-top: 3px; font-size: 6.5px; line-height: 1.7; color: #5a5248; }
-  .stamp { display: inline-block; margin-top: 9px; border: 2px solid #8c2a20; color: #8c2a20; padding: 3px 5px; font-size: 6.5px; font-weight: 700; letter-spacing: .08em; transform: rotate(3deg); }
+  .photo { position: relative; align-self: stretch; border: 1px solid rgba(233,225,210,.18); padding: 5px; background: #171410; }
+  .photo img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 38%; filter: grayscale(1) contrast(1.12) brightness(.7); }
+  .photo .cap { position: absolute; left: 10px; right: 10px; bottom: 9px; display: flex; justify-content: space-between; gap: 6px; font-family: "JetBrains Mono", monospace; font-size: 5.5px; letter-spacing: .1em; text-transform: uppercase; color: #c6bba8; text-shadow: 0 1px 2px #000; }
+  .photo .stamp { position: absolute; top: 12px; right: 10px; border: 1px solid #bd3a2c; color: #bd3a2c; padding: 2px 5px; font-family: "JetBrains Mono", monospace; font-size: 5.5px; letter-spacing: .12em; transform: rotate(-4deg); background: rgba(10,9,8,.45); }
 
-  .console { height: 132px; padding: 8px 24px 6px; background: #171410; color: #e9e2d0; border-top: 3px solid #8c2a20; }
-  .tbar { display: flex; justify-content: space-between; gap: 12px; padding-bottom: 4px; border-bottom: 1px solid #3b342c; font-size: 7.5px; letter-spacing: .07em; color: #b9ae9b; }
-  .tbar b { color: #e9e2d0; font-weight: 700; }
-  .gauges { display: grid; grid-template-columns: 1fr 1fr; gap: 1px 26px; margin-top: 4px; }
-  .g { display: grid; grid-template-columns: 53px 1fr 18px; align-items: center; gap: 5px; font-size: 6.5px; line-height: 1.55; color: #b9ae9b; }
-  .g b { color: #e9e2d0; font-weight: 400; text-transform: uppercase; letter-spacing: .03em; font-size: 6px; }
-  .g i { font-style: normal; color: #e9e2d0; text-align: right; font-variant-numeric: tabular-nums; }
-  .bar { display: block; height: 5px; background: repeating-linear-gradient(to right, #171410 0 1px, transparent 1px 5px), linear-gradient(to right, var(--bar, #d7cbb7) 0 var(--fill), #3b342c var(--fill) 100%); }
-  .res { font-size: 7px; letter-spacing: .08em; color: #d7cbb7; white-space: nowrap; }
-  .foot { display: flex; justify-content: space-between; gap: 12px; margin-top: 5px; font-size: 6px; letter-spacing: .06em; color: #7a7062; }
+  .console { position: relative; height: 118px; padding: 7px 22px 6px; background: #0d0c0a; border-top: 1px solid rgba(233,225,210,.14); }
+  .tbar { display: flex; justify-content: space-between; gap: 10px; padding-bottom: 5px; border-bottom: 1px solid rgba(233,225,210,.1); font-family: "JetBrains Mono", monospace; font-size: 6.5px; letter-spacing: .09em; color: #928674; }
+  .tbar b { color: #e9e1d2; font-weight: 400; }
+  .gauges { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-top: 7px; }
+  .g { font-family: "JetBrains Mono", monospace; font-size: 6px; line-height: 1.5; color: #928674; }
+  .g b { display: block; color: #c6bba8; font-weight: 400; text-transform: uppercase; letter-spacing: .05em; font-size: 5.5px; }
+  .g i { font-style: normal; color: #e9e1d2; font-size: 8px; }
+  .bar { display: block; height: 3px; margin-top: 3px; background: linear-gradient(to right, var(--bar, #c6bba8) 0 var(--fill), #2a251f var(--fill) 100%); }
+  .foot { display: flex; justify-content: space-between; gap: 10px; margin-top: 6px; font-family: "JetBrains Mono", monospace; font-size: 5.5px; letter-spacing: .08em; color: #6f6658; }
 </style>
 </head>
 <body>
@@ -51,33 +50,31 @@
 
   <div class="main">
     <div class="copy">
-      <div class="kick">A text-based Soviet alternate-history game</div>
-      <h1>КРЕМЛЬ<span class="year">1991</span></h1>
+      <div class="kick">BETA v8 · a Soviet alternate-history game</div>
+      <h1>КРЕМЛЬ<span class="yr">1991</span></h1>
       <div class="rule"></div>
-      <div class="sub">GENERAL SECRETARY</div>
-      <div class="line">Twenty-seven years. Five gauges.<br>One signature. No map.</div>
-      <div class="badge">BETA v7-5 · FREE</div>
+      <h2>The country waiting for tomorrow.</h2>
+      <div class="line">Five gauges. Three factions with faces.<br>One seed to share.</div>
+      <div class="badge">BETA v8 · free in the browser</div>
     </div>
 
-    <div class="docket">
-      <img src="../../docs/assets/emblem.svg" alt="">
-      <div class="role">ГЕНЕРАЛЬНЫЙ<br>СЕКРЕТАРЬ</div>
-      <div class="meta">ЦК КПСС · ПОЛИТБЮРО<br>МОСКВА · ОКТЯБРЬ 1964</div>
-      <div class="stamp">СОВ. СЕКРЕТНО</div>
+    <div class="photo">
+      <img src="../../docs/media/kremlin_1991.jpg" alt="">
+      <span class="stamp">СОВ. СЕКРЕТНО</span>
+      <div class="cap"><span>Москва · 1991</span><span>the last full year</span></div>
     </div>
   </div>
 
   <div class="console">
-    <div class="tbar"><span><span class="sym">☭</span> <b>КРЕМЛЬ 1991</b> / BETA v7-5</span><span>THE BOARD</span></div>
+    <div class="tbar"><span><span class="sym">☭</span> <b>КРЕМЛЬ 1991</b> / BETA v8</span><span>THE BOARD · 1964</span></div>
     <div class="gauges">
-      <div class="g"><b>Economy</b><span class="bar" style="--fill:57%"></span><i>57</i></div>
-      <div class="g"><b>People</b><span class="bar" style="--fill:48%;--bar:#d45a4a"></span><i>48</i></div>
-      <div class="g"><b>Military</b><span class="bar" style="--fill:70%"></span><i>70</i></div>
-      <div class="g"><b>Prestige</b><span class="bar" style="--fill:62%"></span><i>62</i></div>
-      <div class="g"><b>Order</b><span class="bar" style="--fill:81%"></span><i>81</i></div>
-      <div class="g"><b>Reserves</b><span class="res">● ● ●</span><i>3/3</i></div>
+      <div class="g"><b>Economy</b><i>57</i><span class="bar" style="--fill:57%"></span></div>
+      <div class="g"><b>Military</b><i>70</i><span class="bar" style="--fill:70%"></span></div>
+      <div class="g"><b>Order</b><i>81</i><span class="bar" style="--fill:81%"></span></div>
+      <div class="g"><b>Faith</b><i>48</i><span class="bar" style="--fill:48%;--bar:#bd3a2c"></span></div>
+      <div class="g"><b>Prestige</b><i>62</i><span class="bar" style="--fill:62%"></span></div>
     </div>
-    <div class="foot"><span>PYTHON · NO INSTALL · 123 EVENTS</span><span>MAHAKAM MOONLIGHT STUDIO</span></div>
+    <div class="foot"><span>PYTHON · NO INSTALL · 129 EVENTS · FIVE TIMELINES</span><span>MAHAKAM MOONLIGHT STUDIO</span></div>
   </div>
 </div>
 </body>

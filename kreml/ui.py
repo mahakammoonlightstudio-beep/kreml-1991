@@ -82,8 +82,8 @@ STAT_COLOUR = {
     "FAITH": C.G, "PRESTIGE": C.CY,
 }
 
-VERSION = "7-5"
-VERSION_TAG = "BETA v7-5"
+VERSION = "8"
+VERSION_TAG = "BETA v8"
 
 # v7: the title screen is drawn, not typed. ANSI Shadow lettering, a docket
 # frame and one red line of classification — the visual grammar the rest of

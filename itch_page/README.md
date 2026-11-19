@@ -4,6 +4,10 @@ This folder is the source of truth for the itch.io project page. Fields below
 follow the current itch.io form, in order. Copy the values; do not retype the
 title, because the Cyrillic and the em dash are part of it.
 
+**This edition is pure play.** The GitHub Pages site is the landing page and the
+case file. The itch ZIP contains the game only: no landing copy, no support
+panel, no site chrome. Keep the itch page description doing the marketing work.
+
 Assets here:
 
 | File | Use |
@@ -11,7 +15,7 @@ Assets here:
 | `cover.png` | Cover image, exactly **630 × 500** (required) |
 | `screenshots/01-board.png` | Screenshot: the board |
 | `screenshots/02-directive.png` | Screenshot: a yearly directive |
-| `screenshots/03-ending.png` | Screenshot: the 1991 report |
+| `screenshots/03-ending.png` | Screenshot: the 1991 report and challenge card |
 | `screenshots/04-title.png` | Screenshot: the appointment screen |
 | `screenshots/05-tutorial.png` | Screenshot: the First-Year Orientation memo |
 | `description.html` | Paste into **Description** (itch accepts HTML) |
@@ -41,10 +45,10 @@ Notes:
 - **Pricing.** Keep **No payments**. The game is free and the donation links are
   external (PayPal, Sociabuzz, Saweria). Do not enable itch's "ask for a
   donation" gate unless you deliberately want a second payment path.
-- **Release status.** `Released` is accurate for the current BETA v7-5 build; the
-  title still says BETA, and updates are expected. The build now includes the
-  optional First-Year Orientation, Republic Unrest and event cues; the paste-ready
-  description in `description.html` is updated for this build.
+- **Release status.** `Released` is accurate for the current **BETA v8** build;
+  the title still says BETA, and updates are expected. The pure-play build
+  includes the situation room, the named Politburo cast, the Three Funerals 1982
+  opening, the challenge card and the mobile layout.
 
 ---
 
@@ -66,8 +70,12 @@ python tools/build_web.py
 python tools/build_itch.py
 ```
 
-The ZIP now carries the favicon, apple-touch icon, 192/512 app icons and the
-web manifest, so the embedded page matches the GitHub Pages copy.
+The ZIP carries the favicon, apple-touch icon, 192/512 app icons, the web
+manifest, the local OFL fonts and the licensed Kremlin photograph. Nothing in
+the play page depends on the GitHub landing assets.
+
+`body.itch-build` removes the landing chrome, support panel and external-site
+links from the play page. The game itself is unchanged.
 
 ---
 
@@ -99,9 +107,13 @@ A truthful explanation if itch offers a free-text box:
 
 1. **01-board.png** — The board: five gauges, the valas reserve, the court, Republic Unrest and the year's agenda.
 2. **02-directive.png** — The yearly directive: one public campaign, chosen from the groups on the table.
-3. **03-ending.png** — The 1991 divergence report: what your century changed, and what it cost.
+3. **03-ending.png** — The divergence report and the v8 challenge card: seed, verdict, score and a dare.
 4. **04-title.png** — The appointment: difficulty, timeline and the name for the history books.
 5. **05-tutorial.png** — The optional First-Year Orientation: Chief of Staff Volkov's fifth memo on fatigue, the court and Republic Unrest.
+
+The stills are rendered from a real seed-7 run by `python tools/capture_stills.py`.
+They show the terminal docket. The itch build frames that same transcript in the
+v8 situation room.
 
 ### Content notes
 
@@ -144,7 +156,7 @@ python tools/build_itch.py
 - [ ] Short description under 160 characters
 - [ ] Kind = HTML, ZIP has `index.html` at root
 - [ ] Pricing = No payments
-- [ ] Cover 630 × 500 uploaded
+- [ ] New v8 cover 630 × 500 uploaded
 - [ ] Five screenshots uploaded with captions
 - [ ] Genre = Strategy, ten tags entered
 - [ ] AI disclosure = Yes
